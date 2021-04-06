@@ -10,12 +10,34 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "axios": "^0.21",
+        "axios": "^0.21.1",
+        "bootstrap": "^5.0.0-beta3",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
+        "popper.js": "^1.12",
         "postcss": "^8.1.14",
         "resolve-url-loader": "^3.1.2",
-        "sass": "^1.32.8",
-        "sass-loader": "^10.1.1"
+        "sass": "^1.20.1",
+        "sass-loader": "^8.0.0",
+        "vue": "^2.6.12",
+        "vue-loader": "^15.9.6",
+        "vue-template-compiler": "^2.6.10",
+        "webpack-cli": "^4.5.0"
+    },
+    "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^27.0.0",
+        "@popperjs/core": "^2.9.1",
+        "ckeditor5": "^27.0.0",
+        "laravel-vue-datatable": "^0.6.0",
+        "moment": "^2.29.1",
+        "popper": "^1.0.1",
+        "portal-vue": "^2.1.7",
+        "sweetalert2": "^10.15.6",
+        "vform": "^1.0.1",
+        "vue-progressbar": "^0.7.5",
+        "vue-router": "^3.5.1",
+        "vuejs-datatable": "^2.0.0-alpha.7",
+        "watch": "^1.0.2",
+        "webpack": "^5.27.2"
     }
 }
