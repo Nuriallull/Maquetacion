@@ -1880,7 +1880,11 @@ __webpack_require__(/*! ../../bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./crudTable */ "./resources/js/admin/desktop/crudTable.js");
 
-__webpack_require__(/*! ./ckeditor */ "./resources/js/admin/desktop/ckeditor.js"); // 
+__webpack_require__(/*! ./ckeditor */ "./resources/js/admin/desktop/ckeditor.js");
+
+__webpack_require__(/*! ./sidebar */ "./resources/js/admin/desktop/sidebar.js");
+
+__webpack_require__(/*! ./errors */ "./resources/js/admin/desktop/errors.js"); // 
 // import Vue from 'vue/dist/vue';
 // Alternativa laravel-vue-datatable
 // import DataTable from 'laravel-vue-datatable';
@@ -1945,6 +1949,9 @@ __webpack_require__(/*! ./ckeditor */ "./resources/js/admin/desktop/ckeditor.js"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "renderEditor": () => (/* binding */ renderEditor)
+/* harmony export */ });
 /* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ckeditor/ckeditor5-build-classic */ "./node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js");
 /* harmony import */ var _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0__);
 
@@ -1952,19 +1959,22 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! @ckeditor/ckeditor5-build-classic/build/translations/es.js */ "./node_modules/@ckeditor/ckeditor5-build-classic/build/translations/es.js");
 
 window.ckeditors = [];
-document.querySelectorAll('.ckeditor').forEach(function (ckeditor) {
-  _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0___default().create(ckeditor, {
-    toolbar: {
-      items: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'outdent', 'indent', '|', 'blockQuote', 'undo', 'redo']
-    },
-    language: 'es',
-    licenseKey: ''
-  }).then(function (classicEditor) {
-    ckeditors[ckeditor.name] = classicEditor;
-  })["catch"](function (error) {
-    console.error(error);
+var renderEditor = function renderEditor() {
+  document.querySelectorAll('.ckeditor').forEach(function (ckeditor) {
+    _ckeditor_ckeditor5_build_classic__WEBPACK_IMPORTED_MODULE_0___default().create(ckeditor, {
+      toolbar: {
+        items: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'outdent', 'indent', '|', 'blockQuote', 'undo', 'redo']
+      },
+      language: 'es',
+      licenseKey: ''
+    }).then(function (classicEditor) {
+      ckeditors[ckeditor.name] = classicEditor;
+    })["catch"](function (error) {
+      console.error(error);
+    });
   });
-});
+};
+renderEditor();
 
 /***/ }),
 
@@ -1976,6 +1986,10 @@ document.querySelectorAll('.ckeditor').forEach(function (ckeditor) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "renderForm": () => (/* binding */ renderForm),
+/* harmony export */   "renderTable": () => (/* binding */ renderTable)
+/* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
@@ -1998,7 +2012,19 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var table = document.getElementById("table");
 var form = document.getElementById("form");
+var menuButton = document.querySelectorAll(".menu-button");
+var panel = document.querySelectorAll(".panel"); //*Aqui comienza la función que incluye el JavaScript del formulario. Las constantes pasan a ser variables, y solamente se mantienen como constantes el formulario y la tabla.
 
+menuButton.forEach(function (menuButton) {
+  menuButton.addEventListener("click", function () {
+    panel.forEach(function (panel) {
+      if (panel.dataset.tab == menuButton.dataset.tab) {
+        panel.classList.toggle("active");
+        menuButton.classList.toggle("active");
+      }
+    });
+  });
+});
 var renderForm = function renderForm() {
   var forms = document.querySelectorAll(".admin-form");
   var labels = document.querySelectorAll('.label-highlight');
@@ -2083,7 +2109,7 @@ var renderForm = function renderForm() {
       sendPostRequest();
     });
   });
-};
+}; //*Aqui comienza la función que incluye el JavaScript de la tabla.
 
 var renderTable = function renderTable() {
   var editButtons = document.querySelectorAll(".edit-button");
@@ -2102,7 +2128,7 @@ var renderTable = function renderTable() {
                   _context2.next = 3;
                   return axios.get(url).then(function (response) {
                     form.innerHTML = response.data.form;
-                    renderForm();
+                    renderForm(); //*cada vez que terminamos una llamada de JS al elemento (formulario) lo llamamos de nuevo al final.
                   });
 
                 case 3:
@@ -2127,7 +2153,7 @@ var renderTable = function renderTable() {
         };
       }();
 
-      sendEditRequest();
+      sendEditRequest(); //* llamamos la funcion editar: cuando demos al boton editar, cogeremos los datos dela tabla y se comunicaran al formulario, para editarlos.
     });
   });
   deleteButtons.forEach(function (deleteButton) {
@@ -2169,13 +2195,110 @@ var renderTable = function renderTable() {
         };
       }();
 
-      sendDeleteRequest();
+      sendDeleteRequest(); //* llamamos la funcion eliminar: cuando pulsemos el boton eliminar, cogemos los datos de la tabla (innerhtml) para que desaparezcan de ella.
     });
   });
 };
-
 renderForm();
-renderTable();
+renderTable(); //* Al final llamamos de nuevo a las funciones de la tabla y el formulario.
+
+/***/ }),
+
+/***/ "./resources/js/admin/desktop/errors.js":
+/*!**********************************************!*\
+  !*** ./resources/js/admin/desktop/errors.js ***!
+  \**********************************************/
+/***/ (() => {
+
+var errorButton = document.getElementById('close-errors-button');
+errorButton.addEventListener("click", function () {
+  console.log("close");
+  var activeElements = document.querySelectorAll(".active");
+
+  if (errorButton.classList.contains("active")) {
+    errorButton.classList.remove("active");
+  } else {
+    activeElements.forEach(function (activeElement) {
+      activeElement.classList.remove("active");
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/desktop/sidebar.js":
+/*!***********************************************!*\
+  !*** ./resources/js/admin/desktop/sidebar.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _crudTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crudTable */ "./resources/js/admin/desktop/crudTable.js");
+/* harmony import */ var _ckeditor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ckeditor */ "./resources/js/admin/desktop/ckeditor.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+var sidebarButton = document.querySelectorAll(".sidebar-menu-item");
+var hamButton = document.getElementById("ham-button");
+var sidebar = document.getElementById("sidebar");
+sidebarButton.forEach(function (sidebarButton) {
+  sidebarButton.addEventListener("click", function () {
+    var url = sidebarButton.dataset.url;
+
+    var sendBarRequest = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return axios.get(url).then(function (response) {
+                  form.innerHTML = response.data.form;
+                  table.innerHTML = response.data.table;
+                  window.history.pushState('', '', url);
+                  (0,_crudTable__WEBPACK_IMPORTED_MODULE_1__.renderForm)();
+                  (0,_crudTable__WEBPACK_IMPORTED_MODULE_1__.renderTable)();
+                  (0,_ckeditor__WEBPACK_IMPORTED_MODULE_2__.renderEditor)();
+                });
+
+              case 3:
+                _context.next = 8;
+                break;
+
+              case 5:
+                _context.prev = 5;
+                _context.t0 = _context["catch"](0);
+                console.error(_context.t0);
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 5]]);
+      }));
+
+      return function sendBarRequest() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+
+    sendBarRequest();
+  });
+});
+hamButton.addEventListener("click", function () {
+  hamButton.classList.toggle("active");
+  sidebar.classList.toggle("active");
+});
 
 /***/ }),
 
@@ -2188,6 +2311,20 @@ renderTable();
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+window.onload = function () {
+  if (/iP(hone|ad)/.test(window.navigator.userAgent)) {
+    document.body.addEventListener('touchstart', function () {}, false);
+  }
+};
+
+window.requestAnimFrame = function () {
+  'use strict';
+
+  return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
+    window.setTimeout(callback, 1000 / 60);
+  };
+}();
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

@@ -14,11 +14,13 @@
 
     <body>
         <div class="wrapper" id="app">
+            
+            @include("admin.layout.partials.sidebar")
+
             <div class="main-content">
-                @yield('content')
+                @yield('content') 
             </div>
         </div>      
-
         @include("admin.layout.partials.js")
     </body>
 </html>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\FaqRequest;
@@ -14,6 +15,7 @@ class FaqController extends Controller
 
     function __construct(Faq $faq)
     {
+       $this->middleware('auth');
         $this->faq = $faq;
     }
 

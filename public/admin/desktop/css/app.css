@@ -519,7 +519,7 @@ body {
 
 .main-content {
   height: 100vh;
-  width: 100%;
+  width: 85%;
 }
 @media (min-width: 1920px) {
   .main-content {
@@ -592,148 +592,84 @@ body {
   transform: rotate(45deg);
 }
 
-/*====================
-========Sidebar========
-======================*/
-.sidebar {
-  min-width: 9%;
-  max-width: 9%;
-  background: #110c40;
-  color: #fff;
-  min-height: 100vh;
-  transition: all 0.6s cubic-bezier(0.945, 0.02, 0.27, 0.665);
-  transform-origin: bottom left;
-}
-@media (min-width: 1920px) {
-  .sidebar {
-    min-width: 5%;
-    max-width: 5%;
-  }
-}
-.sidebar.hide {
-  margin-left: -9%;
-  transform: rotateY(100deg);
-}
-@media (min-width: 1920px) {
-  .sidebar.hide {
-    margin-left: -5%;
-  }
-}
-.sidebar .sidebar-header {
-  padding: 15px;
-}
-.sidebar .sidebar-header img {
-  width: 80%;
-}
-.sidebar .menu-container .menu {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.sidebar .menu-container .menu .menu-item {
-  background-color: transparent;
+.ham {
+  position: fixed;
+  z-index: 1002;
+  top: 1em;
+  left: 0em;
+  width: 1em;
+  height: 1em;
   cursor: pointer;
-  display: block;
-  padding: 0.5em 0;
+  padding: 1em;
 }
-.sidebar .menu-container .menu .menu-item:hover, .sidebar .menu-container .menu .menu-item:focus {
-  outline: none;
-  text-decoration: none;
-  outline-offset: 0;
+.ham svg {
+  fill: black;
+  transition: fill 0.6s;
 }
-.sidebar .menu-container .menu .menu-item a {
-  color: white;
-  font-size: 1em;
-  font-weight: 600;
-  padding: 0 1em;
+.ham.active svg {
+  fill: white;
 }
-.sidebar .menu-container .menu .submenu-container {
-  list-style: none;
-  margin: 0;
+.ham.active svg .bar1 {
+  transform: rotate(45deg) translate(2em, -1em);
 }
-.sidebar .menu-container .menu .submenu-container .submenu {
-  overflow: hidden;
-  padding-left: 0;
-  max-height: 0;
-  transition: all 0.3s ease-out;
-}
-.sidebar .menu-container .menu .submenu-container .submenu.active {
-  display: block;
-  max-height: -webkit-max-content;
-  max-height: -moz-max-content;
-  max-height: max-content;
-  margin-top: 0.5em;
-}
-.sidebar .menu-container .menu .submenu-container .submenu .submenu-item {
-  background-color: #1074bc;
-  cursor: pointer;
-  padding: 0.5em 0;
-}
-.sidebar .menu-container .menu .submenu-container .submenu .submenu-item a {
-  color: white;
-  font-size: 0.9em;
-  font-weight: 600;
-  padding: 0 1.5em;
-}
-
-#sidebar-collapse {
-  border: 0;
-  width: 100%;
-  height: 40px;
-  margin-top: 1em;
-  background: transparent;
-  cursor: pointer;
-}
-
-#sidebar-collapse:focus {
-  outline: 0;
-}
-
-#sidebar-collapse span {
-  width: 80%;
-  height: 2px;
-  margin: 0 auto;
-  display: block;
-  background: white;
-  transition: all 0.8s cubic-bezier(0.81, -0.33, 0.345, 1.375);
-  transition-delay: 0.2s;
-}
-
-#sidebar-collapse span:first-of-type {
-  transform: rotate(45deg) translate(2px, 2px);
-}
-
-#sidebar-collapse span:nth-of-type(2) {
+.ham.active svg .bar2 {
   opacity: 0;
 }
-
-#sidebar-collapse span:last-of-type {
-  transform: rotate(-45deg) translate(1px, -1px);
+.ham.active svg .bar3 {
+  transform: rotate(-45deg) translate(-2em, 1em);
 }
 
-.sidebar-button {
-  background-color: #1074bc;
-  width: 3%;
-}
-@media (min-width: 1920px) {
-  .sidebar-button {
-    width: 2%;
-  }
+.content-sidebar {
+  width: 15%;
 }
 
-#sidebar-collapse.active span {
-  transform: none;
+.sidebar {
+  width: 15%;
+  height: 100vh;
+  display: flex;
+  background-color: #000000;
+  position: relative;
+  z-index: 999;
+  left: -100%;
+  opacity: 0;
+  transition: 0.4s linear;
+}
+
+.sidebar ul {
+  display: block;
+  cursor: pointer;
+  padding: 0.5em;
+  padding-top: 10vh;
+  font-size: 1.2em;
+  font-weight: 550;
+  color: #FFFFFF;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 600;
+  font-size: 1.3em;
+  width: 100%;
+}
+.sidebar ul li {
+  border-bottom: 0.2em solid #FFFFFF;
+  overflow: hidden;
+}
+
+.sidebar.active {
+  position: absolute;
+  z-index: 1001;
+  left: 0%;
   opacity: 1;
-  margin: 5px auto;
+  transition: 0.4s linear;
 }
 
 .table {
   padding: 1em;
   width: 50%;
+  font-size: 1.1em;
 }
 
 table {
   font-family: arial, sans-serif;
+  font-size: 0.9em;
   border-collapse: collapse;
   width: 100%;
 }
@@ -752,11 +688,11 @@ td {
 }
 
 th {
-  color: #ff5100;
+  color: #000000;
 }
 
 tr td:last-child {
-  width: 25%;
+  width: 80%;
   white-space: nowrap;
 }
 
@@ -766,13 +702,14 @@ tr td:last-child {
 }
 
 .table-icons {
-  width: 40%;
+  width: 2%;
+  font-size: 1em;
 }
 .table-icons:hover {
   cursor: pointer;
 }
 .table-icons:hover path {
-  fill: #ff5100;
+  fill: #7ECCE3;
 }
 .table-icons svg {
   width: 100%;
@@ -787,9 +724,22 @@ tr:nth-child(even) {
 
 .form {
   background-color: rgba(114, 201, 223, 0.5);
-  height: 80vh;
-  padding: 10vh 5%;
+  height: 90vh;
+  padding: 5vh 4%;
+  width: 50%;
+  font-size: 1em;
+  display: flex;
+}
+
+.first-column {
+  display: inline-block;
   width: 40%;
+}
+
+.second-column {
+  display: inline-block;
+  width: 40%;
+  float: right;
 }
 
 .form-error {
@@ -808,6 +758,8 @@ tr:nth-child(even) {
 
 .form-container {
   width: 100%;
+  height: 90vh;
+  margin-top: 10vh;
 }
 
 .form-group {
@@ -836,7 +788,7 @@ tr:nth-child(even) {
 }
 
 .form-label label.active {
-  color: #ff5100;
+  color: #000000;
 }
 
 .form-input {
@@ -888,12 +840,57 @@ tr:nth-child(even) {
   font-size: 1.3em;
   padding: 0.2em;
   transition: border 0.3s;
+  position: absolute;
+  top: 85%;
+  right: 0;
+  left: 88%;
+  bottom: 0;
+  height: 5vh;
 }
 
 .form-submit button:hover {
-  border: 0.2em solid #ff5100;
-  background-color: 0.1em solid #ff5100;
+  border: 0.2em solid #000000;
+  background-color: 0.1em #000000;
   color: black;
+}
+
+.menu-form li:hover {
+  border: 0.1em solid #000000;
+  border-radius: 0.3em;
+  background-color: #FFFFFF;
+  color: black;
+}
+
+.menu-button .active {
+  border: 0.1em solid #000000;
+  border-radius: 0.3em;
+  background-color: #FFFFFF;
+  color: black;
+}
+
+.menu-form {
+  width: 35%;
+  padding: 0.3em;
+  position: absolute;
+  top: 3.5em;
+  background-color: #FFFFFF;
+  border: 0.1em;
+  border-radius: 0.3em;
+}
+
+.menu-form ul {
+  width: 100%;
+}
+.menu-form ul li {
+  display: inline-block;
+  padding: 0.5em;
+}
+
+.panel {
+  display: none;
+}
+.panel.active {
+  display: block;
 }
 
 .portfolio .pagination {
@@ -1111,17 +1108,17 @@ tr:nth-child(even) {
   padding: 0 2em;
   position: relative;
 }
-.error-container.active .close-errors-button {
+.error-container.active #close-errors-button {
   cursor: pointer;
   position: absolute;
   top: 1em;
   right: 1em;
 }
-.error-container.active .close-errors-button svg {
+.error-container.active #close-errors-button svg {
   height: 2em;
   width: 2em;
 }
-.error-container.active .close-errors-button svg path {
+.error-container.active #close-errors-button svg path {
   fill: white;
 }
 .error-container.active .errors {
@@ -1132,6 +1129,9 @@ tr:nth-child(even) {
   font-family: "Ubuntu", sans-serif;
   padding: 0.1em 0;
   list-style: circle;
+}
+.error-container.active .form-container {
+  font-size: 0.5em;
 }
 
 .modal-delete {

@@ -1,7 +1,8 @@
 .table{
     transition: all 0.3s cubic-bezier(0.945, 0.020, 0.270, 0.665);
     transform-origin: right;
-    flex: 0 0 100%;
+    width: 50%;
+
 
     &.minimize{
         flex: 0 0 37%;

@@ -1,14 +1,15 @@
 .wrapper{
-    background-color: $blue;
+    background-color: #FFFFFF;
     width: 100%;
 }
 
 .main-content{
-    background-color: $blue;
+    background-color: rgba(114, 201, 223, 0.5);
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
-    width: 90%;
+    width: 100%;
+    height: 100%;
 }
 
 .page-section{

@@ -1,7 +1,31 @@
 const table = document.getElementById("table");
 const form = document.getElementById("form");
+const menuButton = document.querySelectorAll(".menu-button");
+const panel = document.querySelectorAll(".panel");
 
-let renderForm = () => {
+//*Aqui comienza la función que incluye el JavaScript del formulario. Las constantes pasan a ser variables, y solamente se mantienen como constantes el formulario y la tabla.
+
+menuButton.forEach (menuButton => {
+
+    menuButton.addEventListener("click", () => {
+
+        panel.forEach(panel => {
+
+            if(panel.dataset.tab == menuButton.dataset.tab){
+
+            
+                panel.classList.toggle("active");
+                menuButton.classList.toggle("active");
+
+            }
+        })
+
+    })
+
+});
+    
+
+export let renderForm = () => {
 
     let forms = document.querySelectorAll(".admin-form");
     let labels = document.querySelectorAll('.label-highlight');
@@ -40,6 +64,8 @@ let renderForm = () => {
                 });
             }
 
+
+
             let url = form.action;
     
             let sendPostRequest = async () => {
@@ -67,14 +93,16 @@ let renderForm = () => {
                     }
                 }
             };
-    
+
             sendPostRequest();
         });
     });
 };
 
 
-let renderTable = () => {
+//*Aqui comienza la función que incluye el JavaScript de la tabla.
+
+export let renderTable = () => {
 
     let editButtons = document.querySelectorAll(".edit-button");
     let deleteButtons = document.querySelectorAll(".delete-button");
@@ -90,7 +118,7 @@ let renderTable = () => {
                 try {
                     await axios.get(url).then(response => {
                         form.innerHTML = response.data.form;
-                        renderForm();
+                        renderForm(); //*cada vez que terminamos una llamada de JS al elemento (formulario) lo llamamos de nuevo al final.
                     });
                     
                 } catch (error) {
@@ -98,7 +126,7 @@ let renderTable = () => {
                 }
             };
 
-            sendEditRequest();
+            sendEditRequest(); //* llamamos la funcion editar: cuando demos al boton editar, cogeremos los datos dela tabla y se comunicaran al formulario, para editarlos.
         });
     });
 
@@ -122,6 +150,7 @@ let renderTable = () => {
             };
 
             sendDeleteRequest();
+            //* llamamos la funcion eliminar: cuando pulsemos el boton eliminar, cogemos los datos de la tabla (innerhtml) para que desaparezcan de ella.
         });
     });
 };
@@ -129,4 +158,4 @@ let renderTable = () => {
 renderForm();
 renderTable();
 
-
+//* Al final llamamos de nuevo a las funciones de la tabla y el formulario.

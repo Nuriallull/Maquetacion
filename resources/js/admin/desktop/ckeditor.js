@@ -2,7 +2,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 require('@ckeditor/ckeditor5-build-classic/build/translations/es.js');
 
 window.ckeditors = [];
-
+export let renderEditor = () => {
 document.querySelectorAll('.ckeditor').forEach(ckeditor => {
 
     ClassicEditor.create(ckeditor, {
@@ -35,3 +35,6 @@ document.querySelectorAll('.ckeditor').forEach(ckeditor => {
         console.error(error);
     } );
 });
+};
+
+renderEditor();

@@ -39,8 +39,40 @@ Route::group(['prefix' => 'admin'], function () {
             'show' => 'faqs_show',
         ]
     ]);
+    
+    Route::resource('usuarios', 'App\Http\Controllers\Admin\UserController', [
+        'parameters' => [
+            'usuarios' => 'user', 
+        ],
+        'names' => [
+            'index' => 'users',
+            'create' => 'users_create',
+            'edit' => 'users_edit',
+            'store' => 'users_store',
+            'destroy' => 'users_destroy',
+            'show' => 'users_show',
+        ]
+    ]);
+
+    Route::resource('clientes', 'App\Http\Controllers\Admin\ClientController', [
+        'parameters' => [
+            'clientes' => 'client', 
+        ],
+        'names' => [
+            'index' => 'clients',
+            'create' => 'clients_create',
+            'edit' => 'clients_edit',
+            'store' => 'clients_store',
+            'destroy' => 'clients_destroy',
+            'show' => 'clients_show',
+        ]
+    ]);
+
+
+
 
 });
-
+Route::post('/fingerprint', 'App\Http\Controllers\Front\FingerprintController@store')->name('front_fingerprint');
+Route::get('/login', 'App\Http\Controllers\Front\LoginController@index')->name('login');
+Route::post('/login', 'App\Http\Controllers\Front\LoginController@login')->name('front_login_submit');
 Route::get('/faqs', 'App\Http\Controllers\Front\FaqController@index')->name('faqs_front');
-

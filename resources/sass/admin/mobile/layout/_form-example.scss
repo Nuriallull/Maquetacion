@@ -1,8 +1,14 @@
+@media screen and (max-width: 480px){
+
 .form{
 	background-color: rgba(114, 201, 223, 0.5);
-	height: 80vh;
-	padding: 10vh 5%;
-	width: 40%;
+	height: 90%;
+	max-height: 640px;
+	padding: 1em;
+	width: 85%;
+	max-width: 480px;
+	font-size: 0.8em;
+	display: none;
 }
 
 .form-error{
@@ -90,7 +96,7 @@
 	color: hsl(0, 0%, 0%);
 	font-family: $font-stack;
 	font-weight: 600;
-	font-size:  1.3em;
+	font-size:  1em;
 	padding: 0.2em;
 	transition: border 0.3s;
 }
@@ -99,4 +105,51 @@
 	border: 0.2em solid hsl(19, 100%, 50%);
 	background-color: 0.1em solid hsl(19, 100%, 50%);
 	color: hsl(0, 0%, 0%);
+}
+
+}
+
+#menu-container{
+	margin-bottom: 2em;
+	width: 100%;
+	.menu-form{
+		font-size: 0.8em;
+	}
+}
+
+
+.menu-form li:hover{
+	border: 0.1em solid #000000;
+	border-radius: 0.3em;
+	background-color: #FFFFFF;
+	color: hsl(0, 0%, 0%);
+}
+
+.menu-button .active{
+	
+    border: 0.1em solid #000000;
+	border-radius: 0.3em;
+	background-color: #FFFFFF;
+	color: hsl(0, 0%, 0%);
+
+}
+
+
+.menu-form ul{
+    width: 100%;
+	max-width: 480px;
+
+    li{
+        display:inline-block;
+        padding: 0.5em;
+    }
+}
+
+
+.panel{
+    display:none;
+
+    &.active{
+        display:block;
+    }
 }

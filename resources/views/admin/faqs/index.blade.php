@@ -2,7 +2,12 @@
 
 @section('table')
 
-    <table>
+    <table>    
+        <div class="titulo-lang">
+            <h1>
+            @lang('admin/faqs.parent_section')
+            </h1>
+        </div>        
         <tr>
             <th>Id</th>
             <th>Título</th>

@@ -1,8 +1,10 @@
+@media screen and (max-width: 480px){
 .form {
 
-    padding-bottom: 2em;
+    padding-bottom: 5em;
     flex: 0 0 100%;
     margin-left: auto;
+    width: 90%;
 
     .form-content{
         padding: 2em;
@@ -820,4 +822,5 @@
     .mdl-data-table td, .mdl-data-table th{
         text-align: left;
     }
+}
 }
