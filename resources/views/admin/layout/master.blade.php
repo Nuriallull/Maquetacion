@@ -16,6 +16,10 @@
         <div class="wrapper" id="app">
             
             @include("admin.layout.partials.sidebar")
+            
+            @if(isset($filters))
+                @include('admin.components.table_filters', $filters)
+            @endif
 
             <div class="main-content">
                 @yield('content') 

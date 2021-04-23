@@ -7,55 +7,6 @@
     .form-content{
         padding: 2em;
     }
-
-    .one-column{
-
-        margin-bottom: 2em;
-
-        .form-group{
-            width: 100%;
-        }
-    }
-
-    .two-columns{
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 2em;
-
-        .form-group{
-            width: 47%;
-        }
-    }
-
-    .three-columns{
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 2em;
-
-        .form-group{
-            width: 32%;
-        }
-    }
-
-    .four-columns{
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 2em;
-
-        .form-group{
-            width: 23%;
-        }
-    }
-
-    .five-columns{
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 2em;
-
-        .form-group{
-            width: 18%;
-        }
-    }
    
     .form-group {
         background-color: $modul-color;

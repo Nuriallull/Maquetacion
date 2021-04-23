@@ -37,6 +37,33 @@ img {
   display: none;
 }
 
+.one-column .form-group {
+  width: 100%;
+}
+
+.two-columns {
+  justify-content: space-between;
+}
+.two-columns .form-group {
+  width: 47%;
+}
+
+.three-columns {
+  display: flex;
+  justify-content: space-between;
+}
+.three-columns .form-group {
+  width: 32%;
+}
+
+.four-columns {
+  display: flex;
+  justify-content: space-between;
+}
+.four-columns .form-group {
+  width: 23%;
+}
+
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 /**
  * 1. Set default font family to sans-serif.
@@ -178,8 +205,9 @@ dfn {
  * contexts in Firefox 4+, Safari, and Chrome.
  */
 h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
+  font-size: 1.5em;
+  margin: 0.5em 4em;
+  margin-top: 1em;
 }
 
 /**
@@ -515,10 +543,11 @@ body {
   width: 100%;
   align-items: stretch;
   perspective: 1500px;
+  height: 80vh;
 }
 
 .main-content {
-  height: 100vh;
+  height: 80vh;
   width: 85%;
 }
 @media (min-width: 1920px) {
@@ -595,7 +624,7 @@ body {
 .ham {
   position: fixed;
   z-index: 1002;
-  top: 1em;
+  top: 1.5em;
   left: 0em;
   width: 1em;
   height: 1em;
@@ -663,7 +692,13 @@ body {
 
 .table {
   padding: 1em;
-  width: 50%;
+  width: 45%;
+  font-size: 1.1em;
+}
+
+#table-container {
+  padding: 1em;
+  width: 45%;
   font-size: 1.1em;
 }
 
@@ -692,7 +727,7 @@ th {
 }
 
 tr td:last-child {
-  width: 80%;
+  width: 60%;
   white-space: nowrap;
 }
 
@@ -702,7 +737,7 @@ tr td:last-child {
 }
 
 .table-icons {
-  width: 2%;
+  width: 30%;
   font-size: 1em;
 }
 .table-icons:hover {
@@ -715,7 +750,23 @@ tr td:last-child {
   width: 100%;
 }
 .table-icons svg path {
-  fill: gray;
+  fill: #000000;
+}
+
+#order-button {
+  font-size: 1em;
+}
+#order-button:hover {
+  cursor: pointer;
+}
+#order-button:hover path {
+  fill: #7ECCE3;
+}
+#order-button svg {
+  width: 100%;
+}
+#order-button svg path {
+  fill: #000000;
 }
 
 tr:nth-child(even) {
@@ -726,7 +777,7 @@ tr:nth-child(even) {
   background-color: rgba(114, 201, 223, 0.5);
   height: 90vh;
   padding: 5vh 4%;
-  width: 50%;
+  width: 60%;
   font-size: 1em;
   display: flex;
 }
@@ -800,7 +851,7 @@ tr:nth-child(even) {
 .form-input select {
   border: 0.1em solid white;
   border-radius: 0.3em;
-  color: black;
+  color: #000000;
   font-family: "Ubuntu", sans-serif;
   padding: 0.2em 0;
   width: 100%;
@@ -891,6 +942,10 @@ tr:nth-child(even) {
 }
 .panel.active {
   display: block;
+}
+
+option {
+  color: #000000;
 }
 
 .portfolio .pagination {
@@ -2252,4 +2307,88 @@ tr:nth-child(even) {
 }
 .tab-content.content-locale {
   padding: 2em 0;
+}
+
+.table-filter {
+  background-color: #000000;
+  position: fixed;
+  z-index: 1002;
+  top: 0vh;
+  width: 100%;
+  height: 0vh;
+  color: #FFFFFF;
+}
+.table-filter.active {
+  max-height: 0vh;
+}
+.table-filter.active .table-filter-container {
+  max-height: 70vh;
+}
+.table-filter .table-filter-container {
+  max-height: 0;
+  margin: 2 2.5;
+  overflow: hidden;
+  transition: max-height 0.5s;
+  width: 100%;
+  background-color: #000000;
+}
+.table-filter .table-filter-container form {
+  padding: 1em;
+}
+.table-filter .table-filter-buttons {
+  cursor: pointer;
+  width: 100%;
+  overflow: hidden;
+  font-size: 2em;
+  text-align: center;
+}
+.table-filter #open-filter {
+  width: 100%;
+  background-color: #000000;
+}
+.table-filter #open-filter.active {
+  max-height: 10vh;
+  background-color: #000000;
+}
+.table-filter #apply-filter {
+  display: none;
+  width: 100%;
+}
+.table-filter #apply-filter svg path {
+  fill: #2ECC71;
+}
+.table-filter #apply-filter.active {
+  display: block;
+  max-height: 10vh;
+  background-color: #000000;
+}
+
+.form-label label.active {
+  color: #FFFFFF;
+}
+
+select {
+  color: #000000;
+  width: 100%;
+}
+
+.table-pagination .pagination-pages {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-pagination-buttons {
+  display: flex;
+}
+.table-pagination-buttons p {
+  margin: 0;
+}
+.table-pagination-buttons .pagination-button {
+  cursor: pointer;
+  margin-right: 1em;
+  display: inline;
+  margin-top: 0.5em;
+}
+.table-pagination-buttons .pagination-button:hover {
+  color: #7ECCE3;
 }

@@ -1,0 +1,29 @@
+.table-pagination{
+    
+    .pagination-pages{
+    display:flex;
+    justify-content: space-between;
+    }
+
+}
+
+
+.table-pagination-buttons{
+        display: flex;
+    p{
+        margin: 0;
+    }
+
+    .pagination-button{
+
+        cursor: pointer;
+        margin-right: 1em;
+        display: inline;
+        margin-top: 0.5em;
+    }
+
+    .pagination-button:hover{
+        color: #7ECCE3;
+    }
+}
+

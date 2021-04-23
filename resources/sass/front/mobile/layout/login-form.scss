@@ -1,7 +1,8 @@
-@media screen and (max-width: 480px){
 .form-login{
     background-color: #FFFFFF;
-    height: 50vh;   
+    height: 50vh;
+    max-height: 640px;
+    max-width: 480px;
 
 }
 
@@ -11,8 +12,9 @@
 }
 
 .login-form{
-    background-color: rgba(114, 201, 223, 0.5);
-    width: 45%;
+    background-color: rgba(114, 201, 223, 0.911);
+    width: 80%;
+    max-width: 480px;
     height: 50vh;
     display:block;
     text-align:center;
@@ -48,6 +50,7 @@
     font-weight: 600;
 }
 .form-input input{
+    width: 60%;
     border:0.5em;
     border-radius: 1em;
     padding: 0.3em;
@@ -74,4 +77,3 @@
     font-weight: 600;
 }
 
-}

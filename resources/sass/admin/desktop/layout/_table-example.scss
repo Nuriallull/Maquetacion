@@ -1,8 +1,14 @@
 .table{
     padding: 1em;
-    width: 50%;
+    width: 45%;
     font-size: 1.1em;
 
+}
+
+#table-container{
+    padding: 1em;
+    width: 45%;
+    font-size: 1.1em;
 }
 
 table {
@@ -30,7 +36,7 @@ th {
 }
 
 tr td:last-child {
-    width: 80%;
+    width: 60%;
     white-space: nowrap;
 }
 
@@ -41,7 +47,7 @@ tr td:last-child {
 
 .table-icons{ 
 
-    width: 2%;
+    width: 30%;
     font-size: 1em;
 
     &:hover{
@@ -58,9 +64,31 @@ tr td:last-child {
         width: 100%;
     
         path{
-            fill: hsl(0, 0%, 50%);
+            fill:  #000000;
         }
     }    
+}
+
+#order-button{
+    font-size: 1em;
+    &:hover{
+
+        cursor: pointer;
+    
+        path {
+            fill:  #7ECCE3;
+        }
+    }
+
+    svg {
+
+        width: 100%;
+    
+        path{
+            fill:  #000000;
+        }
+    }   
+
 }
   
 tr:nth-child(even) {

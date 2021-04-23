@@ -20,12 +20,12 @@ export function swipeRevealItem (element){
   let rightSwipeVisible = 0;
   let itemWidth = swipeFrontElement.clientWidth;
   let slopValue = itemWidth * (2/4);
-
+// On resize, change the slop value
   this.resize = function() {
       itemWidth = swipeFrontElement.clientWidth;
       slopValue = itemWidth * (2/4);
   };
-
+ // Handle the start of gestures
   this.handleGestureStart = function(evt) {
 
       evt.preventDefault();

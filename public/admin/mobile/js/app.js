@@ -1917,6 +1917,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "renderForm": () => (/* binding */ renderForm),
 /* harmony export */   "renderTable": () => (/* binding */ renderTable),
+/* harmony export */   "deleteElement": () => (/* binding */ deleteElement),
 /* harmony export */   "editElement": () => (/* binding */ editElement)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
@@ -2045,8 +2046,14 @@ var renderForm = function renderForm() {
 }; //*Aqui comienza la función que incluye el JavaScript de la tabla.
 
 var renderTable = function renderTable() {
-  var deleteButtons = document.querySelectorAll(".delete-button");
   var swipeRevealItemElements = document.querySelectorAll('.swipe-element');
+  swipeRevealItemElements.forEach(function (swipeRevealItemElement) {
+    new _swipe__WEBPACK_IMPORTED_MODULE_2__.swipeRevealItem(swipeRevealItemElement);
+  });
+  new scrollWindowElement(table);
+};
+var deleteElement = function deleteElement() {
+  var deleteButtons = document.querySelectorAll(".delete-button");
   deleteButtons.forEach(function (deleteButton) {
     deleteButton.addEventListener("click", function () {
       var url = deleteButton.dataset.url;
@@ -2088,9 +2095,6 @@ var renderTable = function renderTable() {
 
       sendDeleteRequest(); //* llamamos la funcion eliminar: cuando pulsemos el boton eliminar, cogemos los datos de la tabla (innerhtml) para que desaparezcan de ella.
     });
-  });
-  swipeRevealItemElements.forEach(function (swipeRevealItemElement) {
-    new _swipe__WEBPACK_IMPORTED_MODULE_2__.swipeRevealItem(swipeRevealItemElement);
   });
 };
 var editElement = function editElement(url) {
@@ -2134,6 +2138,89 @@ var editElement = function editElement(url) {
 };
 renderForm();
 renderTable(); //* Al final llamamos de nuevo a las funciones de la tabla y el formulario.
+
+/***/ }),
+
+/***/ "./resources/js/admin/mobile/filter.js":
+/*!*********************************************!*\
+  !*** ./resources/js/admin/mobile/filter.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "renderFilterTable": () => (/* binding */ renderFilterTable)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _crudTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crudTable */ "./resources/js/admin/mobile/crudTable.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+var table = document.getElementById("table");
+var tableFilter = document.getElementById("table-filter");
+var filterForm = document.getElementById("filter-form");
+var openFilter = document.getElementById("open-filter");
+var applyFilter = document.getElementById("apply-filter");
+var menuOrder = document.getElementById("order-button");
+var renderFilterTable = function renderFilterTable() {
+  if (filterForm != null) {
+    openFilter.addEventListener('click', function () {
+      openFilter.classList.toggle("active");
+      tableFilter.classList.toggle("active");
+      applyFilter.classList.toggle("active");
+    });
+    applyFilter.addEventListener('click', function () {
+      var data = new FormData(filterForm);
+      var url = filterForm.action;
+
+      var sendPostRequest = /*#__PURE__*/function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.prev = 0;
+                  _context.next = 3;
+                  return axios.post(url, data).then(function (response) {
+                    table.innerHTML = response.data.table;
+                    console.log(response.data.table);
+                    (0,_crudTable__WEBPACK_IMPORTED_MODULE_1__.renderTable)();
+                    tableFilter.classList.toggle("active");
+                    applyFilter.classList.toggle("active");
+                  });
+
+                case 3:
+                  _context.next = 7;
+                  break;
+
+                case 5:
+                  _context.prev = 5;
+                  _context.t0 = _context["catch"](0);
+
+                case 7:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee, null, [[0, 5]]);
+        }));
+
+        return function sendPostRequest() {
+          return _ref.apply(this, arguments);
+        };
+      }();
+
+      sendPostRequest();
+    });
+  }
+};
+renderFilterTable();
 
 /***/ }),
 
@@ -2242,12 +2329,13 @@ function swipeRevealItem(element) {
   var leftSwipeVisible = 0;
   var rightSwipeVisible = 0;
   var itemWidth = swipeFrontElement.clientWidth;
-  var slopValue = itemWidth * (2 / 4);
+  var slopValue = itemWidth * (2 / 4); // On resize, change the slop value
 
   this.resize = function () {
     itemWidth = swipeFrontElement.clientWidth;
     slopValue = itemWidth * (2 / 4);
-  };
+  }; // Handle the start of gestures
+
 
   this.handleGestureStart = function (evt) {
     evt.preventDefault();
@@ -2428,6 +2516,158 @@ function swipeRevealItem(element) {
     swipeFrontElement.addEventListener('touchcancel', this.handleGestureEnd, true);
     swipeFrontElement.addEventListener('mousedown', this.handleGestureStart, true);
   }
+}
+;
+
+/***/ }),
+
+/***/ "./resources/js/admin/mobile/verticalScroll.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/admin/mobile/verticalScroll.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "scrollWindowElement": () => (/* binding */ scrollWindowElement)
+/* harmony export */ });
+function scrollWindowElement(element) {
+  'use strict';
+
+  var scrollWindowElement = element; //* declaramos el elemento que es la tabla, que se moverá al hacer el evento touch. Global state variables
+
+  var STATE_DEFAULT = 1;
+  var STATE_TOP_SIDE = 2;
+  var STATE_BOTTOM_SIDE = 3; //* aqui estamos dandole valores numericos a los lados de la tabla para saber por donde identficarlos.
+
+  var rafPending = false;
+  var initialTouchPos = null;
+  var lastTouchPos = null;
+  var currentYPosition = 0;
+  var currentState = STATE_DEFAULT;
+  var handleSize = 10; // Handle the start of gestures
+
+  this.handleGestureStart = function (evt) {
+    if (evt.touches && evt.touches.length > 1) {
+      return;
+    } // Add the move and end listeners
+
+
+    if (scrollWindowElement.PointerEvent) {
+      evt.target.setPointerCapture(evt.pointerId);
+    } else {
+      document.addEventListener('mousemove', this.handleGestureMove, true);
+      document.addEventListener('mouseup', this.handleGestureEnd, true);
+    }
+
+    initialTouchPos = getGesturePointFromEvent(evt);
+  }.bind(this); // END handle-start-gesture
+
+
+  this.handleGestureMove = function (evt) {
+    if (!initialTouchPos) {
+      return;
+    }
+
+    lastTouchPos = getGesturePointFromEvent(evt);
+
+    if (rafPending) {
+      return;
+    }
+
+    rafPending = true; //code for initiating animation the elements:
+
+    window.requestAnimFrame(onAnimFrame);
+  }.bind(this);
+
+  this.handleGestureEnd = function (evt) {
+    evt.preventDefault();
+
+    if (evt.touches && evt.touches.length > 0) {
+      return;
+    }
+
+    rafPending = false;
+
+    if (scrollWindowElement.PointerEvent) {
+      evt.target.releasePointerCapture(evt.pointerId);
+    } else {
+      document.removeEventListener('mousemove', this.handleGestureMove, true);
+      document.removeEventListener('mouseup', this.handleGestureEnd, true);
+    }
+
+    updateScrollRestPosition();
+    initialTouchPos = null;
+  }.bind(this); //* funcion para calcular la posicion del raton
+
+
+  function updateScrollRestPosition() {
+    var transformStyle;
+    var differenceInY = initialTouchPos.y - lastTouchPos.y; //* declaramos la funcion que captura cuánto ha movido el dedo en el eje y (verticalmente)
+
+    currentYPosition = currentYPosition - differenceInY; // Go to the default state and change
+    //* declaramos la funcion en la que se calcula la diferencia entre el scroll de una caja y el de la otra.
+
+    if (Math.sign(differenceInY) == 1) {
+      currentYPosition = currentYPosition + 200;
+      console.log(currentYPosition);
+    }
+
+    if (Math.sign(differenceInY) == -1) {
+      currentYPosition = currentYPosition - 200;
+      console.log(currentYPosition);
+    }
+
+    if (scrollWindowElement.offsetTop < 0) {
+      transformStyle = 'translateY(' + currentYPosition + 'px)';
+      scrollWindowElement.style.msTransform = transformStyle;
+      scrollWindowElement.style.MozTransform = transformStyle;
+      scrollWindowElement.style.webkitTransform = transformStyle;
+      scrollWindowElement.style.transform = transformStyle;
+      scrollWindowElement.style.transition = 'all 300ms ease-out';
+    }
+
+    ;
+  }
+
+  function getGesturePointFromEvent(evt) {
+    var point = {};
+
+    if (evt.targetTouches) {
+      point.y = evt.targetTouches[0].clientY;
+    } else {
+      point.y = evt.clientY;
+    }
+
+    return point;
+  }
+
+  function onAnimFrame() {
+    if (!rafPending) {
+      return;
+    } // Which way it goes left to right
+
+
+    var differenceInY = initialTouchPos.y - lastTouchPos.y;
+    var newYTransform = currentYPosition - differenceInY + 'px';
+    var transformStyle = 'translateY(' + newYTransform + ')';
+    scrollWindowElement.style.webkitTransform = transformStyle;
+    scrollWindowElement.style.MozTransform = transformStyle;
+    scrollWindowElement.style.msTransform = transformStyle;
+    scrollWindowElement.style.transform = transformStyle;
+    rafPending = false;
+  } //* Check if pointer events are supported:
+
+
+  scrollWindowElement.addEventListener('touchstart', this.handleGestureStart, {
+    passive: true
+  });
+  scrollWindowElement.addEventListener('touchmove', this.handleGestureMove, {
+    passive: true
+  });
+  scrollWindowElement.addEventListener('touchend', this.handleGestureEnd, true);
+  scrollWindowElement.addEventListener('touchcancel', this.handleGestureEnd, true);
 }
 ;
 
@@ -20744,7 +20984,9 @@ __webpack_require__(/*! ./ckeditor */ "./resources/js/admin/mobile/ckeditor.js")
 
 __webpack_require__(/*! ./sidebar */ "./resources/js/admin/mobile/sidebar.js");
 
-__webpack_require__(/*! ./swipe */ "./resources/js/admin/mobile/swipe.js");
+__webpack_require__(/*! ./filter */ "./resources/js/admin/mobile/filter.js");
+
+__webpack_require__(/*! ./verticalScroll */ "./resources/js/admin/mobile/verticalScroll.js");
 })();
 
 /******/ })()

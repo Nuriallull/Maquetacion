@@ -68,10 +68,22 @@ Route::group(['prefix' => 'admin'], function () {
         ]
     ]);
 
-
+    Route::post('/faqs/filter', 'App\Http\Controllers\Admin\FaqController@filter')->name('faqs_filter');
+    
+    Route::resource('faqs', 'App\Http\Controllers\Admin\FaqController', [
+        'names' => [
+            'index' => 'faqs',
+            'create' => 'faqs_create',
+            'edit' => 'faqs_edit',
+            'store' => 'faqs_store',
+            'destroy' => 'faqs_destroy',
+            'show' => 'faqs_show',
+        ]
+    ]);
 
 
 });
+
 Route::post('/fingerprint', 'App\Http\Controllers\Front\FingerprintController@store')->name('front_fingerprint');
 Route::get('/login', 'App\Http\Controllers\Front\LoginController@index')->name('login');
 Route::post('/login', 'App\Http\Controllers\Front\LoginController@login')->name('front_login_submit');

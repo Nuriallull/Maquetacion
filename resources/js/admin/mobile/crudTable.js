@@ -108,33 +108,8 @@ export let renderForm = () => {
 
 export let renderTable = () => {
 
-    let deleteButtons = document.querySelectorAll(".delete-button");
-    let swipeRevealItemElements = document.querySelectorAll('.swipe-element');
     
-
-    deleteButtons.forEach(deleteButton => {
-
-        deleteButton.addEventListener("click", () => {
-
-            let url = deleteButton.dataset.url;
-
-            let sendDeleteRequest = async () => {
-
-                try {
-                    await axios.delete(url).then(response => {
-                        table.innerHTML = response.data.table;
-                        renderTable();
-                    });
-                    
-                } catch (error) {
-                    console.error(error);
-                }
-            };
-
-            sendDeleteRequest();
-            //* llamamos la funcion eliminar: cuando pulsemos el boton eliminar, cogemos los datos de la tabla (innerhtml) para que desaparezcan de ella.
-        });
-    });
+    let swipeRevealItemElements = document.querySelectorAll('.swipe-element');
 
 
     swipeRevealItemElements.forEach(swipeRevealItemElement => {
@@ -142,7 +117,40 @@ export let renderTable = () => {
         new swipeRevealItem(swipeRevealItemElement);
 
     });
+
+    new scrollWindowElement(table);
 };
+
+export let deleteElement = () => {
+
+    let deleteButtons = document.querySelectorAll(".delete-button");
+
+        deleteButtons.forEach(deleteButton => {
+
+            deleteButton.addEventListener("click", () => {
+
+                let url = deleteButton.dataset.url;
+
+                let sendDeleteRequest = async () => {
+
+                    try {
+                        await axios.delete(url).then(response => {
+                            table.innerHTML = response.data.table;
+                            renderTable();
+                        });
+                        
+                    } catch (error) {
+                        console.error(error);
+                    }
+                };
+
+                sendDeleteRequest();
+                //* llamamos la funcion eliminar: cuando pulsemos el boton eliminar, cogemos los datos de la tabla (innerhtml) para que desaparezcan de ella.
+            });
+        })
+
+    
+}
 
 export let editElement = (url) => {
 

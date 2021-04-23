@@ -23,6 +23,7 @@ class FaqCategoryController extends Controller
         $view = View::make('admin.faqs_categories.index')
                 ->with('faqs_categories', $this->faq_category->where('active', 1)->get())
                 ->with('faq_category', $this->faq_category);
+        
 
         if(request()->ajax()) {
 

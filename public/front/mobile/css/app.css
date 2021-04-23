@@ -606,77 +606,117 @@ a:hover, a:focus {
     background-color: blue;
   }
 }
-@media screen and (max-width: 480px) {
-  .form-login {
-    background-color: #FFFFFF;
-    height: 50vh;
-  }
+.form-login {
+  background-color: #FFFFFF;
+  height: 50vh;
+  max-height: 640px;
+  max-width: 480px;
+}
 
-  .two-columns {
-    width: 100%;
-    max-width: 480px;
-  }
+.two-columns {
+  width: 100%;
+  max-width: 480px;
+}
 
-  .login-form {
-    background-color: rgba(114, 201, 223, 0.5);
-    width: 45%;
-    height: 50vh;
-    display: block;
-    text-align: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    border: 0.5em;
-    border-radius: 1em;
-    max-width: 480px;
-  }
+.login-form {
+  background-color: rgba(114, 201, 223, 0.911);
+  width: 80%;
+  max-width: 480px;
+  height: 50vh;
+  display: block;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 0.5em;
+  border-radius: 1em;
+  max-width: 480px;
+}
 
-  .form-content {
-    text-align: center;
-    margin-top: 8vh;
-  }
+.form-content {
+  text-align: center;
+  margin-top: 8vh;
+}
 
-  .login-form-group {
-    padding: 0.5em;
-    text-align: center;
-  }
+.login-form-group {
+  padding: 0.5em;
+  text-align: center;
+}
 
-  .login-form-group .form-submit {
-    width: 100%;
-  }
+.login-form-group .form-submit {
+  width: 100%;
+}
 
-  .login-form-group .form-label {
-    margin-top: 0.2em;
-    padding: 0.3em;
-    font-size: 1.2em;
-    font-weight: 600;
-  }
+.login-form-group .form-label {
+  margin-top: 0.2em;
+  padding: 0.3em;
+  font-size: 1.2em;
+  font-weight: 600;
+}
 
-  .form-input input {
-    border: 0.5em;
-    border-radius: 1em;
-    padding: 0.3em;
-    width: 50%;
-  }
+.form-input input {
+  width: 60%;
+  border: 0.5em;
+  border-radius: 1em;
+  padding: 0.3em;
+  width: 50%;
+}
 
-  .form-submit #send-button {
-    position: absolute;
-    top: 25%;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    height: 5vh;
-    width: 10%;
-    border: 0.1em solid #000000;
-    border-radius: 1em;
-  }
+.form-submit #send-button {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  height: 5vh;
+  width: 10%;
+  border: 0.1em solid #000000;
+  border-radius: 1em;
+}
 
-  .form-content h1 {
-    font-size: 2em;
-    font-weight: 600;
-  }
+.form-content h1 {
+  font-size: 2em;
+  font-weight: 600;
+}
+
+.error-container {
+  display: none;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.error-container.active {
+  background-color: #ff7a7a;
+  border-radius: 0.2em;
+  display: block;
+  margin-bottom: 2em;
+  opacity: 1;
+  padding: 0 2em;
+  position: relative;
+}
+.error-container.active .close-errors-button {
+  cursor: pointer;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+}
+.error-container.active .close-errors-button svg {
+  height: 2em;
+  width: 2em;
+}
+.error-container.active .close-errors-button svg path {
+  fill: white;
+}
+.error-container.active .errors {
+  padding: 1em 0.5em;
+}
+.error-container.active .errors li {
+  color: white;
+  font-family: "Ubuntu", sans-serif;
+  padding: 0.1em 0;
+  list-style: circle;
 }

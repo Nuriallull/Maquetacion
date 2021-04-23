@@ -11,4 +11,6 @@ class Faq extends DBModel
     {
         return $this->belongsTo(FaqCategory::class);
     }
+
+    //* public function __construct() { $this->faqs_categories = FaqCategory::orderBy('name', 'asc')->get();}
 }

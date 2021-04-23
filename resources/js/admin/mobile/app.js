@@ -3,4 +3,5 @@ require('../../bootstrap');
 require('./crudTable');
 require('./ckeditor');
 require('./sidebar');
-require('./swipe');
+require('./filter');
+require('./verticalScroll');

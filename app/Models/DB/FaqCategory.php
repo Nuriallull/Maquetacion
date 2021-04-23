@@ -13,3 +13,4 @@ class FaqCategory extends DBModel
     }
 
 }
+

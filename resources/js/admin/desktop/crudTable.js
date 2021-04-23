@@ -1,9 +1,9 @@
+
 const table = document.getElementById("table");
 const form = document.getElementById("form");
 const menuButton = document.querySelectorAll(".menu-button");
 const panel = document.querySelectorAll(".panel");
 
-//*Aqui comienza la función que incluye el JavaScript del formulario. Las constantes pasan a ser variables, y solamente se mantienen como constantes el formulario y la tabla.
 
 menuButton.forEach (menuButton => {
 
@@ -23,7 +23,9 @@ menuButton.forEach (menuButton => {
     })
 
 });
-    
+
+
+//*Aqui comienza la función que incluye el JavaScript del formulario. Las constantes pasan a ser variables, y solamente se mantienen como constantes el formulario y la tabla.
 
 export let renderForm = () => {
 
@@ -64,10 +66,7 @@ export let renderForm = () => {
                 });
             }
 
-
-
             let url = form.action;
-    
             let sendPostRequest = async () => {
     
                 try {
@@ -106,6 +105,7 @@ export let renderTable = () => {
 
     let editButtons = document.querySelectorAll(".edit-button");
     let deleteButtons = document.querySelectorAll(".delete-button");
+    let paginationButtons = document.querySelectorAll(".pagination-button");
 
     editButtons.forEach(editButton => {
 
@@ -153,9 +153,34 @@ export let renderTable = () => {
             //* llamamos la funcion eliminar: cuando pulsemos el boton eliminar, cogemos los datos de la tabla (innerhtml) para que desaparezcan de ella.
         });
     });
+
+        paginationButtons.forEach(paginationButton => {
+
+            paginationButton.addEventListener("click", () => {
+
+                let url = paginationButton.dataset.page; 
+
+                let sendPaginationRequest = async () => {
+
+                    try {
+                        await axios.get(url).then(response => {
+                            table.innerHTML = response.data.table;
+                            renderTable();
+                        });
+                        
+                    } catch (error) {
+                        console.error(error);
+                    }
+                };
+    
+                sendPaginationRequest();
+                
+            });
+        });
+    
 };
+
 
 renderForm();
 renderTable();
 
-//* Al final llamamos de nuevo a las funciones de la tabla y el formulario.

@@ -25,10 +25,11 @@ body{
     width: 100%;
     align-items: stretch;
     perspective: 1500px;
+    height: 80vh;
 }
 
 .main-content{
-    height: 100vh;
+    height: 80vh;
     width: 85%;
 
     @include respond-to('lg') {
@@ -46,6 +47,7 @@ body{
         overflow-x: auto; 
         -webkit-overflow-scrolling: touch;
         -ms-overflow-style: -ms-autohiding-scrollbar;
+
     }
 
     .two-columns::-webkit-scrollbar {
