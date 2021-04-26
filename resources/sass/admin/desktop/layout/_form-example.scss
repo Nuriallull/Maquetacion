@@ -39,6 +39,66 @@
 	margin-top: 10vh;
 }
 
+.form-update button.update{
+	
+	position: relative;
+    padding: 0.5em;
+    border: none;
+    outline: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+	margin-bottom: 0.5em;
+
+
+
+	&.active{
+		svg{
+		background-color: #FFFFFF;
+		position: absolute;
+		padding: 0.5em;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin-bottom: 0.5em;
+		margin: auto;
+		border: 0.2em solid transparent;
+		border-radius: 50%;
+		animation: button-loading-spinner 1s ease infinite;
+
+			@keyframes button-loading-spinner {
+				from {
+					transform: rotate(0turn);
+				}
+			
+				to {
+					transform: rotate(1turn);
+				}
+			}
+		}
+	}
+	
+}
+
+.update-message{
+	display: none;
+
+	&.active{
+		display:block;
+		background-color: #555;
+		color: #fff;
+		text-align: center;
+		border-radius: 0.5em;
+		padding: 1em;
+		position: relative;
+		z-index: 1002;
+		top: 20%;
+		bottom: 10%;
+		left: 5%;
+	}
+	
+}
+
 .form-group{
 	margin-bottom: 2em;
 	width: 100%;
@@ -178,3 +238,6 @@
 option{
 	color: #000000;
 }
+
+
+ 

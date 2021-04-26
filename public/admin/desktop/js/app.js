@@ -2032,6 +2032,8 @@ var renderForm = function renderForm() {
   var labels = document.querySelectorAll('.label-highlight');
   var inputs = document.querySelectorAll('.input-highlight');
   var sendButton = document.getElementById("send-button");
+  var updateButton = document.getElementById("update-button");
+  var updateMessage = document.getElementById("message");
   inputs.forEach(function (input) {
     input.addEventListener('focusin', function () {
       for (var i = 0; i < labels.length; i++) {
@@ -2110,6 +2112,10 @@ var renderForm = function renderForm() {
 
       sendPostRequest();
     });
+  });
+  updateButton.addEventListener("click", function () {
+    updateButton.classList.toggle("active");
+    updateMessage.classList.toggle("active");
   });
 }; //*Aqui comienza la función que incluye el JavaScript de la tabla.
 

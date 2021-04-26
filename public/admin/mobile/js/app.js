@@ -1924,6 +1924,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _ckeditor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ckeditor */ "./resources/js/admin/mobile/ckeditor.js");
 /* harmony import */ var _swipe__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./swipe */ "./resources/js/admin/mobile/swipe.js");
+/* harmony import */ var _verticalScroll__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./verticalScroll */ "./resources/js/admin/mobile/verticalScroll.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -1941,6 +1942,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -2050,7 +2052,7 @@ var renderTable = function renderTable() {
   swipeRevealItemElements.forEach(function (swipeRevealItemElement) {
     new _swipe__WEBPACK_IMPORTED_MODULE_2__.swipeRevealItem(swipeRevealItemElement);
   });
-  new scrollWindowElement(table);
+  new _verticalScroll__WEBPACK_IMPORTED_MODULE_3__.scrollWindowElement(table);
 };
 var deleteElement = function deleteElement() {
   var deleteButtons = document.querySelectorAll(".delete-button");
@@ -2108,7 +2110,6 @@ var editElement = function editElement(url) {
               _context3.next = 3;
               return axios.get(url).then(function (response) {
                 form.innerHTML = response.data.form;
-                showForm();
                 renderForm(); //*cada vez que terminamos una llamada de JS al elemento (formulario) lo llamamos de nuevo al final.
               });
 
@@ -2316,10 +2317,10 @@ __webpack_require__.r(__webpack_exports__);
 function swipeRevealItem(element) {
   'use strict';
 
+  var swipeFrontElement = element.querySelector('.swipe-front');
   var STATE_DEFAULT = 1;
   var STATE_LEFT_SIDE = 2;
   var STATE_RIGHT_SIDE = 3;
-  var swipeFrontElement = element.querySelector('.swipe-front');
   var rafPending = false;
   var initialTouchPos = null;
   var lastTouchPos = null;
@@ -2329,13 +2330,12 @@ function swipeRevealItem(element) {
   var leftSwipeVisible = 0;
   var rightSwipeVisible = 0;
   var itemWidth = swipeFrontElement.clientWidth;
-  var slopValue = itemWidth * (2 / 4); // On resize, change the slop value
+  var slopValue = itemWidth * (2 / 4);
 
   this.resize = function () {
     itemWidth = swipeFrontElement.clientWidth;
     slopValue = itemWidth * (2 / 4);
-  }; // Handle the start of gestures
-
+  };
 
   this.handleGestureStart = function (evt) {
     evt.preventDefault();
@@ -2431,19 +2431,18 @@ function swipeRevealItem(element) {
 
       case STATE_LEFT_SIDE:
         currentXPosition = -(itemWidth - handleSize);
+        (0,_crudTable__WEBPACK_IMPORTED_MODULE_0__.deleteElement)(element.querySelector('.left-swipe').dataset.url);
+        newState = STATE_DEFAULT;
         break;
 
       case STATE_RIGHT_SIDE:
         currentXPosition = itemWidth - handleSize;
+        (0,_crudTable__WEBPACK_IMPORTED_MODULE_0__.editElement)(element.querySelector('.right-swipe').dataset.url);
+        newState = STATE_DEFAULT;
         break;
     }
 
-    if (currentXPosition > 1) {
-      (0,_crudTable__WEBPACK_IMPORTED_MODULE_0__.editElement)(element.querySelector('.right-swipe').dataset.url);
-    } else if (currentXPosition < -1) {
-      console.log(element.querySelector('.left-swipe').dataset.url);
-    }
-
+    currentXPosition = 0;
     transformStyle = 'translateX(' + currentXPosition + 'px)';
     swipeFrontElement.style.msTransform = transformStyle;
     swipeFrontElement.style.MozTransform = transformStyle;
@@ -2480,9 +2479,9 @@ function swipeRevealItem(element) {
 
       if (swipeActive !== null) {
         swipeActive.removeAttribute('id');
-      } // element.querySelector('.left-swipe').id = 'swipe-active';
+      }
 
-
+      element.querySelector('.left-swipe').id = 'swipe-active';
       leftSwipeVisible = 1;
       rightSwipeVisible = 0;
     } else if (Math.sign(differenceInX) == -1 && rightSwipeVisible == 0) {
@@ -2490,9 +2489,9 @@ function swipeRevealItem(element) {
 
       if (_swipeActive !== null) {
         _swipeActive.removeAttribute('id');
-      } // element.querySelector('.right-swipe').id = 'swipe-active';
+      }
 
-
+      element.querySelector('.right-swipe').id = 'swipe-active';
       leftSwipeVisible = 0;
       rightSwipeVisible = 1;
     }
@@ -2505,16 +2504,16 @@ function swipeRevealItem(element) {
   }
 
   if (window.PointerEvent) {
-    swipeFrontElement.addEventListener('pointerdown', this.handleGestureStart, true);
-    swipeFrontElement.addEventListener('pointermove', this.handleGestureMove, true);
-    swipeFrontElement.addEventListener('pointerup', this.handleGestureEnd, true);
-    swipeFrontElement.addEventListener('pointercancel', this.handleGestureEnd, true);
+    swipeFrontElement.addEventListener('pointerdown', this.handleGestureStart, false);
+    swipeFrontElement.addEventListener('pointermove', this.handleGestureMove, false);
+    swipeFrontElement.addEventListener('pointerup', this.handleGestureEnd, false);
+    swipeFrontElement.addEventListener('pointercancel', this.handleGestureEnd, false);
   } else {
-    swipeFrontElement.addEventListener('touchstart', this.handleGestureStart, true);
-    swipeFrontElement.addEventListener('touchmove', this.handleGestureMove, true);
-    swipeFrontElement.addEventListener('touchend', this.handleGestureEnd, true);
-    swipeFrontElement.addEventListener('touchcancel', this.handleGestureEnd, true);
-    swipeFrontElement.addEventListener('mousedown', this.handleGestureStart, true);
+    swipeFrontElement.addEventListener('touchstart', this.handleGestureStart, false);
+    swipeFrontElement.addEventListener('touchmove', this.handleGestureMove, false);
+    swipeFrontElement.addEventListener('touchend', this.handleGestureEnd, false);
+    swipeFrontElement.addEventListener('touchcancel', this.handleGestureEnd, false);
+    swipeFrontElement.addEventListener('mousedown', this.handleGestureStart, false);
   }
 }
 ;

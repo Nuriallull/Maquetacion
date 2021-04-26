@@ -33,6 +33,8 @@ export let renderForm = () => {
     let labels = document.querySelectorAll('.label-highlight');
     let inputs = document.querySelectorAll('.input-highlight');
     let sendButton = document.getElementById("send-button");
+    let updateButton = document.getElementById("update-button");
+    let updateMessage = document.getElementById("message");
 
     inputs.forEach(input => {
 
@@ -94,8 +96,23 @@ export let renderForm = () => {
             };
 
             sendPostRequest();
+
+
+
+            
         });
     });
+
+    updateButton.addEventListener("click", () => {
+
+        
+        
+        updateButton.classList.toggle("active");
+        updateMessage.classList.toggle("active");
+        
+    })
+
+
 };
 
 

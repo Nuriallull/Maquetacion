@@ -758,7 +758,7 @@ a:hover, a:focus {
 }
 .table-icons-container .table-icons {
   display: none;
-  min-height: 10vh;
+  min-height: 15vh;
 }
 .table-icons-container .table-icons svg {
   height: 1.5em;
@@ -797,6 +797,11 @@ a:hover, a:focus {
     max-width: 480px;
     font-size: 0.8em;
     display: none;
+  }
+
+  .form-header {
+    display: flex;
+    justify-content: flex-end;
   }
 
   .form-error {
@@ -933,6 +938,31 @@ a:hover, a:focus {
 }
 .panel.active {
   display: block;
+}
+
+.form-update button.update {
+  position: relative;
+  padding: 8px 16px;
+  background: #009579;
+  border: none;
+  outline: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.form-update button.update.active {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 4px solid transparent;
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  -webkit-animation: button-loading-spinner 1s ease infinite;
+          animation: button-loading-spinner 1s ease infinite;
 }
 
 @media screen and (max-width: 480px) {

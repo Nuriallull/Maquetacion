@@ -52,6 +52,7 @@
 
 
 .table-icons-container{
+
     position: absolute;
     width: 100%;
     z-index: 997;
@@ -59,7 +60,7 @@
     .table-icons{
 
         display: none;
-        min-height: 10vh;
+        min-height: 15vh;
 
         svg{
             height: 1.5em;

@@ -1,234 +1,233 @@
-import {editElement, renderTable} from './crudTable';
+import {deleteElement, editElement} from './crudTable';
 
 export function swipeRevealItem (element){
 
-  'use strict';
+    'use strict';
 
-  let STATE_DEFAULT = 1;
-  let STATE_LEFT_SIDE = 2;
-  let STATE_RIGHT_SIDE = 3;
+    let swipeFrontElement = element.querySelector('.swipe-front');
 
-  let swipeFrontElement = element.querySelector('.swipe-front');
+    let STATE_DEFAULT = 1;
+    let STATE_LEFT_SIDE = 2;
+    let STATE_RIGHT_SIDE = 3;
 
-  let rafPending = false;
-  let initialTouchPos = null;
-  let lastTouchPos = null;
-  let currentXPosition = 0;
-  let currentState = STATE_DEFAULT;
-  let handleSize = 10;
-  let leftSwipeVisible = 0;
-  let rightSwipeVisible = 0;
-  let itemWidth = swipeFrontElement.clientWidth;
-  let slopValue = itemWidth * (2/4);
-// On resize, change the slop value
-  this.resize = function() {
-      itemWidth = swipeFrontElement.clientWidth;
-      slopValue = itemWidth * (2/4);
-  };
- // Handle the start of gestures
-  this.handleGestureStart = function(evt) {
+    let rafPending = false;
+    let initialTouchPos = null;
+    let lastTouchPos = null;
+    let currentXPosition = 0;
+    let currentState = STATE_DEFAULT;
+    let handleSize = 10;
+    let leftSwipeVisible = 0;
+    let rightSwipeVisible = 0;
+    let itemWidth = swipeFrontElement.clientWidth;
+    let slopValue = itemWidth * (2/4);
 
-      evt.preventDefault();
+    this.resize = function() {
+        itemWidth = swipeFrontElement.clientWidth;
+        slopValue = itemWidth * (2/4);
+    };
 
-      if(evt.touches && evt.touches.length > 1) {
-          return;
-      }
+    this.handleGestureStart = function(evt) {
 
-      if (window.PointerEvent) {
-          evt.target.setPointerCapture(evt.pointerId);
-      } else {
-          document.addEventListener('mousemove', this.handleGestureMove, true);
-          document.addEventListener('mouseup', this.handleGestureEnd, true);
-      }
+        evt.preventDefault();
 
-      initialTouchPos = getGesturePointFromEvent(evt);
-      swipeFrontElement.style.transition = 'initial';
+        if(evt.touches && evt.touches.length > 1) {
+            return;
+        }
 
-  }.bind(this);
+        if (window.PointerEvent) {
+            evt.target.setPointerCapture(evt.pointerId);
+        } else {
+            document.addEventListener('mousemove', this.handleGestureMove, true);
+            document.addEventListener('mouseup', this.handleGestureEnd, true);
+        }
 
-  this.handleGestureMove = function (evt) {
+        initialTouchPos = getGesturePointFromEvent(evt);
+        swipeFrontElement.style.transition = 'initial';
 
-      evt.preventDefault();
+    }.bind(this);
 
-      if(!initialTouchPos) {
-          return;
-      }
+    this.handleGestureMove = function (evt) {
 
-      lastTouchPos = getGesturePointFromEvent(evt);
+        evt.preventDefault();
 
-      if(rafPending) {
-          return;
-      }
+        if(!initialTouchPos) {
+            return;
+        }
 
-      rafPending = true;
+        lastTouchPos = getGesturePointFromEvent(evt);
 
-      window.requestAnimFrame(onAnimFrame);
+        if(rafPending) {
+            return;
+        }
 
-  }.bind(this);
+        rafPending = true;
 
-  this.handleGestureEnd = function(evt) {
+        window.requestAnimFrame(onAnimFrame);
 
-      evt.preventDefault();
+    }.bind(this);
 
-      if(evt.touches && evt.touches.length > 0) {
-          return;
-      }
+    this.handleGestureEnd = function(evt) {
 
-      rafPending = false;
+        evt.preventDefault();
 
-      if (window.PointerEvent) {
-          evt.target.releasePointerCapture(evt.pointerId);
-      } else {
-          document.removeEventListener('mousemove', this.handleGestureMove, true);
-          document.removeEventListener('mouseup', this.handleGestureEnd, true);
-      }
+        if(evt.touches && evt.touches.length > 0) {
+            return;
+        }
 
-      updateSwipeRestPosition();
+        rafPending = false;
 
-      leftSwipeVisible = 0;
-      rightSwipeVisible = 0;
-      initialTouchPos = null;
+        if (window.PointerEvent) {
+            evt.target.releasePointerCapture(evt.pointerId);
+        } else {
+            document.removeEventListener('mousemove', this.handleGestureMove, true);
+            document.removeEventListener('mouseup', this.handleGestureEnd, true);
+        }
 
-  }.bind(this);
+        updateSwipeRestPosition();
 
-  
-  function updateSwipeRestPosition() {
+        leftSwipeVisible = 0;
+        rightSwipeVisible = 0;
+        initialTouchPos = null;
 
-      let differenceInX = initialTouchPos.x - lastTouchPos.x;
-      currentXPosition = currentXPosition - differenceInX;
+    }.bind(this);
 
-      let newState = STATE_DEFAULT;
+    
+    function updateSwipeRestPosition() {
 
-      if(Math.abs(differenceInX) > slopValue) {
-          
-          if(currentState === STATE_DEFAULT) {
-              if(differenceInX > 0) {
-                  newState = STATE_LEFT_SIDE;
-              } else {
-                  newState = STATE_RIGHT_SIDE;
-              }
-          } else {
-              if(currentState === STATE_LEFT_SIDE && differenceInX > 0) {
-                  newState = STATE_DEFAULT;
-              } else if(currentState === STATE_RIGHT_SIDE && differenceInX < 0) {
-                  newState = STATE_DEFAULT;
-              }
-          }
-      } else {
-          newState = currentState;
-      }
+        let differenceInX = initialTouchPos.x - lastTouchPos.x;
+        currentXPosition = currentXPosition - differenceInX;
 
-      changeState(newState);
+        let newState = STATE_DEFAULT;
 
-      swipeFrontElement.style.transition = 'all 150ms ease-out';
-  }
+        if(Math.abs(differenceInX) > slopValue) {
+            
+            if(currentState === STATE_DEFAULT) {
+                if(differenceInX > 0) {
+                    newState = STATE_LEFT_SIDE;
+                } else {
+                    newState = STATE_RIGHT_SIDE;
+                }
+            } else {
+                if(currentState === STATE_LEFT_SIDE && differenceInX > 0) {
+                    newState = STATE_DEFAULT;
+                } else if(currentState === STATE_RIGHT_SIDE && differenceInX < 0) {
+                    newState = STATE_DEFAULT;
+                }
+            }
+        } else {
+            newState = currentState;
+        }
 
-  function changeState(newState) {
+        changeState(newState);
 
-      let transformStyle;
+        swipeFrontElement.style.transition = 'all 150ms ease-out';
+    }
 
-      switch(newState) {
+    function changeState(newState) {
 
-          case STATE_DEFAULT:
-              currentXPosition = 0;
-              break;
-          case STATE_LEFT_SIDE:
-              currentXPosition = -(itemWidth - handleSize);
-              break;
-          case STATE_RIGHT_SIDE:
-              currentXPosition = itemWidth - handleSize;
-              break;
-      }
+        let transformStyle;
 
-      if(currentXPosition > 1){
+        switch(newState) {
 
-          editElement(element.querySelector('.right-swipe').dataset.url);          
+            case STATE_DEFAULT:
+                currentXPosition = 0;
+                break;
 
-      }else if(currentXPosition < -1){
-          
-          console.log(element.querySelector('.left-swipe').dataset.url);
-      }
+            case STATE_LEFT_SIDE:
+                currentXPosition = -(itemWidth - handleSize);
+                deleteElement(element.querySelector('.left-swipe').dataset.url);
+                newState = STATE_DEFAULT;
+                break;
 
-      transformStyle = 'translateX('+currentXPosition+'px)';
+            case STATE_RIGHT_SIDE:
+                currentXPosition = itemWidth - handleSize;
+                editElement(element.querySelector('.right-swipe').dataset.url);          
+                newState = STATE_DEFAULT;
+                break;
+        }
 
-      swipeFrontElement.style.msTransform = transformStyle;
-      swipeFrontElement.style.MozTransform = transformStyle;
-      swipeFrontElement.style.webkitTransform = transformStyle;
-      swipeFrontElement.style.transform = transformStyle;
+        currentXPosition = 0;
 
-      currentState = newState;    
-  }
+        transformStyle = 'translateX('+currentXPosition+'px)';
 
-  function getGesturePointFromEvent(evt) {
+        swipeFrontElement.style.msTransform = transformStyle;
+        swipeFrontElement.style.MozTransform = transformStyle;
+        swipeFrontElement.style.webkitTransform = transformStyle;
+        swipeFrontElement.style.transform = transformStyle;
 
-      let point = {};
+        currentState = newState;    
+    }
 
-      if(evt.targetTouches) {
-          point.x = evt.targetTouches[0].clientX;
-          point.y = evt.targetTouches[0].clientY;
-      } else {
-          point.x = evt.clientX;
-          point.y = evt.clientY;
-      }
+    function getGesturePointFromEvent(evt) {
 
-      return point;
-  }
+        let point = {};
 
-  function onAnimFrame() {
+        if(evt.targetTouches) {
+            point.x = evt.targetTouches[0].clientX;
+            point.y = evt.targetTouches[0].clientY;
+        } else {
+            point.x = evt.clientX;
+            point.y = evt.clientY;
+        }
 
-      if(!rafPending) {
-          return;
-      }
+        return point;
+    }
 
-      let differenceInX = initialTouchPos.x - lastTouchPos.x;
-      let newXTransform  = (currentXPosition - differenceInX)+'px';
-      let transformStyle = 'translateX('+newXTransform+')';
+    function onAnimFrame() {
 
-      if(Math.sign(differenceInX) == 1 && leftSwipeVisible == 0){
+        if(!rafPending) {
+            return;
+        }
 
-          let swipeActive = document.getElementById('swipe-active');
+        let differenceInX = initialTouchPos.x - lastTouchPos.x;
+        let newXTransform  = (currentXPosition - differenceInX)+'px';
+        let transformStyle = 'translateX('+newXTransform+')';
 
-          if(swipeActive !== null){
-              swipeActive.removeAttribute('id');
-          }
+        if(Math.sign(differenceInX) == 1 && leftSwipeVisible == 0){
 
-          // element.querySelector('.left-swipe').id = 'swipe-active';
+            let swipeActive = document.getElementById('swipe-active');
 
-          leftSwipeVisible = 1;
-          rightSwipeVisible = 0;
+            if(swipeActive !== null){
+                swipeActive.removeAttribute('id');
+            }
 
-      }else if(Math.sign(differenceInX) == -1 && rightSwipeVisible == 0){
+            element.querySelector('.left-swipe').id = 'swipe-active';
 
-          let swipeActive = document.getElementById('swipe-active');
+            leftSwipeVisible = 1;
+            rightSwipeVisible = 0;
 
-          if(swipeActive !== null){
-              swipeActive.removeAttribute('id');
-          }
+        }else if(Math.sign(differenceInX) == -1 && rightSwipeVisible == 0){
 
-          // element.querySelector('.right-swipe').id = 'swipe-active';
+            let swipeActive = document.getElementById('swipe-active');
+ 
+            if(swipeActive !== null){
+                swipeActive.removeAttribute('id');
+            }
 
-          leftSwipeVisible = 0;
-          rightSwipeVisible = 1;
-      }
+            element.querySelector('.right-swipe').id = 'swipe-active';
 
-      swipeFrontElement.style.webkitTransform = transformStyle;
-      swipeFrontElement.style.MozTransform = transformStyle;
-      swipeFrontElement.style.msTransform = transformStyle;
-      swipeFrontElement.style.transform = transformStyle;
+            leftSwipeVisible = 0;
+            rightSwipeVisible = 1;
+        }
 
-      rafPending = false;
-  }
-  
-  if (window.PointerEvent) {
-      swipeFrontElement.addEventListener('pointerdown', this.handleGestureStart, true);
-      swipeFrontElement.addEventListener('pointermove', this.handleGestureMove, true);
-      swipeFrontElement.addEventListener('pointerup', this.handleGestureEnd, true);
-      swipeFrontElement.addEventListener('pointercancel', this.handleGestureEnd, true);
-  } else {
-      swipeFrontElement.addEventListener('touchstart', this.handleGestureStart, true);
-      swipeFrontElement.addEventListener('touchmove', this.handleGestureMove, true);
-      swipeFrontElement.addEventListener('touchend', this.handleGestureEnd, true);
-      swipeFrontElement.addEventListener('touchcancel', this.handleGestureEnd, true);
-      swipeFrontElement.addEventListener('mousedown', this.handleGestureStart, true);
-  }    
+        swipeFrontElement.style.webkitTransform = transformStyle;
+        swipeFrontElement.style.MozTransform = transformStyle;
+        swipeFrontElement.style.msTransform = transformStyle;
+        swipeFrontElement.style.transform = transformStyle;
+
+        rafPending = false;
+    }
+    
+    if (window.PointerEvent) {
+        swipeFrontElement.addEventListener('pointerdown', this.handleGestureStart, false);
+        swipeFrontElement.addEventListener('pointermove', this.handleGestureMove, false);
+        swipeFrontElement.addEventListener('pointerup', this.handleGestureEnd, false);
+        swipeFrontElement.addEventListener('pointercancel', this.handleGestureEnd, false);
+    } else {
+        swipeFrontElement.addEventListener('touchstart', this.handleGestureStart, false);
+        swipeFrontElement.addEventListener('touchmove', this.handleGestureMove, false);
+        swipeFrontElement.addEventListener('touchend', this.handleGestureEnd, false);
+        swipeFrontElement.addEventListener('touchcancel', this.handleGestureEnd, false);
+        swipeFrontElement.addEventListener('mousedown', this.handleGestureStart, false);
+    }    
 };   

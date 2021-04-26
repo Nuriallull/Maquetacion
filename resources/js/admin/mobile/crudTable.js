@@ -1,5 +1,6 @@
 import {renderEditor} from './ckeditor';
 import {swipeRevealItem} from './swipe';
+import {scrollWindowElement} from './verticalScroll';
 
 const table = document.getElementById("table");
 const form = document.getElementById("form");
@@ -159,7 +160,6 @@ export let editElement = (url) => {
         try {
             await axios.get(url).then(response => {
                 form.innerHTML = response.data.form;
-                showForm();
                 renderForm(); //*cada vez que terminamos una llamada de JS al elemento (formulario) lo llamamos de nuevo al final.
             });
             
