@@ -2,33 +2,30 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\FaqRequest;
-use App\Models\DB\Faq;
+use App\Http\Requests\Admin\SliderRequest;
+use App\Models\DB\Slider;
 
-class FaqController extends Controller
+class SliderController extends Controller
 {
-    protected $faq;
+    function __construct(Slider $slider)
 
-    function __construct(Faq $faq)
-    {
-       $this->middleware('auth');
-        $this->faq = $faq;
-        
+    {      
+        $this->slider = $slider;
     }
-    
+
     public function index()
     {
 
-        $view = View::make('admin.faqs.index')
-                ->with('faq', $this->faq)
-                ->with('faqs', $this->faq->where('active', 1)->paginate(5)); 
-
+        $view = View::make('admin.sliders.index')
+            ->with('sliders', $this->slider->where('active', 1)->paginate(4))
+            ->with('slider', $this->slider);
+    
         if(request()->ajax()) {
-            
+
             $sections = $view->renderSections(); 
     
             return response()->json([
@@ -43,22 +40,24 @@ class FaqController extends Controller
     public function create()
     {
 
-        $view = View::make('admin.faqs.index')
-        ->with('faq', $this->faq)
+        $view = View::make('admin.sliders.index')
+        ->with('slider', $this->slider)
+        ->with('sliders', $this->slider->where('active', 1)->paginate(4))
         ->renderSections();
 
         return response()->json([
-            'form' => $view['form']
+            'form' => $view['form'],
         ]);
     }
 
-    public function store(FaqRequest $request)
+    public function store(SliderRequest $request)
     {            
-        $faq = $this->faq->updateOrCreate([
+        $slider = $this->slider->updateOrCreate([
             'id' => request('id')],[
             'name' => request('name'),
+            'entity' => request('entity'),
+            'visible' => 1,
             'active' => 1,
-            'category_id' => request('category_id'),
         ]);
 
         if (request('id')){
@@ -67,15 +66,15 @@ class FaqController extends Controller
             $message = \Lang::get('admin/faqs.faq-create');
         }
 
-            $view = View::make('admin.faqs.index')
-            ->with('faqs', $this->faq->where('active', 1)->paginate(10))
-            ->with('faq', $faq)
+            $view = View::make('admin.sliders.index')
+            ->with('sliders', $this->slider->where('active', 1)->paginate(10))
+            ->with('slider', $slider)
             ->renderSections();        
         
 
-            $view = View::make('admin.faqs.index')
-            ->with('faqs', $this->faq->where('active', 1)->paginate(6))
-            ->with('faq', $faq)
+            $view = View::make('admin.sliders.index')
+            ->with('sliders', $this->slider->where('active', 1)->paginate(6))
+            ->with('slider', $slider)
             ->renderSections();        
              
 
@@ -83,18 +82,21 @@ class FaqController extends Controller
             'table' => $view['table'],
             'form' => $view['form'],
             'message' => $message,
-            'id' => $faq->id,
+            'id' => $slider->id,
         ]);
     }
 
-    public function edit(Faq $faq)
+
+
+    public function edit(Slider $slider)
     {
-        $view = View::make('admin.faqs.index')
-        ->with('faq', $faq)
-        ->with('faqs', $this->faq->where('active', 1)->paginate(5));   
+                
+        $view = View::make('admin.sliders.index')
+        ->with('slider', $slider)
+        ->with('sliders', $this->slider->where('active', 1)->paginate(5));
+
         
         if(request()->ajax()) {
-
             $sections = $view->renderSections(); 
     
             return response()->json([
@@ -105,40 +107,31 @@ class FaqController extends Controller
         return $view;
     }
 
-    public function show(Faq $faq){
+    public function show(Slider $slider)
+    {
 
     }
 
-    public function destroy(Faq $faq)
-    {
-        $faq->active = 0;
-        $faq->save();
+    public function destroy(Slider $slider)
+    {   
+        $slider->active = 0;
+        $slider->save();
 
-        $view = View::make('admin.faqs.index')
-            ->with('faq', $this->faq)
-            ->with('faqs', $this->faq->where('active', 1)->paginate(5))
-            ->renderSections();
+        $view = View::make('admin.sliders.index')
+        ->with('sliders', $this->slider->where('active', 1)->paginate(5))
+        ->with('slider', $this->slider)
+        ->renderSections();
         
         return response()->json([
             'table' => $view['table'],
-            'form' => $view['form']
+            'form' => $view['form'],
         ]);
     }
 
 
     public function filter(Request $request){
 
-        $query = $this->faq->query();
-
-        $query->when(request('category_id'), function ($q, $category_id) {
-
-            if($category_id == 'all'){
-                return $q;
-            }
-            else {
-                return $q->where('category_id', $category_id);
-            }
-        });
+        $query = $this->slider->query();
 
         $query->when(request('search'), function ($q, $search) {
             
@@ -177,12 +170,10 @@ class FaqController extends Controller
             
         });
 
-        
-        $faqs = $query->where('t_faqs.active', 1)->join('t_faqs_categories', 't_faqs.category_id', '=', 't_faqs_categories.id')->get();
+        $sliders = $query->where('active', 1)->paginate(5);
 
-        $view = View::make('admin.faqs.index')
-            ->with('faqs', $faqs)
-            ->renderSections();
+        $view = View::make('admin.sliders.index')
+            ->with('sliders', $sliders);
 
         if(request()->ajax()) {
             
@@ -194,5 +185,7 @@ class FaqController extends Controller
         }
     
         return $view;
+        
     }
+    
 }

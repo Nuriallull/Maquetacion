@@ -1,0 +1,29 @@
+input[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+label.switch {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 200px;
+	height: 100px;
+	background: grey;
+	display: block;
+	border-radius: 100px;
+	position: relative;
+
+
+	&.active{
+		content: '';
+		position: absolute;
+		top: 5px;
+		left: 5px;
+		width: 90px;
+		height: 90px;
+		border-radius: 90px;
+		transition: 0.3s;
+
+	}
+}	

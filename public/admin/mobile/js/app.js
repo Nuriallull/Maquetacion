@@ -1979,7 +1979,7 @@ var renderForm = function renderForm() {
       }
     });
   });
-  sendButton.addEventListener("click", function () {
+  sendButton.addEventListener("click", function (event) {
     forms.forEach(function (form) {
       var data = new FormData(form);
 
@@ -2007,16 +2007,19 @@ var renderForm = function renderForm() {
                   return axios.post(url, data).then(function (response) {
                     form.id.value = response.data.id;
                     table.innerHTML = response.data.table;
+                    form.innerHTML = response.data.form;
                     renderTable();
+                    renderForm();
                   });
 
                 case 3:
-                  _context.next = 8;
+                  _context.next = 9;
                   break;
 
                 case 5:
                   _context.prev = 5;
                   _context.t0 = _context["catch"](0);
+                  stopWait();
 
                   if (_context.t0.response.status == '422') {
                     errors = _context.t0.response.data.errors;
@@ -2024,11 +2027,10 @@ var renderForm = function renderForm() {
                     Object.keys(errors).forEach(function (key) {
                       errorMessage += '<li>' + errors[key] + '</li>';
                     });
-                    document.getElementById('error-container').classList.add('active');
-                    document.getElementById('errors').innerHTML = errorMessage;
+                    showMessage('error', errorMessage);
                   }
 
-                case 8:
+                case 9:
                 case "end":
                   return _context.stop();
               }

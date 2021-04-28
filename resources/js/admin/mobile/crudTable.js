@@ -54,7 +54,8 @@ export let renderForm = () => {
         });
     });
     
-    sendButton.addEventListener("click", () => {
+    sendButton.addEventListener("click", (event) => {
+
     
         forms.forEach(form => { 
             
@@ -67,8 +68,6 @@ export let renderForm = () => {
                 });
             }
 
-
-
             let url = form.action;
     
             let sendPostRequest = async () => {
@@ -77,10 +76,14 @@ export let renderForm = () => {
                     await axios.post(url, data).then(response => {
                         form.id.value = response.data.id;
                         table.innerHTML = response.data.table;
+                        form.innerHTML = response.data.form;
                         renderTable();
+                        renderForm();
                     });
                     
                 } catch (error) {
+    
+                    stopWait();
     
                     if(error.response.status == '422'){
     
@@ -91,8 +94,7 @@ export let renderForm = () => {
                             errorMessage += '<li>' + errors[key] + '</li>';
                         })
         
-                        document.getElementById('error-container').classList.add('active');
-                        document.getElementById('errors').innerHTML = errorMessage;
+                        showMessage('error', errorMessage);
                     }
                 }
             };

@@ -68,6 +68,23 @@ Route::group(['prefix' => 'admin'], function () {
         ]
     ]);
 
+    Route::post('/sliders/filter', 'App\Http\Controllers\Admin\SliderController@filter')->name('sliders_filter');
+
+    Route::resource('sliders', 'App\Http\Controllers\Admin\SliderController', [
+        'parameters' => [
+            'sliders' => 'slider', 
+        ],
+        'names' => [
+            'index' => 'sliders',
+            'create' => 'sliders_create',
+            'edit' => 'sliders_edit',
+            'store' => 'sliders_store',
+            'destroy' => 'sliders_destroy',
+            'show' => 'sliders_show',
+        ]
+    ]);
+
+
     Route::post('/faqs/filter', 'App\Http\Controllers\Admin\FaqController@filter')->name('faqs_filter');
     
     Route::resource('faqs', 'App\Http\Controllers\Admin\FaqController', [

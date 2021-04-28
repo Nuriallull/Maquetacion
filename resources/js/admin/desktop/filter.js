@@ -5,7 +5,6 @@ const tableFilter = document.getElementById("table-filter");
 const filterForm = document.getElementById("filter-form");
 const openFilter = document.getElementById("open-filter");
 const applyFilter = document.getElementById("apply-filter");
-const menuOrder = document.getElementById("order-button");
 
 export let renderFilterTable = () => {
 
@@ -26,7 +25,6 @@ export let renderFilterTable = () => {
             try {
                 await axios.post(url, data).then(response => {
                     table.innerHTML = response.data.table;
-                    console.log(response.data.table);
                     renderTable();
                     tableFilter.classList.toggle("active");
                     applyFilter.classList.toggle("active");

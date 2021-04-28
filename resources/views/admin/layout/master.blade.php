@@ -14,11 +14,13 @@
 
     <body>
         <div class="wrapper" id="app">
-            
+
+            @include('admin.components.wait')
+            @include('admin.components.messages')
             @include("admin.layout.partials.sidebar")
             
             @if(isset($filters))
-                @include('admin.components.table_filters', $filters)
+                @include('admin.components.table_filters_sliders', $filters)
             @endif
 
             <div class="main-content">

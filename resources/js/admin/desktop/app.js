@@ -1,8 +1,6 @@
 require('../../bootstrap');
 require('./crudTable');
-require('./ckeditor');
 require('./sidebar');
-require('./errors');
 require ('./filter');
 
 

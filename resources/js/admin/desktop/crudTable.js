@@ -1,9 +1,11 @@
+import {startWait, stopWait} from './wait';
+import {showMessage} from './messages';
+import {renderEditor} from './ckeditor';
 
 const table = document.getElementById("table");
 const form = document.getElementById("form");
 const menuButton = document.querySelectorAll(".menu-button");
 const panel = document.querySelectorAll(".panel");
-
 
 menuButton.forEach (menuButton => {
 
@@ -24,7 +26,6 @@ menuButton.forEach (menuButton => {
 
 });
 
-
 //*Aqui comienza la función que incluye el JavaScript del formulario. Las constantes pasan a ser variables, y solamente se mantienen como constantes el formulario y la tabla.
 
 export let renderForm = () => {
@@ -34,7 +35,6 @@ export let renderForm = () => {
     let inputs = document.querySelectorAll('.input-highlight');
     let sendButton = document.getElementById("send-button");
     let updateButton = document.getElementById("update-button");
-    let updateMessage = document.getElementById("message");
 
     inputs.forEach(input => {
 
@@ -69,16 +69,24 @@ export let renderForm = () => {
             }
 
             let url = form.action;
+
             let sendPostRequest = async () => {
+
+                startWait();
     
                 try {
                     await axios.post(url, data).then(response => {
                         form.id.value = response.data.id;
                         table.innerHTML = response.data.table;
+
+                        stopWait();
+                        showMessage('success', response.data.message);
                         renderTable();
                     });
                     
                 } catch (error) {
+
+                    stopWait();
     
                     if(error.response.status == '422'){
     
@@ -89,34 +97,46 @@ export let renderForm = () => {
                             errorMessage += '<li>' + errors[key] + '</li>';
                         })
         
-                        document.getElementById('error-container').classList.add('active');
-                        document.getElementById('errors').innerHTML = errorMessage;
+                        showMessage('error', errorMessage);
                     }
                 }
             };
 
             sendPostRequest();
-
-
-
-            
         });
     });
 
-    updateButton.addEventListener("click", () => {
+    updateButton.addEventListener("click", (event) => {
 
-        
-        
-        updateButton.classList.toggle("active");
-        updateMessage.classList.toggle("active");
-        
-    })
+        event.preventDefault();
 
+        let url = updateButton.dataset.url;
 
+        let sendCreateRequest = async () => {
+
+            startWait();
+
+            try {
+                await axios.get(url).then(response => {
+
+                    form.innerHTML = response.data.form;
+
+                    stopWait();
+                    renderForm();
+                });
+                
+            } catch (error) {
+
+                stopWait();
+            }
+        };
+
+        sendCreateRequest();
+                
+    });
+
+    renderEditor();
 };
-
-
-//*Aqui comienza la función que incluye el JavaScript de la tabla.
 
 export let renderTable = () => {
 
@@ -171,33 +191,31 @@ export let renderTable = () => {
         });
     });
 
-        paginationButtons.forEach(paginationButton => {
+    paginationButtons.forEach(paginationButton => {
 
-            paginationButton.addEventListener("click", () => {
+        paginationButton.addEventListener("click", () => {
 
-                let url = paginationButton.dataset.page; 
+            let url = paginationButton.dataset.page; 
 
-                let sendPaginationRequest = async () => {
+            let sendPaginationRequest = async () => {
 
-                    try {
-                        await axios.get(url).then(response => {
-                            table.innerHTML = response.data.table;
-                            renderTable();
-                        });
-                        
-                    } catch (error) {
-                        console.error(error);
-                    }
-                };
-    
-                sendPaginationRequest();
-                
-            });
+                try {
+                    await axios.get(url).then(response => {
+                        table.innerHTML = response.data.table;
+                        renderTable();
+                    });
+                    
+                } catch (error) {
+                    console.error(error);
+                }
+            };
+
+            sendPaginationRequest();
+            
         });
+    });
     
 };
 
-
 renderForm();
 renderTable();
-

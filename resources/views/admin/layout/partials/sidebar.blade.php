@@ -15,6 +15,8 @@
             <li class="sidebar-menu-item" data-url="{{route('faqs')}}">Faqs</li>
             <li class="sidebar-menu-item" data-url="{{route('users')}}">Usuarios</li>
             <li class="sidebar-menu-item" data-url="{{route('clients')}}">Clientes</li>
+            <li class="sidebar-menu-item" data-url="{{route('sliders')}}"> Sliders </li>
+
             
         </ul>
     </nav>
