@@ -18,9 +18,14 @@
             @include('admin.components.wait')
             @include('admin.components.messages')
             @include("admin.layout.partials.sidebar")
+            @include("admin.layout.partials.bottombar")
             
             @if(isset($filters))
-                @include('admin.components.table_filters_sliders', $filters)
+                @include('admin.components.table_filters', [
+                    'route' => $route, 
+                    'filters' => $filters, 
+                    'order' => $order
+                ])
             @endif
 
             <div class="main-content">

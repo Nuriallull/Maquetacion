@@ -1,32 +1,16 @@
 import {renderEditor} from './ckeditor';
 import {swipeRevealItem} from './swipe';
 import {scrollWindowElement} from './verticalScroll';
+import {startWait, stopWait} from './wait';
+import {showMessage} from './messages';
+import {showForm} from './bottombarMenu';
 
 const table = document.getElementById("table");
 const form = document.getElementById("form");
-const menuButton = document.querySelectorAll(".menu-button");
+const panelButton = document.querySelectorAll(".panel-button");
 const panel = document.querySelectorAll(".panel");
 
-//*Aqui comienza la función que incluye el JavaScript del formulario. Las constantes pasan a ser variables, y solamente se mantienen como constantes el formulario y la tabla.
 
-menuButton.forEach (menuButton => {
-
-    menuButton.addEventListener("click", () => {
-
-        panel.forEach(panel => {
-
-            if(panel.dataset.tab == menuButton.dataset.tab){
-
-            
-                panel.classList.toggle("active");
-
-            }
-        })
-
-    })
-
-});
-    
 
 export let renderForm = () => {
 
@@ -34,78 +18,100 @@ export let renderForm = () => {
     let labels = document.querySelectorAll('.label-highlight');
     let inputs = document.querySelectorAll('.input-highlight');
     let sendButton = document.getElementById("send-button");
-
+    
     inputs.forEach(input => {
 
         input.addEventListener('focusin', () => {
-    
+
             for( var i = 0; i < labels.length; i++ ) {
                 if (labels[i].htmlFor == input.name){
-                    labels[i].classList.add("active");
+                        labels[i].classList.add("active");
                 }
             }
         });
-    
+
         input.addEventListener('blur', () => {
-    
+
             for( var i = 0; i < labels.length; i++ ) {
-                labels[i].classList.remove("active");
+                    labels[i].classList.remove("active");
             }
         });
     });
-    
+
+
     sendButton.addEventListener("click", (event) => {
 
-    
-        forms.forEach(form => { 
+            event.preventDefault();
             
-            let data = new FormData(form);
+            forms.forEach(form => { 
+                
+                let data = new FormData(form);
 
-            if( ckeditors != 'null'){
+                if( ckeditors != 'null'){
 
-                Object.entries(ckeditors).forEach(([key, value]) => {
-                    data.append(key, value.getData());
-                });
-            }
-
-            let url = form.action;
-    
-            let sendPostRequest = async () => {
-    
-                try {
-                    await axios.post(url, data).then(response => {
-                        form.id.value = response.data.id;
-                        table.innerHTML = response.data.table;
-                        form.innerHTML = response.data.form;
-                        renderTable();
-                        renderForm();
+                    Object.entries(ckeditors).forEach(([key, value]) => {
+                        data.append(key, value.getData());
                     });
-                    
-                } catch (error) {
-    
-                    stopWait();
-    
-                    if(error.response.status == '422'){
-    
-                        let errors = error.response.data.errors;      
-                        let errorMessage = '';
-    
-                        Object.keys(errors).forEach(function(key) {
-                            errorMessage += '<li>' + errors[key] + '</li>';
-                        })
-        
-                        showMessage('error', errorMessage);
-                    }
-                }
-            };
+                } 
 
-            sendPostRequest();
-        });
+                let url = form.action;
+
+                let sendPostRequest = async () => {
+
+                    startWait();
+
+                    try {
+                        await axios.post(url, data).then(response => {
+                            form.id.value = response.data.id;
+                            table.innerHTML = response.data.table;
+
+                            stopWait();
+                            showMessage('success', response.data.message);
+                            renderTable();
+                        });
+                        
+                    } catch (error) {
+
+
+                        if(error.response.status == '422'){
+
+                            let errors = error.response.data.errors;      
+                            let errorMessage = '';
+
+                            Object.keys(errors).forEach(function(key) {
+                                errorMessage += '<li>' + errors[key] + '</li>';
+                            })
+            
+                            showMessage('error', errorMessage);
+                        }
+                    }
+                };
+
+                sendPostRequest();
+            });
     });
 
     renderEditor();
+
+
 };
 
+panelButton.forEach (panelButton => {
+
+    panelButton.addEventListener("click", () => {
+
+        panel.forEach(panel => {
+
+            if(panel.dataset.tab == panelButton.dataset.tab){
+
+            
+                panel.classList.toggle("active");
+                panelButton.classList.toggle("active");
+
+            }
+        })
+    })
+});
 
 //*Aqui comienza la función que incluye el JavaScript de la tabla.
 
@@ -124,6 +130,11 @@ export let renderTable = () => {
     new scrollWindowElement(table);
 };
 
+export let verticalScrollTable = () => {
+    
+    new scrollWindowElement(table);
+
+}
 export let deleteElement = () => {
 
     let deleteButtons = document.querySelectorAll(".delete-button");
@@ -155,9 +166,12 @@ export let deleteElement = () => {
     
 }
 
+
 export let editElement = (url) => {
 
         let sendEditRequest = async () => {
+
+        showForm();
 
         try {
             await axios.get(url).then(response => {

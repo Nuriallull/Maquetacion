@@ -36,7 +36,10 @@
 .form-container{
 	width: 100%;
 	height: 90vh;
-	margin-top: 10vh;
+}
+
+.form-update{
+	display:flex;
 }
 
 .form-update button.update{
@@ -77,8 +80,8 @@
 			}
 		}
 	}
-	
 }
+
 .form-group{
 	margin-bottom: 2em;
 	width: 100%;
@@ -90,6 +93,7 @@
 }
 
 .form-label label{
+
 	color: hsl(0, 0%, 50%);
 	font-family: $font-stack;
 	font-weight: 600;
@@ -170,54 +174,4 @@
 }
 
 
-.menu-form li:hover{
-	border: 0.1em solid #000000;
-	border-radius: 0.3em;
-	background-color: #FFFFFF;
-	color: hsl(0, 0%, 0%);
-}
 
-.menu-button .active{
-	
-    border: 0.1em solid #000000;
-	border-radius: 0.3em;
-	background-color: #FFFFFF;
-	color: hsl(0, 0%, 0%);
-
-}
-
-.menu-form{
-	width: 35%;
-	padding: 0.3em;
-    position: absolute;
-	top: 3.5em;
-	background-color: #FFFFFF;
-	border: 0.1em;
-	border-radius: 0.3em;
-}
-
-.menu-form ul{
-    width: 100%;
-
-    li{
-        display:inline-block;
-        padding: 0.5em;
-    }
-}
-
-
-.panel{
-    display:none;
-
-    &.active{
-        display:block;
-    }
-}
-
-
-option{
-	color: #000000;
-}
-
-
- 

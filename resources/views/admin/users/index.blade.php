@@ -41,8 +41,7 @@
 
 @section('form')
 
-    
-    @include('admin.components.errors')
+
 
     <div class="form-container">
 

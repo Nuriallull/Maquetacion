@@ -18,7 +18,7 @@
                 </h1>
             </div>
 
-            <div id="table-container">   
+            <div id="table-container" class="table">   
 
                 @foreach($faqs as $faq_element)
                     <div class="table-row swipe-element">
@@ -35,7 +35,7 @@
                             </div> 
                             
                             <div class="table-icons delete-button left-swipe" data-url="{{route('faqs_destroy', ['faq' => $faq_element->id])}}">
-                                <svg class="table-icons" viewBox="0 0 24 24">
+                                <svg class="table-icons delete-button left-swipe" viewBox="0 0 24 24">
                                     <path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
                                 </svg>
                             </div>
@@ -85,7 +85,7 @@
             </table>
             
 
-            @include('admin.components.table_pagination')
+            @include('admin.components.table_pagination', ['items' => $faqs])   
             
 
         @endif
@@ -105,50 +105,167 @@
 
                 <input autocomplete="false" name="hidden" type="text" style="display:none;">
                 <input type="hidden" name="id" value="{{isset($faq->id) ? $faq->id : ''}}">
-
+            
                 <div class="form-header">
                     <div class="form-update">
-                        <button id="update-button" class="update" data-url="{{route('faqs_create')}}"> 
-                            <svg class="button_text" style="width:24px;height:24px" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M21,10.12H14.22L16.96,7.3C14.23,4.6 9.81,4.5 7.08,7.2C4.35,9.91 4.35,14.28 7.08,17C9.81,19.7 14.23,19.7 16.96,17C18.32,15.65 19,14.08 19,12.1H21C21,14.08 20.12,16.65 18.36,18.39C14.85,21.87 9.15,21.87 5.64,18.39C2.14,14.92 2.11,9.28 5.62,5.81C9.13,2.34 14.76,2.34 18.27,5.81L21,3V10.12M12.5,8V12.25L16,14.33L15.28,15.54L11,13V8H12.5Z" />
-                            </svg>
-                        </button>
+                            <button id="update-button" class="update" data-url="{{route('faqs_create')}}"> 
+                                <svg class="button_text" style="width:24px;height:24px" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M21,10.12H14.22L16.96,7.3C14.23,4.6 9.81,4.5 7.08,7.2C4.35,9.91 4.35,14.28 7.08,17C9.81,19.7 14.23,19.7 16.96,17C18.32,15.65 19,14.08 19,12.1H21C21,14.08 20.12,16.65 18.36,18.39C14.85,21.87 9.15,21.87 5.64,18.39C2.14,14.92 2.11,9.28 5.62,5.81C9.13,2.34 14.76,2.34 18.27,5.81L21,3V10.12M12.5,8V12.25L16,14.33L15.28,15.54L11,13V8H12.5Z" />
+                                </svg>
+                            </button>
                     </div>
+                </div>  
+
+                <div class="menu-form">
+                    <ul>
+                        <li class="menu-button" data-tab="contenido"> Contenido </li>
+                        <li class="menu-button" data-tab="imagenes"> Imágenes </li>
+                    </ul>
+                
                 </div>
 
-                <div class="form-group">
-                    <div class="form-label">
-                        <label for="category_id" class="label-highlight">
-                            Categoría 
-                        </label>
+
+                <div class="panel active" data-tab="contenido">
+                            
+                    <div class="form-group">
+                        <div class="form-label">
+                            <label for="category_id" class="label-highlight">
+                                Categoría 
+                            </label>
+                        </div>
+                        <div class="form-input">
+                            <select name="category_id" data-placeholder="Seleccione una categoría" class="input-highlight">
+                                <option></option>
+                                @foreach($faqs_categories as $faq_category)
+                                    <option value="{{$faq_category->id}}" {{$faq->category_id == $faq_category->id ? 'selected':''}} class="category_id">{{ $faq_category->name }}</option>
+                                @endforeach
+                            </select>  
+                        </div>                 
                     </div>
-                    <div class="form-input">
-                        <select name="category_id" data-placeholder="Seleccione una categoría" class="input-highlight">
-                            <option></option>
-                            @foreach($faqs_categories as $faq_category)
-                                <option value="{{$faq_category->id}}" {{$faq->category_id == $faq_category->id ? 'selected':''}} class="category_id">{{ $faq_category->name }}</option>
-                            @endforeach
-                        </select>                   
+                
+                    <div class="form-group">
+                        <div class="form-label">
+                            <label for="title" class="label-highlight">Nombre</label>
+                        </div>
+                        <div class="form-input">
+                            <input type="text" name="name" value="{{isset($faq->name) ? $faq->name : ''}}"  class="input-highlight"  />
+                        </div>
                     </div>
+
+    
+                    @component('admin.components.locale', ['tab' => 'content'])
+
+                        <div class="subpanel active" data-tab="español">
+
+                            <div class="form-group">
+                                <div class="form-label">
+                                    <label for="title" class="label-highlight">
+                                        Titulo
+                                    </label>
+                                </div>
+    
+                                <div class="form-input">
+                                    <input type="text" name="name" class="input-highlight"> 
+                                </div>
+                            </div>
+    
+                            <div class="form-group">
+                                <div class="form-label">
+                                    <label for="description" class="label-highlight">
+                                        Descripcion
+                                    </label>
+                                </div>
+    
+                                <div class="form-input">
+                                    <textarea class="ckeditor" name="description" class="input-highlight"> </textarea>
+                                </div>
+                            </div>
+        
+                        
+                        </div>
+    
+                        <div class="subpanel" data-tab="ingles">
+    
+                            <div class="form-group">
+                                <div class="form-label">
+                                    <label for="title" class="label-highlight">
+                                        Title
+                                    </label>
+                                </div>
+    
+                                <div class="form-input">
+                                    <input type="text" name="name" class="input-highlight"> 
+                                </div>
+                            </div>
+    
+                            <div class="form-group">
+                                <div class="form-label">
+                                    <label for="description" class="label-highlight">
+                                        Description
+                                    </label>
+                                </div>
+    
+                                <div class="form-input">
+                                    <textarea class="ckeditor" name="description" class="input-highlight"> </textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                    @endcomponent
+                        
                 </div>
 
-                <div class="form-group">
-                    <div class="form-label">
-                        <label for="title" class="label-highlight">Nombre</label>
-                    </div>
-                    <div class="form-input">
-                        <input type="text" name="name" value="{{isset($faq->name) ? $faq->name : ''}}"  class="input-highlight"  />
-                    </div>
+                <div class="panel" id="imagen" data-tab="imagenes">
+
+                    @component('admin.components.locale', ['tab' => 'images'])
+
+                        <div class="subpanel active" data-localetab="español">
+            
+                            <div class="drop-zone">
+                                <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                <input type="file" name="myFile" class="drop-zone__input">
+                            </div>
+    
+                            <div class="form-group">
+                                <div class="form-label">
+                                    <label for="title" class="label-highlight">
+                                        Título
+                                    </label>
+                                </div>
+    
+                                <div class="form-input">
+                                    <input type="text" name="name" class="input-highlight"> 
+                                </div>
+                            </div>
+    
+                        </div>
+    
+                        <div class="subpanel" data-localetab="ingles">
+    
+                            <div class="drop-zone">
+                                <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                <input type="file" name="myFile" class="drop-zone__input">
+                            </div>
+    
+                            <div class="form-group">
+                                <div class="form-label">
+                                    <label for="title" class="label-highlight">
+                                        Title
+                                    </label>
+                                </div>
+    
+                                <div class="form-input">
+                                    <input type="text" name="name" class="input-highlight"> 
+                                </div>
+                            </div>
+    
+                        </div>
+    
+                    @endcomponent
+                
                 </div>
                 
-                <div class="form-group">
-                    <div class="form-label">
-                        <label for="description" class="label-highlight">Descripción</label>
-                    </div>
-                    <div class="form-input">
-                        <textarea class="ckeditor" name="description" class="input-highlight">{{isset($faq->description) ? $faq->description : ''}}</textarea>
-                    </div>
-                </div>
             </form>
         </div>
         

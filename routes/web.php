@@ -29,6 +29,10 @@ Route::group(['prefix' => 'admin'], function () {
         ]
     ]);
     
+    /* Hacemos la llamada tipo get en vez de post para filtros paginados, pasamos los datos
+    por la variable {filters?}*/
+
+    Route::get('/faqs/filter/{filters?}', 'App\Http\Controllers\Admin\FaqController@filter')->name('faqs_filter');
     Route::resource('faqs', 'App\Http\Controllers\Admin\FaqController', [
         'names' => [
             'index' => 'faqs',
@@ -68,7 +72,7 @@ Route::group(['prefix' => 'admin'], function () {
         ]
     ]);
 
-    Route::post('/sliders/filter', 'App\Http\Controllers\Admin\SliderController@filter')->name('sliders_filter');
+    Route::get('/sliders/filter/{filters?}', 'App\Http\Controllers\Admin\SliderController@filter')->name('sliders_filter');
 
     Route::resource('sliders', 'App\Http\Controllers\Admin\SliderController', [
         'parameters' => [
@@ -83,22 +87,6 @@ Route::group(['prefix' => 'admin'], function () {
             'show' => 'sliders_show',
         ]
     ]);
-
-
-    Route::post('/faqs/filter', 'App\Http\Controllers\Admin\FaqController@filter')->name('faqs_filter');
-    
-    Route::resource('faqs', 'App\Http\Controllers\Admin\FaqController', [
-        'names' => [
-            'index' => 'faqs',
-            'create' => 'faqs_create',
-            'edit' => 'faqs_edit',
-            'store' => 'faqs_store',
-            'destroy' => 'faqs_destroy',
-            'show' => 'faqs_show',
-        ]
-    ]);
-
-
 });
 
 Route::post('/fingerprint', 'App\Http\Controllers\Front\FingerprintController@store')->name('front_fingerprint');

@@ -49,7 +49,8 @@
                 
             </table>
 
-            @include('admin.components.table_pagination_sliders')
+            @include('admin.components.table_pagination', ['items' => $sliders])
+                
                 
         @endif
 

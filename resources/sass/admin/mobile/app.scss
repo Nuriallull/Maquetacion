@@ -8,8 +8,8 @@
 @import "layout/master";
 @import "layout/topbar";
 @import "layout/sidebar";
-// @import "layout/table";
 @import "layout/table-example";
+// @import "layout/table";
 // @import "layout/form";
 @import "layout/form-example";
 @import "layout/portfolio";
@@ -24,5 +24,5 @@
 @import "components/messages";
 @import "components/menu-nestable";
 @import "components/tabs";
-@import "components/swipe";
 @import "components/table-filter";
+@import "layout/bottombar";

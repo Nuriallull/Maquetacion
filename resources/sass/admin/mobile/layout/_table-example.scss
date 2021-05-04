@@ -1,30 +1,25 @@
 .table{
-    display: block;
     height: max-content;
-    overflow: scroll;
     position: relative;
+    transition: all 300ms ease-out;
     width: 100%;
+
+    &.active{
+        display: block;
+    }
 }
+
 .table-row {
     background-color: rgb(255, 255, 255);
-    border: 1px solid hsl(0, 0%, 73%);
-    min-height: 10vh;
+    border-bottom: 1px solid hsl(0, 0%, 73%);
+    border-top: 1px solid hsl(0, 0%, 73%);
+    min-height: 15vh;
     position: relative;    
 }
 
 #table-container{
-    margin-top: 1.2em;
-    height: max-content;
-    width: 100%;
-    display: block;
-    
-}
-
-
-
-.table-field-container{
     background-color: white;
-    min-height: 10vh;
+    min-height: 15vh;
     position: absolute;
     -ms-touch-action: none;
     touch-action: none;
@@ -33,7 +28,6 @@
 }
 
 .table-field{
-    display: table-row;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; 
@@ -41,15 +35,16 @@
     p{
         font-weight: 600;
         margin: 0;
-        margin-left: 1em;
+        margin-left: 0.5em;
+        margin-top: 0.5em;
 
         span{
-            color: #000000;
+            color: hsl(183, 98%, 35%);
             margin-right: 0.5em;
         }
     }
+   
 }
-
 
 .table-icons-container{
 

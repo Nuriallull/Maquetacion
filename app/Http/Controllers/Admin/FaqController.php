@@ -6,17 +6,21 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Jenssegers\Agent\Agent;
 use App\Http\Requests\Admin\FaqRequest;
 use App\Models\DB\Faq;
 
 class FaqController extends Controller
 {
     protected $faq;
+    protected $agent;
+    protected $paginate;
 
-    function __construct(Faq $faq)
+    function __construct(Faq $faq, Agent $agent)
     {
-       $this->middleware('auth');
+        $this->middleware('auth');
         $this->faq = $faq;
+        $this->agent = $agent;
         
     }
     
@@ -25,7 +29,9 @@ class FaqController extends Controller
 
         $view = View::make('admin.faqs.index')
                 ->with('faq', $this->faq)
-                ->with('faqs', $this->faq->where('active', 1)->paginate(5)); 
+                ->with('faqs', $this->faq->where('active', 1)
+                ->orderBy('created_at', 'desc')
+                ->paginate($this->paginate));
 
         if(request()->ajax()) {
             
@@ -68,13 +74,13 @@ class FaqController extends Controller
         }
 
             $view = View::make('admin.faqs.index')
-            ->with('faqs', $this->faq->where('active', 1)->paginate(10))
+            ->with('faqs', $this->faq->where('active', 1)->paginate($this->paginate))
             ->with('faq', $faq)
             ->renderSections();        
         
 
             $view = View::make('admin.faqs.index')
-            ->with('faqs', $this->faq->where('active', 1)->paginate(6))
+            ->with('faqs', $this->faq->where('active', 1)->paginate($this->paginate))
             ->with('faq', $faq)
             ->renderSections();        
              
@@ -91,7 +97,7 @@ class FaqController extends Controller
     {
         $view = View::make('admin.faqs.index')
         ->with('faq', $faq)
-        ->with('faqs', $this->faq->where('active', 1)->paginate(5));   
+        ->with('faqs', $this->faq->where('active', 1)->paginate($this->paginate));   
         
         if(request()->ajax()) {
 
@@ -107,6 +113,15 @@ class FaqController extends Controller
 
     public function show(Faq $faq){
 
+        $view = View::make('admin.faqs.index')
+        ->with('faq', $faq)
+        ->with('faqs', $this->faq->where('active', 1)->orderBy('created_at', 'desc')->paginate($this->paginate))
+        ->renderSections();        
+
+        return response()->json([
+            'table' => $view['table'],
+            'form' => $view['form'],
+        ]);
     }
 
     public function destroy(Faq $faq)
@@ -116,7 +131,7 @@ class FaqController extends Controller
 
         $view = View::make('admin.faqs.index')
             ->with('faq', $this->faq)
-            ->with('faqs', $this->faq->where('active', 1)->paginate(5))
+            ->with('faqs', $this->faq->where('active', 1)->paginate($this->paginate))
             ->renderSections();
         
         return response()->json([
@@ -126,73 +141,83 @@ class FaqController extends Controller
     }
 
 
-    public function filter(Request $request){
+    public function filter(Request $request, $filters = null){
+
+        $filters = json_decode($request->input('filters'));
 
         $query = $this->faq->query();
 
-        $query->when(request('category_id'), function ($q, $category_id) {
+        if($filters != null){
 
-            if($category_id == 'all'){
-                return $q;
-            }
-            else {
-                return $q->where('category_id', $category_id);
-            }
-        });
+            $query->when($filters->category_id, function ($q, $category_id) {
 
-        $query->when(request('search'), function ($q, $search) {
+                if($category_id == 'all'){
+                    return $q;
+                }
+                else {
+                    return $q->where('category_id', $category_id);
+                }
+            });
+
+            $query->when($filters->search, function ($q, $search) {
+                
+                if($search == null){
+                    return $q;
+                }
+                else {
+                    return $q->where('t_faqs.name', 'like', "%$search%");
+                }
+            }); 
+
+            $query->when($filters->created_at_from, function ($q, $created_at_from) {
+                
+                if($created_at_from == null){
+                    return $q;
+                }
+                else {
+                    return $q->whereDate('t_faqs.created_at', '>=', $created_at_from);
+                }
+            });
             
-            if($search == null){
-                return $q;
-            }
-            else {
-                return $q->where('name', 'like', "%$search%");
-            }
-        }); 
+            $query->when($filters->created_at_since, function ($q, $created_at_since) {
+                
+                if($created_at_since == null){
+                    return $q;
+                }
+                else {
+                    return $q->whereDate('t_faqs.created_at', '<=', $created_at_since);
+                }
+            });
 
-        $query->when(request('created_at_from'), function ($q, $created_at_from) {
-            
-            if($created_at_from == null){
-                return $q;
-            }
-            else {
-                return $q->whereDate('created_at', '>=', $created_at_from);
-            }
-        });
-        
-        $query->when(request('created_at_since'), function ($q, $created_at_since) {
-            
-            if($created_at_since == null){
-                return $q;
-            }
-            else {
-                return $q->whereDate('created_at', '<=', $created_at_since);
-            }
-        });
+            $query->when($filters->order, function ($q, $order) use ($filters) {
+    
+                $q->orderBy($order, $filters->direction);
+            });
+        }
+       
 
-        // Aqui va la parte en la que introducimos el filtro Order By. También indicamos la forma en la que vamos a ordenar (direction)
-        $query->when(request('order_by'), function ($q, $order_by) {
+        if($this->agent->isMobile()){
+            $faqs = $query->where('t_faqs.active', 1)
+            ->orderBy('t_faqs.created_at', 'desc')
+            ->paginate(10)
+            ->appends(['filters' => json_encode($filters)]);  
+        }
 
-            return $q->orderBy($order_by, request('direction'));
-            
-        });
-
-        
-        $faqs = $query->where('t_faqs.active', 1)->join('t_faqs_categories', 't_faqs.category_id', '=', 't_faqs_categories.id')->get();
+        if($this->agent->isDesktop()){
+            $faqs = $query->where('t_faqs.active', 1)
+            ->orderBy('t_faqs.created_at', 'desc')
+            ->paginate(10)
+            ->appends(['filters' => json_encode($filters)]);  
+        }
 
         $view = View::make('admin.faqs.index')
             ->with('faqs', $faqs)
             ->renderSections();
 
-        if(request()->ajax()) {
+        return response()->json([
+            'table' => $view['table'],
+        ]); 
             
-                $sections = $view->renderSections(); 
-        
-                return response()->json([
-                    'table' => $sections['table'],
-                ]); 
-        }
-    
-        return $view;
+       
     }
 }

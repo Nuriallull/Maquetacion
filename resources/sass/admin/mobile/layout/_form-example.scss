@@ -2,20 +2,54 @@
 
 .form{
 	background-color: rgba(114, 201, 223, 0.5);
-	height: 90%;
-	max-height: 640px;
+	height: 80%;
 	padding: 1em;
 	width: 85%;
 	max-width: 480px;
 	font-size: 0.8em;
-	display: block;
+	display: none;
+
+	&.active{
+		display: block;
+		z-index: 3000;
+	}
+
+	.one-column{
+
+        .form-group{
+            width: 100%;
+        }
+    }
+
+    .two-columns{
+        display: flex;
+        justify-content: space-between;
+
+        .form-group{
+            width: 47%;
+        }
+    }
+
+    .three-columns{
+        display: flex;
+        justify-content: space-between;
+
+        .form-group{
+            width: 32%;
+        }
+    }
+
+    .four-columns{
+        display: flex;
+        justify-content: space-between;
+
+        .form-group{
+            width: 23%;
+        }
+    }
+
 }
 
-
-.form-header{
-	display: flex;
-	justify-content: flex-end;
-}
 
 .form-error{
 	opacity: 0;
@@ -85,6 +119,12 @@
 	height: 20vh;
 }
 
+.form-input select{
+	border: 0.2em;
+	border-radius: 0.3em;
+	padding: 0.2em;
+}
+
 .form-footer{
 	display: flex;
 	justify-content: flex-end;
@@ -117,19 +157,9 @@
 
 #menu-container{
 	margin-bottom: 2em;
-	width: 100%;
-	.menu-form{
-		font-size: 0.8em;
-	}
+	width: 90%;
 }
 
-
-.menu-form li:hover{
-	border: 0.1em solid #000000;
-	border-radius: 0.3em;
-	background-color: #FFFFFF;
-	color: hsl(0, 0%, 0%);
-}
 
 .menu-button .active{
 	
@@ -141,32 +171,58 @@
 }
 
 
-.menu-form ul{
-    width: 100%;
-	max-width: 480px;
+.menu-form{
+    width: 45%;
 
     li{
         display:inline-block;
         padding: 0.5em;
     }
+
+	.form-header{
+		width: 50%;
+	}
+}
+
+.menu-form li:hover{
+	border: 0.1em solid #000000;
+	border-radius: 0.3em;
+	background-color: #FFFFFF;
+	color: hsl(0, 0%, 0%);
+}
+
+.panel .submenu-form ul{
+	width: 45%;
+
+    li{
+        display:inline-block;
+        padding: 0.5em;
+    }
+
+	.form-header{
+		width: 50%;
+	}
 }
 
 
 .panel{
     display:none;
+	z-index: 3000;
 
     &.active{
         display:block;
+		position: absolute;
+		z-index: 3003;
     }
 }
 
 .form-update button.update{
-	position: relative;
-    padding: 8px 16px;
+	position:relative;
+    padding: 2em;
     background: #009579;
     border: none;
     outline: none;
-    border-radius: 2px;
+    border-radius: 0.5em;
     cursor: pointer;
 	
 	&.active{
@@ -184,4 +240,3 @@
 		animation: button-loading-spinner 1s ease infinite;
 	}
 }
- 

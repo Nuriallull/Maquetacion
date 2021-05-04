@@ -1882,60 +1882,13 @@ __webpack_require__(/*! ./crudTable */ "./resources/js/admin/desktop/crudTable.j
 
 __webpack_require__(/*! ./sidebar */ "./resources/js/admin/desktop/sidebar.js");
 
-__webpack_require__(/*! ./filter */ "./resources/js/admin/desktop/filter.js"); // 
-// import Vue from 'vue/dist/vue';
-// Alternativa laravel-vue-datatable
-// import DataTable from 'laravel-vue-datatable';
-// Vue.use(DataTable);
-// Alternativa vuejs-datatable
-// import { VuejsDatatableFactory } from 'vuejs-datatable';
-// Vue.use( VuejsDatatableFactory );
-// Vue.component('datatable-component', require('./components/admin/DatatableComponent.vue').default);
-// const app = new Vue({
-//     el: '#app',
-// });
-// window.Vue = require('vue');
-// //Import Vue Filter
-// require('./filter'); 
-// //Import progressbar
-// require('./progressbar'); 
-// //Setup custom events 
-// require('./customEvents'); 
-// //Import View Router
-// import VueRouter from 'vue-router'
-// Vue.use(VueRouter)
-// //Import Sweetalert2
-// import Swal from 'sweetalert2'
-// window.Swal = Swal
-// const Toast = Swal.mixin({
-//   toast: true,
-//   position: 'top-end',
-//   showConfirmButton: false,
-//   timer: 3000,
-//   timerProgressBar: true,
-//   onOpen: (toast) => {
-//     toast.addEventListener('mouseenter', Swal.stopTimer)
-//     toast.addEventListener('mouseleave', Swal.resumeTimer)
-//   }
-// })
-// window.Toast = Toast
-// //Import v-from
-// import { Form, HasError, AlertError } from 'vform'
-// window.Form = Form;
-// Vue.component(HasError.name, HasError)
-// Vue.component(AlertError.name, AlertError)
-// //Routes
-// import { routes } from './routes';
-// //Register Routes
-// const router = new VueRouter({
-//     routes, 
-//     mode: 'hash',
-// })
-// //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-// const app = new Vue({
-//     el: '#app',
-//     router
-// });
+__webpack_require__(/*! ./filter */ "./resources/js/admin/desktop/filter.js");
+
+__webpack_require__(/*! ./dropzone */ "./resources/js/admin/desktop/dropzone.js");
+
+__webpack_require__(/*! ./tabs */ "./resources/js/admin/desktop/tabs.js");
+
+__webpack_require__(/*! ./tabslocale */ "./resources/js/admin/desktop/tabslocale.js");
 
 /***/ }),
 
@@ -1992,6 +1945,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wait__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./wait */ "./resources/js/admin/desktop/wait.js");
 /* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./messages */ "./resources/js/admin/desktop/messages.js");
 /* harmony import */ var _ckeditor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ckeditor */ "./resources/js/admin/desktop/ckeditor.js");
+/* harmony import */ var _tabs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./tabs */ "./resources/js/admin/desktop/tabs.js");
+/* harmony import */ var _tabslocale__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./tabslocale */ "./resources/js/admin/desktop/tabslocale.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2013,20 +1968,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
 var table = document.getElementById("table");
-var form = document.getElementById("form");
-var menuButton = document.querySelectorAll(".menu-button");
-var panel = document.querySelectorAll(".panel");
-menuButton.forEach(function (menuButton) {
-  menuButton.addEventListener("click", function () {
-    panel.forEach(function (panel) {
-      if (panel.dataset.tab == menuButton.dataset.tab) {
-        panel.classList.toggle("active");
-        menuButton.classList.toggle("active");
-      }
-    });
-  });
-}); //*Aqui comienza la función que incluye el JavaScript del formulario. Las constantes pasan a ser variables, y solamente se mantienen como constantes el formulario y la tabla.
+var form = document.getElementById("form"); //*Aqui comienza la función que incluye el JavaScript del formulario. Las constantes pasan a ser variables, y solamente se mantienen como constantes el formulario y la tabla.
 
 var renderForm = function renderForm() {
   var forms = document.querySelectorAll(".admin-form");
@@ -2160,6 +2105,8 @@ var renderForm = function renderForm() {
     sendCreateRequest();
   });
   (0,_ckeditor__WEBPACK_IMPORTED_MODULE_3__.renderEditor)();
+  (0,_tabs__WEBPACK_IMPORTED_MODULE_4__.renderTabs)();
+  (0,_tabslocale__WEBPACK_IMPORTED_MODULE_5__.renderLocaleTabs)();
 };
 var renderTable = function renderTable() {
   var editButtons = document.querySelectorAll(".edit-button");
@@ -2297,6 +2244,79 @@ renderTable();
 
 /***/ }),
 
+/***/ "./resources/js/admin/desktop/dropzone.js":
+/*!************************************************!*\
+  !*** ./resources/js/admin/desktop/dropzone.js ***!
+  \************************************************/
+/***/ (() => {
+
+document.querySelectorAll(".drop-zone__input").forEach(function (inputElement) {
+  var dropZoneElement = inputElement.closest(".drop-zone");
+  dropZoneElement.addEventListener("click", function (e) {
+    inputElement.click();
+  });
+  inputElement.addEventListener("change", function (e) {
+    if (inputElement.files.length) {
+      updateThumbnail(dropZoneElement, inputElement.files[0]);
+    }
+  });
+  dropZoneElement.addEventListener("dragover", function (e) {
+    e.preventDefault();
+    dropZoneElement.classList.add("drop-zone--over");
+  });
+  ["dragleave", "dragend"].forEach(function (type) {
+    dropZoneElement.addEventListener(type, function (e) {
+      dropZoneElement.classList.remove("drop-zone--over");
+    });
+  });
+  dropZoneElement.addEventListener("drop", function (e) {
+    e.preventDefault();
+
+    if (e.dataTransfer.files.length) {
+      inputElement.files = e.dataTransfer.files;
+      updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+    }
+
+    dropZoneElement.classList.remove("drop-zone--over");
+  });
+});
+/**
+ * Updates the thumbnail on a drop zone element.
+ *
+ * @param {HTMLElement} dropZoneElement
+ * @param {File} file
+ */
+
+function updateThumbnail(dropZoneElement, file) {
+  var thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb"); // First time - remove the prompt
+
+  if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+    dropZoneElement.querySelector(".drop-zone__prompt").remove();
+  } // First time - there is no thumbnail element, so lets create it
+
+
+  if (!thumbnailElement) {
+    thumbnailElement = document.createElement("div");
+    thumbnailElement.classList.add("drop-zone__thumb");
+    dropZoneElement.appendChild(thumbnailElement);
+  }
+
+  thumbnailElement.dataset.label = file.name; // Show thumbnail for image files
+
+  if (file.type.startsWith("image/")) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = function () {
+      thumbnailElement.style.backgroundImage = "url('".concat(reader.result, "')");
+    };
+  } else {
+    thumbnailElement.style.backgroundImage = null;
+  }
+}
+
+/***/ }),
+
 /***/ "./resources/js/admin/desktop/filter.js":
 /*!**********************************************!*\
   !*** ./resources/js/admin/desktop/filter.js ***!
@@ -2331,45 +2351,48 @@ var renderFilterTable = function renderFilterTable() {
   });
   applyFilter.addEventListener('click', function () {
     var data = new FormData(filterForm);
+    var filters = {};
+    data.forEach(function (value, key) {
+      filters[key] = value;
+    });
+    var json = JSON.stringify(filters);
     var url = filterForm.action;
 
-    var sendPostRequest = /*#__PURE__*/function () {
+    var sendFilterRequest = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios.post(url, data).then(function (response) {
-                  table.innerHTML = response.data.table;
-                  (0,_crudTable__WEBPACK_IMPORTED_MODULE_1__.renderTable)();
-                  tableFilter.classList.toggle("active");
-                  applyFilter.classList.toggle("active");
-                });
+                console.log(url);
 
-              case 3:
-                _context.next = 7;
-                break;
+                try {
+                  axios.get(url, {
+                    params: {
+                      filters: json
+                    }
+                  }).then(function (response) {
+                    table.innerHTML = response.data.table;
+                    (0,_crudTable__WEBPACK_IMPORTED_MODULE_1__.renderTable)();
+                    tableFilter.classList.toggle("active");
+                    applyFilter.classList.toggle("active");
+                  });
+                } catch (error) {}
 
-              case 5:
-                _context.prev = 5;
-                _context.t0 = _context["catch"](0);
-
-              case 7:
+              case 2:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 5]]);
+        }, _callee);
       }));
 
-      return function sendPostRequest() {
+      return function sendFilterRequest() {
         return _ref.apply(this, arguments);
       };
     }();
 
-    sendPostRequest();
+    sendFilterRequest();
   });
 };
 renderFilterTable();
@@ -2489,6 +2512,68 @@ hamButton.addEventListener("click", function () {
   hamButton.classList.toggle("active");
   sidebar.classList.toggle("active");
 });
+
+/***/ }),
+
+/***/ "./resources/js/admin/desktop/tabs.js":
+/*!********************************************!*\
+  !*** ./resources/js/admin/desktop/tabs.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "renderTabs": () => (/* binding */ renderTabs)
+/* harmony export */ });
+var renderTabs = function renderTabs() {
+  var menuButton = document.querySelectorAll(".menu-button");
+  var panel = document.querySelectorAll(".panel");
+  menuButton.forEach(function (menuButton) {
+    menuButton.addEventListener("click", function () {
+      var activeElements = document.querySelectorAll(".active");
+      activeElements.forEach(function (activeElement) {
+        activeElement.classList.remove("active");
+      });
+      panel.forEach(function (panel) {
+        panel.classList.remove("active");
+
+        if (panel.dataset.tab == menuButton.dataset.tab) {
+          panel.classList.add("active");
+        }
+      });
+    });
+  });
+};
+
+/***/ }),
+
+/***/ "./resources/js/admin/desktop/tabslocale.js":
+/*!**************************************************!*\
+  !*** ./resources/js/admin/desktop/tabslocale.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "renderLocaleTabs": () => (/* binding */ renderLocaleTabs)
+/* harmony export */ });
+var renderLocaleTabs = function renderLocaleTabs() {
+  var subpanelButton = document.querySelectorAll(".subpanel-button");
+  var subPanel = document.querySelectorAll(".subpanel");
+  subpanelButton.forEach(function (subpanelButton) {
+    subpanelButton.addEventListener("click", function () {
+      subPanel.forEach(function (subPanel) {
+        subPanel.classList.remove("active");
+
+        if (subPanel.dataset.localetab == subpanelButton.dataset.localetab) {
+          subPanel.classList.add("active");
+        }
+      });
+    });
+  });
+};
 
 /***/ }),
 

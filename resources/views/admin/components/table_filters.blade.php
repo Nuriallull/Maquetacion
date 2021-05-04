@@ -1,6 +1,6 @@
 <div class="table-filter" id="table-filter">
     <div class="table-filter-container">
-        <form class="filter-form" id="filter-form" action="{{route("faqs_filter")}}" autocomplete="off">             
+        <form class="filter-form" id="filter-form" action="{{route($route.'_filter')}}" autocomplete="off">             
 
             {{ csrf_field() }}
 
@@ -94,7 +94,7 @@
                     <div class="form-label">
                         <label> Ordenar por
                     </div>
-                    <select name="order_by"> 
+                    <select name="order"> 
                         @foreach($order as $key => $item)
                             <option value="{{$item}}">{{$key}}</option>
                         @endforeach

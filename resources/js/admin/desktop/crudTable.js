@@ -1,30 +1,13 @@
 import {startWait, stopWait} from './wait';
 import {showMessage} from './messages';
 import {renderEditor} from './ckeditor';
+import {renderTabs} from './tabs';
+import {renderLocaleTabs} from './tabslocale';
 
 const table = document.getElementById("table");
 const form = document.getElementById("form");
-const menuButton = document.querySelectorAll(".menu-button");
-const panel = document.querySelectorAll(".panel");
 
-menuButton.forEach (menuButton => {
 
-    menuButton.addEventListener("click", () => {
-
-        panel.forEach(panel => {
-
-            if(panel.dataset.tab == menuButton.dataset.tab){
-
-            
-                panel.classList.toggle("active");
-                menuButton.classList.toggle("active");
-
-            }
-        })
-
-    })
-
-});
 
 //*Aqui comienza la función que incluye el JavaScript del formulario. Las constantes pasan a ser variables, y solamente se mantienen como constantes el formulario y la tabla.
 
@@ -136,6 +119,8 @@ export let renderForm = () => {
     });
 
     renderEditor();
+    renderTabs();
+    renderLocaleTabs();
 };
 
 export let renderTable = () => {
