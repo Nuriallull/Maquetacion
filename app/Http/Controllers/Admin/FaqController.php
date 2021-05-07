@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Jenssegers\Agent\Agent;
 use App\Http\Requests\Admin\FaqRequest;
 use App\Models\DB\Faq;
+use Debugbar;
 
 class FaqController extends Controller
 {
@@ -60,6 +61,8 @@ class FaqController extends Controller
 
     public function store(FaqRequest $request)
     {            
+        Debugbar::info(request('locale'));
+
         $faq = $this->faq->updateOrCreate([
             'id' => request('id')],[
             'name' => request('name'),

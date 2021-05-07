@@ -736,10 +736,11 @@ tr td:last-child {
 .table-icons-container {
   display: flex;
   justify-content: space-around;
+  width: 40%;
 }
 
 .table-icons {
-  width: 30%;
+  width: 100%;
   font-size: 1em;
 }
 .table-icons:hover {
@@ -753,6 +754,7 @@ tr td:last-child {
 }
 .table-icons svg path {
   fill: #000000;
+  width: 100%;
 }
 
 #order-button {
@@ -1201,8 +1203,8 @@ tr:nth-child(even) {
   justify-content: space-around;
 }
 .modal-delete .modal-body .modal-body-buttons .btn-alert {
-  background-color: #e04857;
-  border-color: #e04857;
+  background-color: #000000;
+  border-color: solid #000000;
   border-radius: 0.25rem;
   cursor: pointer;
   color: white;
@@ -1220,7 +1222,7 @@ tr:nth-child(even) {
   width: 100%;
 }
 .modal-delete .modal-body .modal-body-buttons .btn-alert:hover {
-  background-color: #ff7a7a;
+  background-color: #FFFFFF;
 }
 
 .modal-menu-item {
@@ -1914,14 +1916,14 @@ tr:nth-child(even) {
 .panel {
   display: none;
 }
-.panel.active {
+.panel.tab-active {
   display: block;
 }
 
 .subpanel {
   display: none;
 }
-.subpanel.active {
+.subpanel.locale-tab-active {
   display: block;
 }
 
@@ -2178,31 +2180,45 @@ select {
     transform: rotate(450deg);
   }
 }
-input[type=checkbox] {
-  height: 0;
-  width: 0;
-  visibility: hidden;
+.switch-container {
+  width: 50%;
+  float: right;
+  position: relative;
+  bottom: 3.2em;
+  right: 14em;
 }
 
 label.switch {
   cursor: pointer;
   text-indent: -9999px;
-  width: 200px;
-  height: 100px;
+  width: 6em;
+  height: 2.7em;
   background: grey;
   display: block;
   border-radius: 100px;
-  position: relative;
+  position: absolute;
+  transition: 0.4s;
+  border-radius: 1.3em;
 }
-label.switch.active {
+
+input[type=checkbox] {
+  display: none;
+}
+
+.slider:before {
   content: "";
   position: absolute;
-  top: 5px;
+  height: 2em;
+  width: 2em;
   left: 5px;
-  width: 90px;
-  height: 90px;
-  border-radius: 90px;
-  transition: 0.3s;
+  bottom: 5px;
+  background-color: #FFFFFF;
+  transition: 0.4s;
+  border-radius: 1.5em;
+}
+
+input:checked + .slider:before {
+  transform: translateX(50px);
 }
 
 .messages-container {

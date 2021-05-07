@@ -1886,10 +1886,6 @@ __webpack_require__(/*! ./filter */ "./resources/js/admin/desktop/filter.js");
 
 __webpack_require__(/*! ./dropzone */ "./resources/js/admin/desktop/dropzone.js");
 
-__webpack_require__(/*! ./tabs */ "./resources/js/admin/desktop/tabs.js");
-
-__webpack_require__(/*! ./tabslocale */ "./resources/js/admin/desktop/tabslocale.js");
-
 /***/ }),
 
 /***/ "./resources/js/admin/desktop/ckeditor.js":
@@ -2531,15 +2527,14 @@ var renderTabs = function renderTabs() {
   var panel = document.querySelectorAll(".panel");
   menuButton.forEach(function (menuButton) {
     menuButton.addEventListener("click", function () {
-      var activeElements = document.querySelectorAll(".active");
+      var activeElements = document.querySelectorAll(".tab-active");
       activeElements.forEach(function (activeElement) {
-        activeElement.classList.remove("active");
+        activeElement.classList.remove("tab-active");
       });
+      menuButton.classList.add("tab-active");
       panel.forEach(function (panel) {
-        panel.classList.remove("active");
-
         if (panel.dataset.tab == menuButton.dataset.tab) {
-          panel.classList.add("active");
+          panel.classList.add("tab-active");
         }
       });
     });
@@ -2564,11 +2559,17 @@ var renderLocaleTabs = function renderLocaleTabs() {
   var subPanel = document.querySelectorAll(".subpanel");
   subpanelButton.forEach(function (subpanelButton) {
     subpanelButton.addEventListener("click", function () {
+      var activeElements = document.querySelectorAll(".locale-tab-active");
+      var activeTab = subpanelButton.dataset.tab;
+      activeElements.forEach(function (activeElement) {
+        if (activeElement.dataset.tab == activeTab) {
+          activeElement.classList.remove("locale-tab-active");
+        }
+      });
+      subpanelButton.classList.add("locale-tab-active");
       subPanel.forEach(function (subPanel) {
-        subPanel.classList.remove("active");
-
-        if (subPanel.dataset.localetab == subpanelButton.dataset.localetab) {
-          subPanel.classList.add("active");
+        if (subPanel.dataset.tab == activeTab) {
+          if (subPanel.dataset.localetab == subpanelButton.dataset.localetab) subPanel.classList.add("locale-tab-active");
         }
       });
     });

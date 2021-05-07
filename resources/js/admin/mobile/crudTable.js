@@ -4,6 +4,8 @@ import {scrollWindowElement} from './verticalScroll';
 import {startWait, stopWait} from './wait';
 import {showMessage} from './messages';
 import {showForm} from './bottombarMenu';
+import {renderTabs} from './tabs';
+import {renderLocaleTabs} from './tabslocale';
 
 const table = document.getElementById("table");
 const form = document.getElementById("form");
@@ -92,6 +94,8 @@ export let renderForm = () => {
     });
 
     renderEditor();
+    renderTabs();
+    renderLocaleTabs();
 
 
 };
@@ -135,35 +139,14 @@ export let verticalScrollTable = () => {
     new scrollWindowElement(table);
 
 }
-export let deleteElement = () => {
 
-    let deleteButtons = document.querySelectorAll(".delete-button");
+export let deleteElement = (url) => {
 
-        deleteButtons.forEach(deleteButton => {
+    let modalDelete = document.getElementById('modal-delete');
+    let deleteConfirm = document.getElementById('delete-confirm');
 
-            deleteButton.addEventListener("click", () => {
-
-                let url = deleteButton.dataset.url;
-
-                let sendDeleteRequest = async () => {
-
-                    try {
-                        await axios.delete(url).then(response => {
-                            table.innerHTML = response.data.table;
-                            renderTable();
-                        });
-                        
-                    } catch (error) {
-                        console.error(error);
-                    }
-                };
-
-                sendDeleteRequest();
-                //* llamamos la funcion eliminar: cuando pulsemos el boton eliminar, cogemos los datos de la tabla (innerhtml) para que desaparezcan de ella.
-            });
-        })
-
-    
+    deleteConfirm.dataset.url = url;
+    modalDelete.classList.add('open');
 }
 
 

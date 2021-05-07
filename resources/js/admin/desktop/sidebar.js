@@ -9,7 +9,6 @@ const sidebar = document.getElementById("sidebar");
 sidebarButton.forEach(sidebarButton => {
 
     sidebarButton.addEventListener("click", () => {
-
         let url = sidebarButton.dataset.url;
 
             let sendBarRequest = async () => {

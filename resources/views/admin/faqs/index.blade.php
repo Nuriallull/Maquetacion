@@ -114,6 +114,13 @@
                                 </svg>
                             </button>
                     </div>
+
+                    <div class="switch-container">
+                        <label class="switch"> 
+                        <input type="checkbox">
+                            <span class="slider"> </span>
+                        </label>
+                    </div>
                 </div>  
 
                 <div class="menu-form">
@@ -125,7 +132,7 @@
                 </div>
 
 
-                <div class="panel active" data-tab="contenido">
+                <div class="panel tab-active" data-tab="contenido">
                             
                     <div class="form-group">
                         <div class="form-label">
@@ -155,7 +162,7 @@
     
                     @component('admin.components.locale', ['tab' => 'content'])
 
-                        <div class="subpanel active" data-tab="español">
+                        <div class="subpanel locale-tab-active" data-tab="content" data-localetab="es">
 
                             <div class="form-group">
                                 <div class="form-label">
@@ -165,7 +172,7 @@
                                 </div>
     
                                 <div class="form-input">
-                                    <input type="text" name="name" class="input-highlight"> 
+                                    <input type="text" name="locale[title.es]" class="input-highlight"> 
                                 </div>
                             </div>
     
@@ -184,7 +191,7 @@
                         
                         </div>
     
-                        <div class="subpanel" data-tab="ingles">
+                        <div class="subpanel" data-tab="content" data-localetab="en">
     
                             <div class="form-group">
                                 <div class="form-label">
@@ -194,7 +201,7 @@
                                 </div>
     
                                 <div class="form-input">
-                                    <input type="text" name="name" class="input-highlight"> 
+                                    <input type="text" name="locale[title.en]" class="input-highlight"> 
                                 </div>
                             </div>
     
@@ -216,14 +223,15 @@
                         
                 </div>
 
-                <div class="panel" id="imagen" data-tab="imagenes">
+                <div class="panel" data-tab="imagenes">
 
-                    @component('admin.components.locale', ['tab' => 'images'])
+                    @component('admin.components.locale', ['tab' => 'imagenes'])
 
-                        <div class="subpanel active" data-localetab="español">
+                        <div class="subpanel locale-tab-active" data-tab="imagenes" data-localetab="es">
+                        
             
                             <div class="drop-zone">
-                                <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                <span class="drop-zone__prompt">Arrastra aquí tu archivo o haz click encima</span>
                                 <input type="file" name="myFile" class="drop-zone__input">
                             </div>
     
@@ -235,13 +243,13 @@
                                 </div>
     
                                 <div class="form-input">
-                                    <input type="text" name="name" class="input-highlight"> 
+                                    <input type="text" name="title" class="input-highlight"> 
                                 </div>
                             </div>
     
                         </div>
     
-                        <div class="subpanel" data-localetab="ingles">
+                        <div class="subpanel" data-tab="imagenes" data-localetab="en">
     
                             <div class="drop-zone">
                                 <span class="drop-zone__prompt">Drop file here or click to upload</span>
@@ -256,7 +264,7 @@
                                 </div>
     
                                 <div class="form-input">
-                                    <input type="text" name="name" class="input-highlight"> 
+                                    <input type="text" name="title" class="input-highlight"> 
                                 </div>
                             </div>
     

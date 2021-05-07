@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ClientRequest;
 use App\Models\DB\Client;
@@ -13,7 +14,7 @@ class ClientController extends Controller
     function __construct(Client $client)
 
     {  
-       $this->middleware('auth');      
+          
         $this->client = $client;
     }
 
@@ -21,8 +22,8 @@ class ClientController extends Controller
     {
 
         $view = View::make('admin.clients.index')
-                ->with('clients', $this->client->where('active', 1)->get())
-                ->with('client', $this->client);
+            ->with('clients', $this->client->where('active', 1)->get())
+            ->with('client', $this->client);
     
         if(request()->ajax()) {
 

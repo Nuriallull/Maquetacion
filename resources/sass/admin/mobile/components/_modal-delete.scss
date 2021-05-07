@@ -1,6 +1,6 @@
 .modal-delete{
 
-    background-color: $white;
+    background-color: #000000;
     height: 25vh;
     transform: translateY(-200%);
     position: fixed;
@@ -12,10 +12,13 @@
     transition: transform 0.5s;
     width: 40%;
     z-index: 3000;
+    color: #FFFFFF;
 
     &.open{
         top: 30%;
         transform: translateY(0);
+        border: solid #000000;
+        border-radius: 0.3em;
     }
 
     .modal-header{
@@ -60,8 +63,8 @@
             justify-content: space-around;
 
             .btn-alert{
-                background-color: $alert;
-                border-color: $alert;
+                background-color: #000000;
+                border-color: solid #000000;
                 border-radius: .25rem;
                 cursor: pointer;
                 color: $white;
@@ -76,7 +79,7 @@
                 width: 100%;
 
                 &:hover{
-                    background-color: $alert-highlight;
+                    background-color: #FFFFFF;
                 }
             }
         }

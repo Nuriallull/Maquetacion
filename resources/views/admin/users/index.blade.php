@@ -51,16 +51,8 @@
 
             <input autocomplete="false" name="hidden" type="text" style="display:none;">
             <input type="hidden" name="id" value="{{isset($user->id) ? $user->id : ''}}">
-             <div id="menu-container">
-                <div class="menu-form">
-                    <ul>
-                        <li class="menu-button" data-tab="info"> Información </li>
-                        <li class="menu-button" data-tab="imagenes"> Imágenes </li>
-                        <li class="menu-button" data-tab="herramientas"> Herramientas </li>
-                    </ul>
-                </div>
-            </div>
-        <div class="panel" data-tab="info">
+             
+       
             <div class="form-group">
                 <div class="form-label">
                     <label for="name" class="label-highlight">Nombre de Usuario</label>
@@ -69,9 +61,9 @@
                     <input type="text" name="name" value="{{isset($user->name) ? $user->name : ''}}"  class="input-highlight">
                 </div>
             </div>
-        </div>
         
-        <div class="panel" data-tab="imagenes">
+        
+        
             <div class="form-group">
                 <div class="form-label">
                     <label for="email" class="label-highlight">Email</label>
@@ -80,9 +72,9 @@
                   	<input type="email" name="email" value="{{isset($user->email) ? $user->email : ''}}"  class="input-highlight"  />
               	</div>
           	</div>
-        </div>
+      
 		
-        <div class="panel" data-tab="herramientas">
+      
 			<div class="form-group">
                 <div class="form-label">
                     <label for="password" class="label-highlight">Contraseña</label>
@@ -90,12 +82,12 @@
                 <div class="form-input">
                   <input type="password" name="password" id="password" onkeyup='check();' value="{{isset($user->password) ? $user->password : ''}}"  class="input-highlight"  />
                 </div>
-			</div>
+			
 
 			<div class="form-group">
                 <div class="form-label">
                 	<label for="password" class="label-highlight">Confirmar Contraseña</label>
-              	</div>
+                </div>
             	<div class="form-input">
                 	<input type="password" name="password_confirmation" id="confirm_password" onkeyup='check();' value="{{isset($user->password) ? $user->password : ''}}"  class="input-highlight"  />
 					<label id="message"></label>

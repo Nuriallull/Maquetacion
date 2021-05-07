@@ -43,7 +43,7 @@
 
 @section('form')
 
-    @include('admin.components.errors')
+   
 
     <div class="form-container">
         <form class="admin-form" id="admin-form" action="{{route("clients_store")}}" autocomplete="off">

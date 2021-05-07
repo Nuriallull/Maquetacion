@@ -2,8 +2,8 @@
 	width: 50%;
 	float: right;
 	position: relative;
-	bottom: 3.2em;
-	right: 14em;
+	bottom: 3.5em;
+	right: 4em;
 	
 }
 
@@ -38,5 +38,5 @@ input[type=checkbox] {
 }
 
 input:checked + .slider:before{
-	transform: translateX(50px);
+	transform: translateX(40px);
 }
