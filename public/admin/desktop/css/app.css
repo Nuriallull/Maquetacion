@@ -1891,6 +1891,13 @@ tr:nth-child(even) {
   padding: 0.5em;
 }
 
+.menu-button {
+  background-color: #000000;
+}
+.menu-button.tab-active {
+  background-color: #9d9ddb;
+}
+
 .submenu-form {
   background-color: #FFFFFF;
   border: 0.1em;

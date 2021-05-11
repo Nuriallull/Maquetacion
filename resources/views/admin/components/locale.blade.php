@@ -2,8 +2,11 @@
 
     <div class="submenu-form">
         <ul>
-            <li class="subpanel-button" data-tab="{{$tab}}" data-localetab="es"> Español </li>
-            <li class="subpanel-button" data-tab="{{$tab}}" data-localetab="en"> Inglés </li>
+            @foreach ($localizations as $localization)
+                <li class="subpanel-button {{ $loop->first ? 'locale-tab-active':'' }}" data-tab="{{$tab}}" data-localetab="{{$localization->alias}}"> 
+                    {{$localization->name}}
+                </li>
+            @endforeach
         </ul>
     </div>
 

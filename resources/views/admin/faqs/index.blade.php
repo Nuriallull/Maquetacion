@@ -162,62 +162,37 @@
     
                     @component('admin.components.locale', ['tab' => 'content'])
 
-                        <div class="subpanel locale-tab-active" data-tab="content" data-localetab="es">
+                        @foreach ($localizations as $localization)
 
-                            <div class="form-group">
-                                <div class="form-label">
-                                    <label for="title" class="label-highlight">
-                                        Titulo
-                                    </label>
-                                </div>
-    
-                                <div class="form-input">
-                                    <input type="text" name="locale[title.es]" class="input-highlight"> 
-                                </div>
-                            </div>
-    
-                            <div class="form-group">
-                                <div class="form-label">
-                                    <label for="description" class="label-highlight">
-                                        Descripcion
-                                    </label>
-                                </div>
-    
-                                <div class="form-input">
-                                    <textarea class="ckeditor" name="description" class="input-highlight"> </textarea>
-                                </div>
-                            </div>
+                            <div class="subpanel {{ $loop->first ? 'locale-tab-active':'' }}" data-tab="content" data-localetab="{{$localization->alias}}">
+
+                                <div class="form-group">
+                                    <div class="form-label">
+                                        <label for="title" class="label-highlight">
+                                            Titulo
+                                        </label>
+                                    </div>
         
-                        
-                        </div>
-    
-                        <div class="subpanel" data-tab="content" data-localetab="en">
-    
-                            <div class="form-group">
-                                <div class="form-label">
-                                    <label for="title" class="label-highlight">
-                                        Title
-                                    </label>
+                                    <div class="form-input">
+                                        <input type="text" name="locale[title.{{$localization->alias}}]" value="{{isset($locale["title.$localization->alias"]) ? $locale["title.$localization->alias"] : ''}}" class="input-highlight"> 
+                                    </div>
                                 </div>
-    
-                                <div class="form-input">
-                                    <input type="text" name="locale[title.en]" class="input-highlight"> 
+        
+                                <div class="form-group">
+                                    <div class="form-label">
+                                        <label for="description" class="label-highlight">
+                                            Descripcion
+                                        </label>
+                                    </div>
+        
+                                    <div class="form-input">
+                                        <textarea class="ckeditor input-highlight" name="locale[description.{{$localization->alias}}]">{{isset($locale["description.$localization->alias"]) ? $locale["description.$localization->alias"] : ''}}</textarea>
+                                    </div>
                                 </div>
+            
+                            
                             </div>
-    
-                            <div class="form-group">
-                                <div class="form-label">
-                                    <label for="description" class="label-highlight">
-                                        Description
-                                    </label>
-                                </div>
-    
-                                <div class="form-input">
-                                    <textarea class="ckeditor" name="description" class="input-highlight"> </textarea>
-                                </div>
-                            </div>
-
-                        </div>
+                        @endforeach
                         
                     @endcomponent
                         
@@ -227,49 +202,32 @@
 
                     @component('admin.components.locale', ['tab' => 'imagenes'])
 
-                        <div class="subpanel locale-tab-active" data-tab="imagenes" data-localetab="es">
-                        
+                        @foreach ($localizations as $localization)
+                                
+                                <div class="subpanel {{ $loop->first ? 'locale-tab-active':'' }}" data-tab="imagenes" data-localetab="{{$localization->alias}}">
+                                
+                    
+                                    <div class="drop-zone">
+                                        <span class="drop-zone__prompt">Arrastra aquí tu archivo o haz click encima</span>
+                                        <input type="file" name="myFile" class="drop-zone__input">
+                                    </div>
             
-                            <div class="drop-zone">
-                                <span class="drop-zone__prompt">Arrastra aquí tu archivo o haz click encima</span>
-                                <input type="file" name="myFile" class="drop-zone__input">
-                            </div>
-    
-                            <div class="form-group">
-                                <div class="form-label">
-                                    <label for="title" class="label-highlight">
-                                        Título
-                                    </label>
+                                    <div class="form-group">
+                                        <div class="form-label">
+                                            <label for="title" class="label-highlight">
+                                                Título
+                                            </label>
+                                        </div>
+            
+                                        <div class="form-input">
+                                            <input type="text" name="title" class="input-highlight"> 
+                                        </div>
+                                    </div>
+            
                                 </div>
-    
-                                <div class="form-input">
-                                    <input type="text" name="title" class="input-highlight"> 
-                                </div>
-                            </div>
-    
-                        </div>
-    
-                        <div class="subpanel" data-tab="imagenes" data-localetab="en">
-    
-                            <div class="drop-zone">
-                                <span class="drop-zone__prompt">Drop file here or click to upload</span>
-                                <input type="file" name="myFile" class="drop-zone__input">
-                            </div>
-    
-                            <div class="form-group">
-                                <div class="form-label">
-                                    <label for="title" class="label-highlight">
-                                        Title
-                                    </label>
-                                </div>
-    
-                                <div class="form-input">
-                                    <input type="text" name="title" class="input-highlight"> 
-                                </div>
-                            </div>
-    
-                        </div>
-    
+
+                        @endforeach
+                        
                     @endcomponent
                 
                 </div>
@@ -283,6 +241,7 @@
             </div>
         </div>
     @endif
+
 @endsection
 
 

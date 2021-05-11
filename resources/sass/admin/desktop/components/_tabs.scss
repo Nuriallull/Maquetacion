@@ -21,6 +21,13 @@
     }
 }
 
+.menu-button{
+	background-color:#000000;
+	&.tab-active{
+		background-color: rgb(157, 157, 219);
+	}
+}
+
 .submenu-form{
 	background-color: #FFFFFF;
 	border: 0.1em;
