@@ -887,7 +887,10 @@ tr:nth-child(even) {
 }
 
 .form-label label.active {
-  color: #000000;
+  background-color: #dedede;
+  border-radius: 0.3em;
+  color: black;
+  cursor: pointer;
 }
 
 .form-input {
@@ -940,7 +943,7 @@ tr:nth-child(even) {
   padding: 0.2em;
   transition: border 0.3s;
   position: absolute;
-  top: 90%;
+  top: 85%;
   right: 0;
   left: 90%;
   bottom: 0;
@@ -1891,11 +1894,11 @@ tr:nth-child(even) {
   padding: 0.5em;
 }
 
-.menu-button {
-  background-color: #000000;
-}
 .menu-button.tab-active {
-  background-color: #9d9ddb;
+  background-color: #dedede;
+  border-radius: 0.3em;
+  color: black;
+  cursor: pointer;
 }
 
 .submenu-form {
@@ -1920,6 +1923,13 @@ tr:nth-child(even) {
   cursor: pointer;
 }
 
+.subpanel-button.locale-tab-active {
+  background-color: #dedede;
+  border-radius: 0.3em;
+  color: black;
+  cursor: pointer;
+}
+
 .panel {
   display: none;
 }
@@ -1935,15 +1945,13 @@ tr:nth-child(even) {
 }
 
 .drop-zone {
-  max-width: 7em;
-  height: 3em;
+  max-width: 10em;
+  height: 6em;
   padding: 2em;
   margin-bottom: 2.5em;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  font-family: "Quicksand", sans-serif;
   font-weight: 500;
   font-size: 1em;
   cursor: pointer;

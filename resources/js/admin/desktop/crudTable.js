@@ -3,6 +3,7 @@ import {showMessage} from './messages';
 import {renderEditor} from './ckeditor';
 import {renderTabs} from './tabs';
 import {renderLocaleTabs} from './tabslocale';
+import {renderUpload} from './upload';
 
 const table = document.getElementById("table");
 const form = document.getElementById("form");
@@ -121,6 +122,7 @@ export let renderForm = () => {
     renderEditor();
     renderTabs();
     renderLocaleTabs();
+    renderUpload();
 };
 
 export let renderTable = () => {

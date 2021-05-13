@@ -524,13 +524,14 @@ a:hover, a:focus {
   height: max-content;
   width: 100%;
 }
-.faqs .faq .faq-title-container .faq-title {
+.faqs .faq .faq-title-container .faqs-title {
   margin: 0 0.5em;
   width: 90%;
 }
-.faqs .faq .faq-title-container .faq-title h3 {
+.faqs .faq .faq-title-container .faqs-title h3 {
   color: white;
   font-weight: 400;
+  text-align: center;
 }
 .faqs .faq .faq-title-container .faq-plus-button {
   cursor: pointer;
@@ -576,7 +577,7 @@ a:hover, a:focus {
   bottom: 0.65em;
 }
 .faqs .faq .faq-title-container:hover {
-  background-color: #110c40;
+  background-color: rgba(114, 201, 223, 0.938);
 }
 .faqs .faq .faq-description {
   background-color: white;
@@ -591,10 +592,11 @@ a:hover, a:focus {
   margin: 1em;
 }
 .faqs .faq.active .faq-title-container {
-  background-color: #110c40;
+  background-color: rgba(114, 201, 223, 0.938);
 }
 .faqs .faq.active .faq-description {
   max-height: 200vh;
+  color: #927676;
 }
 
 @media (min-width: 481px) and (max-width: 767px) {

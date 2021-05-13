@@ -14,14 +14,16 @@
             height: max-content;
             width: 100%;
 
-            .faq-title{
+            .faqs-title{
                 margin: 0 0.5em;
                 width: 90%;
+
             }
 
-            .faq-title h3{
+            .faqs-title h3{
                 color: $white;
                 font-weight: 400;
+                text-align: center;
             }
 
             .faq-plus-button {
@@ -32,7 +34,7 @@
         }
 
         .faq-title-container:hover{
-            background-color: $blue-dark;
+            background-color: rgba(114, 201, 223, 0.938);
         }
 
         .faq-description{
@@ -54,11 +56,12 @@
     .faq.active{
         
         .faq-title-container{
-            background-color: $blue-dark;
+            background-color: rgba(114, 201, 223, 0.938);
         }
 
         .faq-description{
             max-height: 200vh;
+            color: #927676;
         }
     }
     

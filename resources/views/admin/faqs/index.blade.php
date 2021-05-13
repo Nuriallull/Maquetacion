@@ -205,12 +205,13 @@
                         @foreach ($localizations as $localization)
                                 
                                 <div class="subpanel {{ $loop->first ? 'locale-tab-active':'' }}" data-tab="imagenes" data-localetab="{{$localization->alias}}">
-                                
-                    
-                                    <div class="drop-zone">
-                                        <span class="drop-zone__prompt">Arrastra aquí tu archivo o haz click encima</span>
-                                        <input type="file" name="myFile" class="drop-zone__input">
-                                    </div>
+                                    
+                                    @include('admin.components.upload', [
+                                        'type' => 'image', 
+                                        'content' => 'featured', 
+                                        'alias' => $localization->alias,
+                                        'files' => $faq->images_featured
+                                    ])
             
                                     <div class="form-group">
                                         <div class="form-label">
