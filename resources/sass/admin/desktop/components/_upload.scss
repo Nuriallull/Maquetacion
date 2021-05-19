@@ -1,0 +1,109 @@
+.upload-image,
+.upload-image-add{
+  height: 15vh;
+  align-items: center;
+  border: 0.2em dashed #dedede;
+  color: #000000;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 500;
+  height: 12vh;
+  justify-content: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding: 0.3em;
+  text-align: center;
+}
+
+.upload-image-add:hover{
+  border: 0.2em dashed #ffffff;
+}
+
+
+#multiple-element{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2em;
+  width: 100%;
+}
+
+
+.upload-image.collection,
+.upload-image-add.collection{
+    height: 15vh;
+    padding: 0;
+}
+
+.upload-over {
+  border-style: solid;
+}
+
+.drop-zone{
+  align-items: center;
+  width: 100%;
+}
+
+.drop-zone__prompt{
+  position: absolute;
+    width: 15%;
+    z-index: 999;
+  .picture-button{
+    opacity: 100%;
+    width: 2.5em;
+    
+  }
+}
+
+.upload-image-options{
+  display: none;
+}
+.upload-image:hover .upload-image-options{
+  display: initial;
+  position: absolute;
+  width: 15%;
+  z-index: 999;
+
+  svg{
+      height: 1.2em;
+      width: 1.2em;
+
+      path{
+          fill: hsl(0, 0%, 100%);
+      }
+  }
+}
+
+  
+.drop-zone--over {
+	border-style: solid;
+  }
+  
+.drop-zone__input {
+	display: none;
+  }
+  
+.upload-thumb {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: hsl(0, 0%, 80%);
+    background-size: cover;
+    position: relative;
+    z-index: 900;
+}
+
+.upload-thumb::after {
+   content: attr(data-label);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px 0;
+    color: #ffffff;
+    font-size: 14px;
+    text-align: center;
+}
+
+
+

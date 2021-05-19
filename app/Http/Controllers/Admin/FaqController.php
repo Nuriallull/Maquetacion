@@ -79,6 +79,8 @@ class FaqController extends Controller
     public function store(FaqRequest $request)
     {            
 
+        Debugbar::info(request("collection"));
+
         $faq = $this->faq->updateOrCreate([
             'id' => request('id')],[
             'name' => request('name'),

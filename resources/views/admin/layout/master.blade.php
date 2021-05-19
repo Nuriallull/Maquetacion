@@ -18,6 +18,7 @@
             @include('admin.components.wait')
             @include('admin.components.messages')
             @include('admin.components.modal_delete')
+            @include('admin.components.modal_images')
             @include("admin.layout.partials.sidebar")
             @include("admin.layout.partials.bottombar")
             

@@ -1884,8 +1884,6 @@ __webpack_require__(/*! ./sidebar */ "./resources/js/admin/desktop/sidebar.js");
 
 __webpack_require__(/*! ./filter */ "./resources/js/admin/desktop/filter.js");
 
-__webpack_require__(/*! ./dropzone */ "./resources/js/admin/desktop/dropzone.js");
-
 /***/ }),
 
 /***/ "./resources/js/admin/desktop/ckeditor.js":
@@ -2243,79 +2241,6 @@ renderTable();
 
 /***/ }),
 
-/***/ "./resources/js/admin/desktop/dropzone.js":
-/*!************************************************!*\
-  !*** ./resources/js/admin/desktop/dropzone.js ***!
-  \************************************************/
-/***/ (() => {
-
-document.querySelectorAll(".drop-zone__input").forEach(function (inputElement) {
-  var dropZoneElement = inputElement.closest(".drop-zone");
-  dropZoneElement.addEventListener("click", function (e) {
-    inputElement.click();
-  });
-  inputElement.addEventListener("change", function (e) {
-    if (inputElement.files.length) {
-      updateThumbnail(dropZoneElement, inputElement.files[0]);
-    }
-  });
-  dropZoneElement.addEventListener("dragover", function (e) {
-    e.preventDefault();
-    dropZoneElement.classList.add("drop-zone--over");
-  });
-  ["dragleave", "dragend"].forEach(function (type) {
-    dropZoneElement.addEventListener(type, function (e) {
-      dropZoneElement.classList.remove("drop-zone--over");
-    });
-  });
-  dropZoneElement.addEventListener("drop", function (e) {
-    e.preventDefault();
-
-    if (e.dataTransfer.files.length) {
-      inputElement.files = e.dataTransfer.files;
-      updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
-    }
-
-    dropZoneElement.classList.remove("drop-zone--over");
-  });
-});
-/**
- * Updates the thumbnail on a drop zone element.
- *
- * @param {HTMLElement} dropZoneElement
- * @param {File} file
- */
-
-function updateThumbnail(dropZoneElement, file) {
-  var thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb"); // First time - remove the prompt
-
-  if (dropZoneElement.querySelector(".drop-zone__prompt")) {
-    dropZoneElement.querySelector(".drop-zone__prompt").remove();
-  } // First time - there is no thumbnail element, so lets create it
-
-
-  if (!thumbnailElement) {
-    thumbnailElement = document.createElement("div");
-    thumbnailElement.classList.add("drop-zone__thumb");
-    dropZoneElement.appendChild(thumbnailElement);
-  }
-
-  thumbnailElement.dataset.label = file.name; // Show thumbnail for image files
-
-  if (file.type.startsWith("image/")) {
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onload = function () {
-      thumbnailElement.style.backgroundImage = "url('".concat(reader.result, "')");
-    };
-  } else {
-    thumbnailElement.style.backgroundImage = null;
-  }
-}
-
-/***/ }),
-
 /***/ "./resources/js/admin/desktop/filter.js":
 /*!**********************************************!*\
   !*** ./resources/js/admin/desktop/filter.js ***!
@@ -2434,6 +2359,170 @@ closeButtons.forEach(function (closeButton) {
       messageActive.classList.remove('message-active');
     });
   });
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/desktop/modalImage.js":
+/*!**************************************************!*\
+  !*** ./resources/js/admin/desktop/modalImage.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "openModal": () => (/* binding */ openModal),
+/* harmony export */   "openImageModal": () => (/* binding */ openImageModal),
+/* harmony export */   "updateImageModal": () => (/* binding */ updateImageModal)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wait__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./wait */ "./resources/js/admin/desktop/wait.js");
+/* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./messages */ "./resources/js/admin/desktop/messages.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+var modalImageStoreButton = document.getElementById('modal-image-store-button');
+var modalImageDeleteButton = document.getElementById('modal-image-delete-button');
+var openModal = function openModal() {
+  var modal = document.getElementById('upload-image-modal');
+  modal.classList.add('modal-active');
+  (0,_wait__WEBPACK_IMPORTED_MODULE_1__.startOverlay)();
+};
+var openImageModal = function openImageModal(image) {
+  var modal = document.getElementById('upload-image-modal');
+  var imageContainer = document.getElementById('modal-image-original');
+  var imageForm = document.getElementById('image-form');
+
+  if (image.path) {
+    imageContainer.src = '../storage/' + image.path;
+  }
+
+  for (var _i = 0, _Object$entries = Object.entries(image); _i < _Object$entries.length; _i++) {
+    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+        key = _Object$entries$_i[0],
+        val = _Object$entries$_i[1];
+
+    var input = imageForm.elements[key];
+
+    if (input) {
+      switch (input.type) {
+        case 'checkbox':
+          input.checked = !!val;
+          break;
+
+        default:
+          input.value = val;
+          break;
+      }
+    }
+  }
+
+  modal.classList.add('modal-active');
+  (0,_wait__WEBPACK_IMPORTED_MODULE_1__.startOverlay)();
+};
+var updateImageModal = function updateImageModal(image) {
+  var imageContainer = document.getElementById('modal-image-original');
+  imageContainer.src = image;
+};
+modalImageStoreButton.addEventListener("click", function (e) {
+  var modal = document.getElementById('upload-image-modal');
+  var imageForm = document.getElementById('image-form');
+  var data = new FormData(imageForm);
+  var url = imageForm.action;
+
+  var sendImagePostRequest = /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              try {
+                axios.post(url, data).then(function (response) {
+                  modal.classList.remove('modal-active');
+                  (0,_wait__WEBPACK_IMPORTED_MODULE_1__.stopWait)();
+                  (0,_messages__WEBPACK_IMPORTED_MODULE_2__.showMessage)('success', response.data.message);
+                });
+              } catch (error) {}
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function sendImagePostRequest() {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
+  sendImagePostRequest();
+});
+modalImageDeleteButton.addEventListener("click", function (e) {
+  var modal = document.getElementById('upload-image-modal');
+  var url = modalImageDeleteButton.dataset.route;
+  var imageId = document.getElementById('modal-image-id').value;
+
+  var sendImageDeleteRequest = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              console.log("delete");
+
+              try {
+                axios.get(url, {
+                  params: {
+                    'image': imageId
+                  }
+                }).then(function (response) {
+                  modal.classList.remove('modal-active');
+                  (0,_wait__WEBPACK_IMPORTED_MODULE_1__.stopWait)();
+                  (0,_messages__WEBPACK_IMPORTED_MODULE_2__.showMessage)('success', response.data.message);
+                  var uploadImages = document.querySelectorAll(".upload-image");
+                  uploadImages.forEach(function (uploadImage) {
+                    if (uploadImage.classList.contains(imageId)) {
+                      uploadImage.remove();
+                    }
+                  });
+                });
+              } catch (error) {}
+
+            case 2:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    return function sendImageDeleteRequest() {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
+  sendImageDeleteRequest();
 });
 
 /***/ }),
@@ -2592,12 +2681,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "renderUpload": () => (/* binding */ renderUpload)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _modalImage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modalImage */ "./resources/js/admin/desktop/modalImage.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 var renderUpload = function renderUpload() {
   var inputElements = document.querySelectorAll(".drop-zone__input");
+  var uploadImages = document.querySelectorAll(".upload-image");
   inputElements.forEach(function (inputElement) {
-    var uploadElement = inputElement.closest(".upload");
-    uploadElement.addEventListener("click", function (e) {
-      inputElement.click();
+    uploadImage(inputElement);
+  });
+  uploadImages.forEach(function (uploadImage) {
+    uploadImage.addEventListener("click", function (e) {
+      openImage(uploadImage);
+    });
+  });
+
+  function uploadImage(inputElement) {
+    var uploadElement = inputElement.parentElement;
+    uploadElement.addEventListener("click", function (event) {
+      var thumbnailElement = uploadElement.querySelector(".upload-thumb");
+
+      if (!thumbnailElement) {
+        inputElement.click();
+      } else {
+        openImage(uploadElement);
+      }
+
+      ;
     });
     inputElement.addEventListener("change", function (e) {
       if (inputElement.files.length) {
@@ -2606,6 +2723,12 @@ var renderUpload = function renderUpload() {
     });
     uploadElement.addEventListener("dragover", function (e) {
       e.preventDefault();
+
+      if (e.dataTransfer.files.length) {
+        inputElement.files = e.dataTransfer.files;
+        updateThumbnail(uploadElement, e.dataTransfer.files[0]);
+      }
+
       uploadElement.classList.add("upload-over");
     });
     ["dragleave", "dragend"].forEach(function (type) {
@@ -2623,32 +2746,96 @@ var renderUpload = function renderUpload() {
 
       uploadElement.classList.remove("upload-over");
     });
-  });
+  }
+
+  ;
 
   function updateThumbnail(uploadElement, file) {
-    var thumbnailElement = uploadElement.querySelector(".upload-thumb");
-
-    if (uploadElement.querySelector(".drop-zone__prompt")) {
-      uploadElement.querySelector(".drop-zone__prompt").remove();
-    }
-
-    if (!thumbnailElement) {
-      thumbnailElement = document.createElement("div");
-      thumbnailElement.classList.add("upload-thumb");
-      uploadElement.appendChild(thumbnailElement);
-    }
-
-    thumbnailElement.dataset.label = file.name;
-
     if (file.type.startsWith("image/")) {
+      var _thumbnailElement = uploadElement.querySelector(".upload-thumb");
+
+      var multipleWrap = document.getElementById("multiple-element");
+      /* clonamos sin apend. Con apend es así:
+         multipleWrap.appendChild(uploadClone); */
+
+      if (uploadElement.classList.contains("multiple")) {
+        if (!_thumbnailElement) {
+          var cloneUploadElement = uploadElement.cloneNode(true);
+          var cloneInput = cloneUploadElement.querySelector('.drop-zone__input');
+          uploadImage(cloneInput);
+          uploadElement.parentElement.insertBefore(cloneUploadElement, uploadElement);
+        }
+      }
+
+      if (uploadElement.querySelector(".drop-zone__prompt")) {
+        uploadElement.querySelector(".drop-zone__prompt").remove();
+      }
+
+      if (!_thumbnailElement) {
+        _thumbnailElement = document.createElement("div");
+
+        _thumbnailElement.classList.add("upload-thumb");
+
+        uploadElement.appendChild(_thumbnailElement);
+      }
+
       var reader = new FileReader();
       reader.readAsDataURL(file);
 
       reader.onload = function () {
-        thumbnailElement.style.backgroundImage = "url('".concat(reader.result, "')");
+        _thumbnailElement.style.backgroundImage = "url('".concat(reader.result, "')");
+        (0,_modalImage__WEBPACK_IMPORTED_MODULE_1__.updateImageModal)(reader.result);
+        (0,_modalImage__WEBPACK_IMPORTED_MODULE_1__.openModal)();
       };
+
+      uploadElement.classList.remove('upload-image-add');
+      uploadElement.classList.add('upload-image');
+
+      if (uploadElement.classList.contains("multiple")) {
+        var inputElement = uploadElement.getElementsByClassName("drop-zone__input")[0];
+        var content = uploadElement.dataset.content;
+        var alias = uploadElement.dataset.alias;
+        inputElement.name = "images[" + content + "-" + Math.floor(Math.random() * 99999 + 1) + "." + alias + "]";
+      }
     } else {
       thumbnailElement.style.backgroundImage = null;
+    }
+  }
+
+  ;
+
+  function openImage(image) {
+    var url = image.dataset.url;
+
+    if (url) {
+      var sendImageRequest = /*#__PURE__*/function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  try {
+                    axios.get(url).then(function (response) {
+                      (0,_modalImage__WEBPACK_IMPORTED_MODULE_1__.openImageModal)(response.data);
+                    });
+                  } catch (error) {}
+
+                case 1:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }));
+
+        return function sendImageRequest() {
+          return _ref.apply(this, arguments);
+        };
+      }();
+
+      sendImageRequest();
+    } else {
+      (0,_modalImage__WEBPACK_IMPORTED_MODULE_1__.openModal)();
     }
   }
 };
@@ -2665,7 +2852,9 @@ var renderUpload = function renderUpload() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "startWait": () => (/* binding */ startWait),
-/* harmony export */   "stopWait": () => (/* binding */ stopWait)
+/* harmony export */   "stopWait": () => (/* binding */ stopWait),
+/* harmony export */   "startOverlay": () => (/* binding */ startOverlay),
+/* harmony export */   "stopOverlay": () => (/* binding */ stopOverlay)
 /* harmony export */ });
 var spinner = document.getElementById('spinner');
 var overlay = document.getElementById('overlay');
@@ -2678,6 +2867,21 @@ var stopWait = function stopWait() {
     spinner.classList.remove('spinner-active');
     overlay.classList.remove('overlay-active');
   }, 1000);
+};
+var startOverlay = function startOverlay() {
+  overlay.classList.add('overlay-active');
+  overlay.addEventListener("click", function (e) {
+    var modals = document.querySelectorAll('.modal');
+    modals.forEach(function (modal) {
+      if (modal.classList.contains('modal-active')) {
+        modal.classList.remove('modal-active');
+      }
+    });
+    overlay.classList.remove('overlay-active');
+  });
+};
+var stopOverlay = function stopOverlay() {
+  overlay.classList.remove('overlay-active');
 };
 
 /***/ }),

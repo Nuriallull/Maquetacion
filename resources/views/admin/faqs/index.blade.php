@@ -204,28 +204,27 @@
 
                         @foreach ($localizations as $localization)
                                 
-                                <div class="subpanel {{ $loop->first ? 'locale-tab-active':'' }}" data-tab="imagenes" data-localetab="{{$localization->alias}}">
-                                    
-                                    @include('admin.components.upload', [
-                                        'type' => 'image', 
-                                        'content' => 'featured', 
-                                        'alias' => $localization->alias,
-                                        'files' => $faq->images_featured
-                                    ])
-            
-                                    <div class="form-group">
-                                        <div class="form-label">
-                                            <label for="title" class="label-highlight">
-                                                Título
-                                            </label>
-                                        </div>
-            
-                                        <div class="form-input">
-                                            <input type="text" name="title" class="input-highlight"> 
-                                        </div>
-                                    </div>
-            
-                                </div>
+                            <div class="subpanel {{ $loop->first ? 'locale-tab-active':'' }}" data-tab="imagenes" data-localetab="{{$localization->alias}}">
+                                
+                                @include('admin.components.upload', [
+                                    'entity' => 'faqs',
+                                    'type' => 'image', 
+                                    'content' => 'featured', 
+                                    'alias' => $localization->alias,
+                                    'files' => $faq->images_featured_preview
+                                ])
+                            
+                                <p> Selección múltiple </p>
+                            
+                                @include('admin.components.upload', [
+                                    'entity' => 'faqs',
+                                    'type' => 'images', 
+                                    'content' => 'grid', 
+                                    'alias' => $localization->alias,
+                                    'files' => $faq->images_grid_preview
+                                ])
+                                   
+                            </div> 
 
                         @endforeach
                         
