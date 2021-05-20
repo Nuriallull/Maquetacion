@@ -18,7 +18,16 @@
                 <div class="faq-description-text">
                 <p>  {!!isset($faq->locale['description']) ? $faq->locale['description'] : "" !!} </p>
                 </div>
+
+                @isset($faq->image_featured_desktop->path)
+                    <div class="faq-description-image">
+                        <img src="{{Storage::url($faq->image_featured_desktop->path)}}" alt="{{$faq->image_featured_desktop->alt}}" title="{{$faq->image_featured_desktop->title}}" />
+                    </div>
+                @endif
             </div>   
+
+            
+
         </div>
     @endforeach
 

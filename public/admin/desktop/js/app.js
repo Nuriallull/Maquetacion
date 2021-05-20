@@ -2441,7 +2441,29 @@ var openImageModal = function openImageModal(image) {
 };
 var updateImageModal = function updateImageModal(image) {
   var imageContainer = document.getElementById('modal-image-original');
-  imageContainer.src = image;
+  imageContainer.src = image.dataset.image;
+  var imageForm = document.getElementById('image-form');
+  imageForm.reset();
+
+  for (var _i2 = 0, _Object$entries2 = Object.entries(image.dataset); _i2 < _Object$entries2.length; _i2++) {
+    var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i2], 2),
+        key = _Object$entries2$_i[0],
+        val = _Object$entries2$_i[1];
+
+    var input = imageForm.elements[key];
+
+    if (input) {
+      switch (input.type) {
+        case 'checkbox':
+          input.checked = !!val;
+          break;
+
+        default:
+          input.value = val;
+          break;
+      }
+    }
+  }
 };
 modalImageStoreButton.addEventListener("click", function (e) {
   var modal = document.getElementById('upload-image-modal');
@@ -2481,49 +2503,47 @@ modalImageStoreButton.addEventListener("click", function (e) {
 modalImageDeleteButton.addEventListener("click", function (e) {
   var modal = document.getElementById('upload-image-modal');
   var url = modalImageDeleteButton.dataset.route;
-  var imageId = document.getElementById('modal-image-id').value;
+  var temporalId = document.getElementById('modal-image-temporal-id').value;
+  var entityId = document.getElementById('modal-image-entity-id').value;
 
-  var sendImageDeleteRequest = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              console.log("delete");
-
-              try {
-                axios.get(url, {
-                  params: {
-                    'image': imageId
-                  }
-                }).then(function (response) {
-                  modal.classList.remove('modal-active');
-                  (0,_wait__WEBPACK_IMPORTED_MODULE_1__.stopWait)();
-                  (0,_messages__WEBPACK_IMPORTED_MODULE_2__.showMessage)('success', response.data.message);
-                  var uploadImages = document.querySelectorAll(".upload-image");
-                  uploadImages.forEach(function (uploadImage) {
-                    if (uploadImage.classList.contains(imageId)) {
-                      uploadImage.remove();
+  if (entityId) {
+    var sendImageDeleteRequest = /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                try {
+                  axios.get(url, {
+                    params: {
+                      'image': imageId
                     }
+                  }).then(function (response) {
+                    (0,_messages__WEBPACK_IMPORTED_MODULE_2__.showMessage)('success', response.data.message);
                   });
-                });
-              } catch (error) {}
+                } catch (error) {}
 
-            case 2:
-            case "end":
-              return _context2.stop();
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
           }
-        }
-      }, _callee2);
-    }));
+        }, _callee2);
+      }));
 
-    return function sendImageDeleteRequest() {
-      return _ref2.apply(this, arguments);
-    };
-  }();
+      return function sendImageDeleteRequest() {
+        return _ref2.apply(this, arguments);
+      };
+    }();
 
-  sendImageDeleteRequest();
+    sendImageDeleteRequest();
+  }
+
+  modal.classList.remove('modal-active');
+  (0,_wait__WEBPACK_IMPORTED_MODULE_1__.stopWait)();
+  deleteThumbnail(temporalId);
 });
+/* introducir updateImageModal para que se renderice la imagen recien subida*/
 
 /***/ }),
 
@@ -2716,6 +2736,8 @@ var renderUpload = function renderUpload() {
 
       ;
     });
+    /* Este de arriba inputElement.click es el click para subir la foto nueva */
+
     inputElement.addEventListener("change", function (e) {
       if (inputElement.files.length) {
         updateThumbnail(uploadElement, inputElement.files[0]);
@@ -2723,12 +2745,6 @@ var renderUpload = function renderUpload() {
     });
     uploadElement.addEventListener("dragover", function (e) {
       e.preventDefault();
-
-      if (e.dataTransfer.files.length) {
-        inputElement.files = e.dataTransfer.files;
-        updateThumbnail(uploadElement, e.dataTransfer.files[0]);
-      }
-
       uploadElement.classList.add("upload-over");
     });
     ["dragleave", "dragend"].forEach(function (type) {
@@ -2783,13 +2799,19 @@ var renderUpload = function renderUpload() {
       reader.readAsDataURL(file);
 
       reader.onload = function () {
+        var temporalId = Math.floor(Math.random() * 99999 + 1);
+        var content = uploadElement.dataset.content;
+        var language = uploadElement.dataset.language;
+        var inputElement = uploadElement.getElementsByClassName("upload-image-input")[0];
         _thumbnailElement.style.backgroundImage = "url('".concat(reader.result, "')");
-        (0,_modalImage__WEBPACK_IMPORTED_MODULE_1__.updateImageModal)(reader.result);
+        uploadElement.dataset.temporalId = temporalId;
+        uploadElement.dataset.image = reader.result;
+        inputElement.name = "images[" + content + "-" + temporalId + "." + language + "]";
+        uploadElement.classList.remove('upload-image-add');
+        uploadElement.classList.add('upload-image');
+        (0,_modalImage__WEBPACK_IMPORTED_MODULE_1__.updateImageModal)(uploadElement);
         (0,_modalImage__WEBPACK_IMPORTED_MODULE_1__.openModal)();
       };
-
-      uploadElement.classList.remove('upload-image-add');
-      uploadElement.classList.add('upload-image');
 
       if (uploadElement.classList.contains("multiple")) {
         var inputElement = uploadElement.getElementsByClassName("drop-zone__input")[0];
@@ -2805,6 +2827,8 @@ var renderUpload = function renderUpload() {
   ;
 
   function openImage(image) {
+    /* aqui miramos si tiene url, si la tiene voy a por ella.
+    Si no tiene url, es una foto que acaba de cargar asi que le metemos un update en vez de un open.*/
     var url = image.dataset.url;
 
     if (url) {
@@ -2817,6 +2841,7 @@ var renderUpload = function renderUpload() {
                   try {
                     axios.get(url).then(function (response) {
                       (0,_modalImage__WEBPACK_IMPORTED_MODULE_1__.openImageModal)(response.data);
+                      /* esto abre el modal con una foto que SI esta en la BBDD*/
                     });
                   } catch (error) {}
 
@@ -2835,6 +2860,9 @@ var renderUpload = function renderUpload() {
 
       sendImageRequest();
     } else {
+      (0,_modalImage__WEBPACK_IMPORTED_MODULE_1__.updateImageModal)(image);
+      /* esto abre el modal con una foto que no esta en la BBDD, se utiliza para que al dar click, salga la foto indicada*/
+
       (0,_modalImage__WEBPACK_IMPORTED_MODULE_1__.openModal)();
     }
   }

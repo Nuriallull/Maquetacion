@@ -34,7 +34,7 @@ export let renderUpload = () => {
                 openImage(uploadElement);
             };
         });
-        
+        /* Este de arriba inputElement.click es el click para subir la foto nueva */
       
         inputElement.addEventListener("change", (e) => {
             if (inputElement.files.length) {
@@ -44,11 +44,6 @@ export let renderUpload = () => {
       
         uploadElement.addEventListener("dragover", (e) => {
             e.preventDefault();
-
-            if (e.dataTransfer.files.length) {
-                inputElement.files = e.dataTransfer.files;
-                updateThumbnail(uploadElement, e.dataTransfer.files[0]);
-            }
             uploadElement.classList.add("upload-over");
         });
       
@@ -110,13 +105,23 @@ export let renderUpload = () => {
             reader.readAsDataURL(file);
 
             reader.onload = () => {
-                thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
-                updateImageModal(reader.result);
-                openModal();
-            };
+                let temporalId = Math.floor((Math.random() * 99999) + 1);
+            let content = uploadElement.dataset.content;
+            let language = uploadElement.dataset.language;
+
+            let inputElement = uploadElement.getElementsByClassName("upload-image-input")[0];
+
+            thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+            uploadElement.dataset.temporalId = temporalId;
+            uploadElement.dataset.image = reader.result;
+            inputElement.name = "images[" + content + "-" + temporalId + "." + language  + "]"; 
 
             uploadElement.classList.remove('upload-image-add');
             uploadElement.classList.add('upload-image');
+
+            updateImageModal(uploadElement);
+            openModal();
+            };
 
 
             if(uploadElement.classList.contains("multiple")){
@@ -137,7 +142,8 @@ export let renderUpload = () => {
     };
 
     function openImage(image){
-
+ /* aqui miramos si tiene url, si la tiene voy a por ella.
+ Si no tiene url, es una foto que acaba de cargar asi que le metemos un update en vez de un open.*/
         let url = image.dataset.url;
 
         if(url){
@@ -147,7 +153,7 @@ export let renderUpload = () => {
                 try {
                     axios.get(url).then(response => {
     
-                        openImageModal(response.data);
+                        openImageModal(response.data); /* esto abre el modal con una foto que SI esta en la BBDD*/
                         
                     });
                     
@@ -159,7 +165,7 @@ export let renderUpload = () => {
             sendImageRequest();
 
         }else{            
-
+            updateImageModal(image); /* esto abre el modal con una foto que no esta en la BBDD, se utiliza para que al dar click, salga la foto indicada*/
             openModal();
         }
     }

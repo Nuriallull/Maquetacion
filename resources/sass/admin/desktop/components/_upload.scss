@@ -61,11 +61,13 @@
   display: initial;
   position: absolute;
   width: 15%;
-  z-index: 999;
+  z-index: 2002;
 
   svg{
-      height: 1.2em;
-      width: 1.2em;
+      height: 1.5em;
+      width: 1.5em;
+      position: relative;
+      margin-right: 3em;
 
       path{
           fill: hsl(0, 0%, 100%);
@@ -103,6 +105,11 @@
     color: #ffffff;
     font-size: 14px;
     text-align: center;
+
+
+  .upload-thumb:hover{
+    color: #000000;
+  }
 }
 
 

@@ -594,6 +594,17 @@ a:hover, a:focus {
   font-weight: 200;
   margin: 1em;
 }
+.faqs .faq .faq-description .faq-description-text p {
+  color: black;
+  font-weight: 200;
+  margin: 1em;
+}
+.faqs .faq .faq-description .faq-description-image {
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+  padding: 1em;
+}
 .faqs .faq.active .faq-title-container {
   background-color: #110c40;
 }

@@ -52,6 +52,21 @@
                 font-weight: 200;
                 margin: 1em;
             }
+
+            .faq-description-text{
+
+                p{
+                    color: $black;
+                    font-weight: 200;
+                    margin: 1em;
+                }
+            }
+
+            .faq-description-image{
+                min-width: max-content;
+                padding: 1em;
+            }
+           
         }
     }
 
