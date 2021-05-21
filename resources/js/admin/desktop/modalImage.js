@@ -1,5 +1,6 @@
 import {startOverlay, startWait, stopWait} from './wait';
 import {showMessage} from './messages';
+import {deleteThumbnail} from './upload';
 
 let modalImageStoreButton = document.getElementById('modal-image-store-button');
 let modalImageDeleteButton = document.getElementById('modal-image-delete-button');
@@ -17,6 +18,8 @@ export let openImageModal = (image) => {
     let modal = document.getElementById('upload-image-modal');
     let imageContainer = document.getElementById('modal-image-original');
     let imageForm = document.getElementById('image-form');
+
+    imageForm.reset();  
 
     if(image.path){
         imageContainer.src = '../storage/' + image.path;
@@ -43,15 +46,29 @@ export let openImageModal = (image) => {
 export let updateImageModal = (image) => {
 
     let imageContainer = document.getElementById('modal-image-original');
-    imageContainer.src = image.dataset.image;
-
     let imageForm = document.getElementById('image-form');
+
     imageForm.reset();
 
-    for (var [key, val] of Object.entries(image.dataset)) {
+    if(image.path){
+
+        if(image.entity_id){
+            image.imageId = image.id; 
+            imageContainer.src = '../storage/' + image.path;
+        }else{
+            imageContainer.src = image.path;
+        }
+
+    }else{
+
+        imageContainer.src = image.dataset.path;
+        image = image.dataset;
+    }
+ 
+    for (var [key, val] of Object.entries(image)) {
 
         let input = imageForm.elements[key];
-
+        
         if(input){
 
             switch(input.type) {
@@ -60,7 +77,6 @@ export let updateImageModal = (image) => {
             }
         }
     }
-    
 }
 
 modalImageStoreButton .addEventListener("click", (e) => {
@@ -76,6 +92,7 @@ modalImageStoreButton .addEventListener("click", (e) => {
             axios.post(url, data).then(response => {
 
                 modal.classList.remove('modal-active');
+                imageForm.reset();
                 stopWait();
                 showMessage('success', response.data.message);
               
@@ -91,23 +108,24 @@ modalImageStoreButton .addEventListener("click", (e) => {
 
 modalImageDeleteButton.addEventListener("click", (e) => {
 
-    
          
     let modal = document.getElementById('upload-image-modal');
     let url = modalImageDeleteButton.dataset.route;
     let temporalId = document.getElementById('modal-image-temporal-id').value;
-    let entityId = document.getElementById('modal-image-entity-id').value;
+    let imageForm = document.getElementById('image-form');
+    let id = document.getElementById('modal-image-id').value;
 
-    if(entityId){
+    if(id){
 
         let sendImageDeleteRequest = async () => {
 
             try {
                 axios.get(url, {
                     params: {
-                      'image': imageId
+                      'image': id
                     }
                 }).then(response => {
+                    deleteThumbnail(response.data.imageId);
                     showMessage('success', response.data.message);
                 });
                 
@@ -118,11 +136,15 @@ modalImageDeleteButton.addEventListener("click", (e) => {
     
         sendImageDeleteRequest();
 
+    }else{
+        console.log("no-no");
+        deleteThumbnail(temporalId);
     }
 
+   
     modal.classList.remove('modal-active');
+    imageForm.reset();
     stopWait();
-    deleteThumbnail(temporalId);
 });
 
 /* introducir updateImageModal para que se renderice la imagen recien subida*/

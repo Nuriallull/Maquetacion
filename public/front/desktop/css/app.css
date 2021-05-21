@@ -585,6 +585,8 @@ a:hover, a:focus {
 .faqs .faq .faq-description {
   background-color: white;
   max-height: 0;
+  display: flex;
+  justify-content: space-between;
   overflow: hidden;
   transition: max-height 0.5s;
   width: 100%;
@@ -593,23 +595,42 @@ a:hover, a:focus {
   color: black;
   font-weight: 200;
   margin: 1em;
+  vertical-align: top;
+}
+.faqs .faq .faq-description .faq-description-text {
+  width: 100%;
+  margin-bottom: 1em;
 }
 .faqs .faq .faq-description .faq-description-text p {
+  width: 100%;
   color: black;
   font-weight: 200;
   margin: 1em;
 }
-.faqs .faq .faq-description .faq-description-image {
-  min-width: -webkit-max-content;
-  min-width: -moz-max-content;
-  min-width: max-content;
+.faqs .faq .faq-description .faq-wrap-images .faq-description-image {
   padding: 1em;
+  width: 100%;
+  text-align: center;
+}
+.faqs .faq .faq-description .faq-wrap-images .faq-grid-images {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 0.5em;
+  width: 100%;
+  padding-bottom: 0.5em;
+}
+.faqs .faq .faq-description .faq-wrap-images .faq-description-images {
+  height: 10vh;
+  padding: 1;
+  width: 100%;
 }
 .faqs .faq.active .faq-title-container {
   background-color: #110c40;
 }
 .faqs .faq.active .faq-description {
-  max-height: 70vh;
+  max-height: -webkit-max-content;
+  max-height: -moz-max-content;
+  max-height: max-content;
 }
 
 .error-container {

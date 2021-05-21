@@ -2380,6 +2380,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wait__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./wait */ "./resources/js/admin/desktop/wait.js");
 /* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./messages */ "./resources/js/admin/desktop/messages.js");
+/* harmony import */ var _upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./upload */ "./resources/js/admin/desktop/upload.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2400,6 +2401,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var modalImageStoreButton = document.getElementById('modal-image-store-button');
 var modalImageDeleteButton = document.getElementById('modal-image-delete-button');
 var openModal = function openModal() {
@@ -2411,6 +2413,7 @@ var openImageModal = function openImageModal(image) {
   var modal = document.getElementById('upload-image-modal');
   var imageContainer = document.getElementById('modal-image-original');
   var imageForm = document.getElementById('image-form');
+  imageForm.reset();
 
   if (image.path) {
     imageContainer.src = '../storage/' + image.path;
@@ -2441,11 +2444,22 @@ var openImageModal = function openImageModal(image) {
 };
 var updateImageModal = function updateImageModal(image) {
   var imageContainer = document.getElementById('modal-image-original');
-  imageContainer.src = image.dataset.image;
   var imageForm = document.getElementById('image-form');
   imageForm.reset();
 
-  for (var _i2 = 0, _Object$entries2 = Object.entries(image.dataset); _i2 < _Object$entries2.length; _i2++) {
+  if (image.path) {
+    if (image.entity_id) {
+      image.imageId = image.id;
+      imageContainer.src = '../storage/' + image.path;
+    } else {
+      imageContainer.src = image.path;
+    }
+  } else {
+    imageContainer.src = image.dataset.path;
+    image = image.dataset;
+  }
+
+  for (var _i2 = 0, _Object$entries2 = Object.entries(image); _i2 < _Object$entries2.length; _i2++) {
     var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i2], 2),
         key = _Object$entries2$_i[0],
         val = _Object$entries2$_i[1];
@@ -2480,6 +2494,7 @@ modalImageStoreButton.addEventListener("click", function (e) {
               try {
                 axios.post(url, data).then(function (response) {
                   modal.classList.remove('modal-active');
+                  imageForm.reset();
                   (0,_wait__WEBPACK_IMPORTED_MODULE_1__.stopWait)();
                   (0,_messages__WEBPACK_IMPORTED_MODULE_2__.showMessage)('success', response.data.message);
                 });
@@ -2504,9 +2519,10 @@ modalImageDeleteButton.addEventListener("click", function (e) {
   var modal = document.getElementById('upload-image-modal');
   var url = modalImageDeleteButton.dataset.route;
   var temporalId = document.getElementById('modal-image-temporal-id').value;
-  var entityId = document.getElementById('modal-image-entity-id').value;
+  var imageForm = document.getElementById('image-form');
+  var id = document.getElementById('modal-image-id').value;
 
-  if (entityId) {
+  if (id) {
     var sendImageDeleteRequest = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
@@ -2516,9 +2532,10 @@ modalImageDeleteButton.addEventListener("click", function (e) {
                 try {
                   axios.get(url, {
                     params: {
-                      'image': imageId
+                      'image': id
                     }
                   }).then(function (response) {
+                    (0,_upload__WEBPACK_IMPORTED_MODULE_3__.deleteThumbnail)(response.data.imageId);
                     (0,_messages__WEBPACK_IMPORTED_MODULE_2__.showMessage)('success', response.data.message);
                   });
                 } catch (error) {}
@@ -2537,11 +2554,14 @@ modalImageDeleteButton.addEventListener("click", function (e) {
     }();
 
     sendImageDeleteRequest();
+  } else {
+    console.log("no-no");
+    (0,_upload__WEBPACK_IMPORTED_MODULE_3__.deleteThumbnail)(temporalId);
   }
 
   modal.classList.remove('modal-active');
+  imageForm.reset();
   (0,_wait__WEBPACK_IMPORTED_MODULE_1__.stopWait)();
-  deleteThumbnail(temporalId);
 });
 /* introducir updateImageModal para que se renderice la imagen recien subida*/
 
@@ -2699,7 +2719,8 @@ var renderLocaleTabs = function renderLocaleTabs() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "renderUpload": () => (/* binding */ renderUpload)
+/* harmony export */   "renderUpload": () => (/* binding */ renderUpload),
+/* harmony export */   "deleteThumbnail": () => (/* binding */ deleteThumbnail)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
@@ -2867,6 +2888,31 @@ var renderUpload = function renderUpload() {
     }
   }
 };
+function deleteThumbnail(imageId) {
+  var uploadImages = document.querySelectorAll(".upload-image");
+  uploadImages.forEach(function (uploadImage) {
+    if (uploadImage.classList.contains('collection')) {
+      if (uploadImage.dataset.temporalId == imageId || uploadImage.dataset.imageId == imageId) {
+        uploadImage.remove();
+      }
+    }
+
+    if (uploadImage.classList.contains('single')) {
+      if (uploadImage.dataset.temporalId == imageId || uploadImage.dataset.imageId == imageId) {
+        uploadImage.querySelector(".upload-thumb").remove();
+        uploadImage.dataset.imageId = '';
+        uploadImage.dataset.url = '';
+        uploadImage.querySelector(".drop-zone__prompt").classList.remove('hidden');
+        uploadImage.classList.remove('upload-image');
+        uploadImage.classList.add('upload-image-add');
+
+        if (uploadImage.querySelector(".drop-zone__input")) {
+          uploadImage.querySelector(".drop-zone__input").value = "";
+        }
+      }
+    }
+  });
+}
 
 /***/ }),
 

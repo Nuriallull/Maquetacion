@@ -170,3 +170,36 @@ export let renderUpload = () => {
         }
     }
 }
+
+export function deleteThumbnail(imageId) {
+
+    let uploadImages = document.querySelectorAll(".upload-image");
+
+    uploadImages.forEach(uploadImage => {
+
+        if(uploadImage.classList.contains('collection')){
+
+            if(uploadImage.dataset.temporalId == imageId || uploadImage.dataset.imageId == imageId){
+                
+                uploadImage.remove();
+            }
+        }
+
+        if(uploadImage.classList.contains('single')){
+
+            if(uploadImage.dataset.temporalId == imageId || uploadImage.dataset.imageId == imageId){
+
+                uploadImage.querySelector(".upload-thumb").remove();
+                uploadImage.dataset.imageId = '';
+                uploadImage.dataset.url = '';
+                uploadImage.querySelector(".drop-zone__prompt").classList.remove('hidden');
+                uploadImage.classList.remove('upload-image');
+                uploadImage.classList.add('upload-image-add');
+
+                if(uploadImage.querySelector(".drop-zone__input")){
+                    uploadImage.querySelector(".drop-zone__input").value = "";
+                }
+            }
+        }
+    });
+}
