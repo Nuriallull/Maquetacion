@@ -23,12 +23,12 @@ td, th {
     max-width: 5em;
     padding: 0.5em;
     text-align: center;
+    
 }
 
 td{
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap; 
+    word-wrap: break-word;
 }
 
 th {
@@ -36,7 +36,7 @@ th {
 }
 
 tr td:last-child {
-    width: 60%;
+    width: 70%;
     white-space: nowrap;
 }
 
@@ -69,6 +69,12 @@ tr td:last-child {
             width: 100%;
         }
     }    
+
+    
+}
+
+#edit-tag{
+    width: 40%;
 }
 
 #order-button{

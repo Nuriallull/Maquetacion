@@ -170,10 +170,39 @@
 	height: 5vh;
 }
 
+.form-save button{
+	border: 0.2em solid hsl(0, 0%, 50%);
+	border-radius: 0.3em;
+	background-color: #ffffff;
+	color: hsl(0, 0%, 0%);
+	font-family: $font-stack;
+	font-weight: 600;
+	font-size:  1.5em;
+	padding: 0.3em;
+	transition: border 0.3s;
+	position:absolute;
+	top: 93%;
+	right: 0;
+	left: 95%;
+	bottom: 0;
+	height: 5vh;
+}
+
+
 .form-submit button:hover{
 	border: 0.2em solid #000000;
 	background-color: 0.1em  #000000;
 	color: hsl(0, 0%, 0%);
+}
+
+.form-save button:hover{
+	border: 0.2em solid #000000;
+	background-color: 0.1em  #000000;
+	color: hsl(0, 0%, 0%);
+}
+
+#create-sitemap{
+	margin-bottom: 1em;
 }
 
 

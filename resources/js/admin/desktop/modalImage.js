@@ -111,9 +111,9 @@ modalImageDeleteButton.addEventListener("click", (e) => {
          
     let modal = document.getElementById('upload-image-modal');
     let url = modalImageDeleteButton.dataset.route;
-    let temporalId = document.getElementById('modal-image-temporal-id').value;
+    let temporalId = document.getElementById('modal-image-temporal-id');
     let imageForm = document.getElementById('image-form');
-    let id = document.getElementById('modal-image-id').value;
+    let id = document.getElementById('modal-image-id');
 
     if(id){
 
@@ -122,7 +122,7 @@ modalImageDeleteButton.addEventListener("click", (e) => {
             try {
                 axios.get(url, {
                     params: {
-                      'image': id
+                      'image': id.value
                     }
                 }).then(response => {
                     deleteThumbnail(response.data.imageId);
@@ -142,8 +142,10 @@ modalImageDeleteButton.addEventListener("click", (e) => {
     }
 
    
-    modal.classList.remove('modal-active');
+    temporalId.value = "";
+    id.value = "";
     imageForm.reset();
+    modal.classList.remove('modal-active');
     stopWait();
 });
 

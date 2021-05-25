@@ -1,5 +1,5 @@
 <?php
 
-return [
-    'title' => 'Frequently Asked Questions',
-];
+return array (
+  'title' => 'Frequently Asked Questions',
+);

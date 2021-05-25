@@ -16,6 +16,8 @@
             <li class="sidebar-menu-item" data-url="{{route('users')}}">Usuarios</li>
             <li class="sidebar-menu-item" data-url="{{route('sliders')}}"> Sliders </li>
             <li class="sidebar-menu-item" data-url="{{route('clients')}}">Clientes</li>
+            <li class="sidebar-menu-item" data-url="{{route('traductions')}}">Traducciones</li>
+            <li class="sidebar-menu-item" data-url="{{route('seo')}}">SEO</li>
 
             
         </ul>

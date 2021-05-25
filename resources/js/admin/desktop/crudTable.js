@@ -4,13 +4,14 @@ import {renderEditor} from './ckeditor';
 import {renderTabs} from './tabs';
 import {renderLocaleTabs} from './tabslocale';
 import {renderUpload} from './upload';
+import {renderLocaleTags} from './localeTags';
+import {renderGoogleBot} from './googleBot';
+import {renderSitemap} from './sitemap';
+import {renderLocaleSeo} from './localeSeo';
+
 
 const table = document.getElementById("table");
 const form = document.getElementById("form");
-
-
-
-//*Aqui comienza la función que incluye el JavaScript del formulario. Las constantes pasan a ser variables, y solamente se mantienen como constantes el formulario y la tabla.
 
 export let renderForm = () => {
 
@@ -39,91 +40,112 @@ export let renderForm = () => {
         });
     });
     
-    sendButton.addEventListener("click", () => {
-    
-        forms.forEach(form => { 
+    if (sendButton) {
+        sendButton.addEventListener("click", () => {
+        
+            forms.forEach(form => { 
+                
+                let data = new FormData(form);
+
+                if( ckeditors != 'null'){
+
+                    Object.entries(ckeditors).forEach(([key, value]) => {
+                        data.append(key, value.getData());
+                    });
+                }
+
+                let url = form.action;
+
+                let sendPostRequest = async () => {
+
+                    startWait();
+        
+                    try {
+                        await axios.post(url, data).then(response => {
+
+                            if(response.data.id){
+                                form.id.value = response.data.id;
+                            }
+
+                            table.innerHTML = response.data.table;
+
+                            stopWait();
+                            showMessage('success', response.data.message);
+                            renderTable();
+                        });
+                        
+                    } catch (error) {
+
+                        stopWait();
+        
+                        if(error.response.status == '422'){
+        
+                            let errors = error.response.data.errors;      
+                            let errorMessage = '';
+        
+                            Object.keys(errors).forEach(function(key) {
+                                errorMessage += '<li>' + errors[key] + '</li>';
+                            })
             
-            let data = new FormData(form);
+                            showMessage('error', errorMessage);
+                        }
+                    }
+                };
 
-            if( ckeditors != 'null'){
+                sendPostRequest();
+            })
 
-                Object.entries(ckeditors).forEach(([key, value]) => {
-                    data.append(key, value.getData());
-                });
-            }
+            
+            
+        });
+    };
 
-            let url = form.action;
+    if (updateButton) {
 
-            let sendPostRequest = async () => {
+        updateButton.addEventListener("click", (event) => {
 
+            event.preventDefault();
+    
+            let url = updateButton.dataset.url;
+    
+            let sendCreateRequest = async () => {
+    
                 startWait();
     
                 try {
-                    await axios.post(url, data).then(response => {
-                        form.id.value = response.data.id;
-                        table.innerHTML = response.data.table;
-
+                    await axios.get(url).then(response => {
+    
+                        form.innerHTML = response.data.form;
+    
                         stopWait();
-                        showMessage('success', response.data.message);
-                        renderTable();
+                        renderForm();
                     });
                     
                 } catch (error) {
-
+    
                     stopWait();
-    
-                    if(error.response.status == '422'){
-    
-                        let errors = error.response.data.errors;      
-                        let errorMessage = '';
-    
-                        Object.keys(errors).forEach(function(key) {
-                            errorMessage += '<li>' + errors[key] + '</li>';
-                        })
-        
-                        showMessage('error', errorMessage);
-                    }
                 }
             };
-
-            sendPostRequest();
-        });
-    });
-
-    updateButton.addEventListener("click", (event) => {
-
-        event.preventDefault();
-
-        let url = updateButton.dataset.url;
-
-        let sendCreateRequest = async () => {
-
-            startWait();
-
-            try {
-                await axios.get(url).then(response => {
-
-                    form.innerHTML = response.data.form;
-
-                    stopWait();
-                    renderForm();
-                });
-                
-            } catch (error) {
-
-                stopWait();
-            }
-        };
+    
+    
 
         sendCreateRequest();
-                
-    });
 
+        })
+                
+    }
+    
     renderEditor();
     renderTabs();
     renderLocaleTabs();
     renderUpload();
+    renderLocaleTags();
+    renderGoogleBot();
+    renderSitemap();
+    renderLocaleSeo();
+    
 };
+
 
 export let renderTable = () => {
 
@@ -206,3 +228,5 @@ export let renderTable = () => {
 
 renderForm();
 renderTable();
+
+

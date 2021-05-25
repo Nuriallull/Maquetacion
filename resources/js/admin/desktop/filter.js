@@ -1,59 +1,64 @@
 import {renderTable} from './crudTable';
 
-const table = document.getElementById("table");
-const tableFilter = document.getElementById("table-filter");
-const filterForm = document.getElementById("filter-form");
-const openFilter = document.getElementById("open-filter");
-const applyFilter = document.getElementById("apply-filter");
+
 
 export let renderFilterTable = () => {
 
+    let table = document.getElementById("table");
+    let tableFilter = document.getElementById("table-filter");
+    let filterForm = document.getElementById("filter-form");
+    let openFilter = document.getElementById("open-filter");
+    let applyFilter = document.getElementById("apply-filter");
 
-    openFilter.addEventListener( 'click', () => {
-        openFilter.classList.toggle("active");
-        tableFilter.classList.toggle("active");
-        applyFilter.classList.toggle("active");
-    });
-    
-    applyFilter.addEventListener( 'click', () => {      
+    if(filterForm != null){
 
-        let data = new FormData(filterForm);
+        let openFilter = document.getElementById("open-filter");
+        let applyFilter = document.getElementById("apply-filter");
 
-        let filters = {};
-            
-            data.forEach(function(value, key){
-                filters[key] = value;
-            });
-            
-        let json = JSON.stringify(filters);
+        openFilter.addEventListener( 'click', () => {
+            openFilter.classList.toggle("active");
+            tableFilter.classList.toggle("active");
+            applyFilter.classList.toggle("active");
+        });
+        
+        applyFilter.addEventListener( 'click', () => {      
 
-        let url = filterForm.action;
+            let data = new FormData(filterForm);
 
-        let sendFilterRequest = async () => {
-
-            console.log(url);
-
-            try {
-                axios.get(url, {
-                    params: {
-                        filters: json
-                    }
-                }).then(response => {
-                    table.innerHTML = response.data.table;
-                    renderTable();
-                    tableFilter.classList.toggle("active");
-                    applyFilter.classList.toggle("active");
-                    
+            let filters = {};
+                
+                data.forEach(function(value, key){
+                    filters[key] = value;
                 });
                 
-            } catch (error) {
+            let json = JSON.stringify(filters);
 
-            }
-        };
+            let url = filterForm.action;
 
-        sendFilterRequest();
+            let sendFilterRequest = async () => {
+
+                try {
+                    axios.get(url, {
+                        params: {
+                            filters: json
+                        }
+                    }).then(response => {
+                        table.innerHTML = response.data.table;
+                        renderTable();
+                        tableFilter.classList.toggle("active");
+                        applyFilter.classList.toggle("active");
+                        
+                    });
+                    
+                } catch (error) {
+
+                }
+            };
+
+            sendFilterRequest();
+        });
         
-    });
+    };
 
 };
 

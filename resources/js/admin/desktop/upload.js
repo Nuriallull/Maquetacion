@@ -91,7 +91,7 @@ export let renderUpload = () => {
             }
             
             if (uploadElement.querySelector(".drop-zone__prompt")) {
-                uploadElement.querySelector(".drop-zone__prompt").remove();
+                uploadElement.querySelector(".drop-zone__prompt").classList.add('hidden');
             }
           
             if (!thumbnailElement) {
@@ -177,7 +177,7 @@ export function deleteThumbnail(imageId) {
 
     uploadImages.forEach(uploadImage => {
 
-        if(uploadImage.classList.contains('collection')){
+        if(uploadImage.classList.contains('multiple')){
 
             if(uploadImage.dataset.temporalId == imageId || uploadImage.dataset.imageId == imageId){
                 
