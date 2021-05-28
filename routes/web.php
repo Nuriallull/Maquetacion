@@ -110,6 +110,35 @@ Route::group(['prefix' => 'admin'], function () {
         ]
     ]);
 
+    Route::resource('muebles/categories', 'App\Http\Controllers\Admin\MueblesCategoryController', [
+        'parameters' => [
+            'categories' => 'muebles_category', 
+        ],
+        'names' => [
+            'index' => 'muebles_categories',
+            'create' => 'muebles_categories_create',
+            'edit' => 'muebles_categories_edit',
+            'store' => 'muebles_categories_store',
+            'destroy' => 'muebles_categories_destroy',
+            'show' => 'muebles_categories_show',
+        ]
+    ]);
+
+
+    Route::resource('muebles', 'App\Http\Controllers\Admin\MuebleController', [
+        'parameters' => [
+            'muebles' => 'mueble', 
+        ],
+        'names' => [
+            'index' => 'muebles',
+            'create' => 'muebles_create',
+            'edit' => 'muebles_edit',
+            'store' => 'muebles_store',
+            'destroy' => 'muebles_destroy',
+            'show' => 'muebles_show',
+        ]
+    ]);
+
 });
 
 Route::group(['prefix' => $localizationseo->setLocale(),
@@ -125,3 +154,4 @@ Route::post('/fingerprint', 'App\Http\Controllers\Front\FingerprintController@st
 Route::get('/login', 'App\Http\Controllers\Front\LoginController@index')->name('login');
 Route::post('/login', 'App\Http\Controllers\Front\LoginController@login')->name('front_login_submit');
 Route::get('/faqs', 'App\Http\Controllers\Front\FaqController@index')->name('faqs_front');
+Route::get('/muebles', 'App\Http\Controllers\Front\MuebleController@index')->name('muebles_front');

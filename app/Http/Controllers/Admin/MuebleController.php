@@ -7,32 +7,32 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Jenssegers\Agent\Agent;
-use App\Http\Requests\Admin\FaqRequest;
+use App\Http\Requests\Admin\MueblesRequest;
 use App\Vendor\Locale\Locale;
 use App\Vendor\Locale\LocaleSlugSeo;
 use App\Vendor\Image\Image;
-use App\Models\DB\Faq;
+use App\Models\DB\Mueble;
 
 
 
-class FaqController extends Controller
+class MuebleController extends Controller
 {
-    protected $faq;
+    protected $mueble;
     protected $agent;
     protected $locale;
     protected $locale_slug_seo;
     protected $image;
     protected $paginate;
 
-    function __construct(Faq $faq, Agent $agent, Locale $locale, LocaleSlugSeo $locale_slug_seo, Image $image)
+    function __construct(Mueble $mueble, Agent $agent, Locale $locale, LocaleSlugSeo $locale_slug_seo, Image $image)
     {
         $this->middleware('auth');
         $this->agent = $agent;
         $this->locale = $locale;
         $this->locale_slug_seo = $locale_slug_seo;
         $this->image = $image;
-        $this->faq = $faq;
-        $this->faq->visible = 1;
+        $this->mueble = $mueble;
+        $this->mueble->visible = 1;
 
         if ($this->agent->isMobile()) {
             $this->paginate = 10;
@@ -42,17 +42,17 @@ class FaqController extends Controller
             $this->paginate = 6;
         }
         
-       $this->locale->setParent('faqs');
-       $this->locale_slug_seo->setParent('faqs');
-       $this->image->setEntity('faqs');
+       $this->locale->setParent('muebles');
+       $this->locale_slug_seo->setParent('muebles');
+       $this->image->setEntity('muebles');
     }
     
     public function index()
     {
 
-        $view = View::make('admin.faqs.index')
-                ->with('faq', $this->faq)
-                ->with('faqs', $this->faq->where('active', 1)
+        $view = View::make('admin.muebles.index')
+                ->with('mueble', $this->mueble)
+                ->with('muebles', $this->mueble->where('active', 1)
                 ->orderBy('created_at', 'desc')
                 ->paginate($this->paginate));
 
@@ -72,8 +72,8 @@ class FaqController extends Controller
     public function create()
     {
 
-        $view = View::make('admin.faqs.index')
-        ->with('faq', $this->faq)
+        $view = View::make('admin.muebles.index')
+        ->with('mueble', $this->mueble)
         ->renderSections();
 
         return response()->json([
@@ -81,15 +81,16 @@ class FaqController extends Controller
         ]);
     }
 
-    public function store(FaqRequest $request)
+    public function store(MueblesRequest $request)
     {            
         
-
-        $faq = $this->faq->updateOrCreate([
+        $mueble = $this->mueble->updateOrCreate([
             'id' => request('id')],[
             'name' => request('name'),
             'active' => 1,
-            'category_id' => request('category_id'),
+            'mueble_categoria_id' => request('mueble_categoria_id'),
+            'color_id' => request('color_id'),
+            'tamaño_id' => request('tamaño_id'),
         ]);
 
         if (request('id')){
@@ -99,22 +100,21 @@ class FaqController extends Controller
         }
 
         if(request('locale')){
-            $locale = $this->locale->store(request('locale'), $faq->id);
+            $locale = $this->locale->store(request('locale'), $mueble->id);
         }
 
         if(request('images')){
-            $images = $this->image->store(request('images'), $faq->id);
+            $images = $this->image->store(request('images'), $mueble->id);
         }
 
         if(request('seo')){
-            $seo = $this->locale_slug_seo->store(request('seo'), $faq->id, 'front_faq');
+            $seo = $this->locale_slug_seo->store(request('seo'), $mueble->id, 'front_faq');
         }
 
-        
-
-        $view = View::make('admin.faqs.index')
-        ->with('faqs', $this->faq->where('active', 1)->paginate($this->paginate))
-        ->with('faq', $faq)
+    
+        $view = View::make('admin.muebles.index')
+        ->with('muebles', $this->mueble->where('active', 1)->paginate($this->paginate))
+        ->with('mueble', $mueble)
         ->with('locale', $locale)
         ->renderSections();         
             
@@ -123,20 +123,21 @@ class FaqController extends Controller
             'table' => $view['table'],
             'form' => $view['form'],
             'message' => $message,
-            'id' => $faq->id,
+            'id' => $mueble->id,
+            'color' => $mueble->color_id,
         ]);
     }
 
-    public function edit(Faq $faq)
+    public function edit(Mueble $mueble)
     {
-        $locale = $this->locale->show($faq->id);
-        $seo = $this->locale_slug_seo->show($faq->id);
+        $locale = $this->locale->show($mueble->id);
+        $seo = $this->locale_slug_seo->show($mueble->id);
 
-        $view = View::make('admin.faqs.index')
+        $view = View::make('admin.muebles.index')
         ->with('locale', $locale)
         ->with('seo', $seo)
-        ->with('faq', $faq)
-        ->with('faqs', $this->faq->where('active', 1)->paginate($this->paginate));   
+        ->with('mueble', $mueble)
+        ->with('muebles', $this->mueble->where('active', 1)->paginate($this->paginate));   
         
         if(request()->ajax()) {
 
@@ -150,11 +151,11 @@ class FaqController extends Controller
         return $view;
     }
 
-    public function show(Faq $faq){
+    public function show(Mueble $mueble){
 
-        $view = View::make('admin.faqs.index')
-        ->with('faq', $faq)
-        ->with('faqs', $this->faq->where('active', 1)->orderBy('created_at', 'desc')->paginate($this->paginate))
+        $view = View::make('admin.muebles.index')
+        ->with('mueble', $mueble)
+        ->with('muebles', $this->mueble->where('active', 1)->orderBy('created_at', 'desc')->paginate($this->paginate))
         ->renderSections();        
 
         return response()->json([
@@ -163,16 +164,16 @@ class FaqController extends Controller
         ]);
     }
 
-    public function destroy(Faq $faq)
+    public function destroy(Mueble $mueble)
     {
-        $faq->active = 0;
-        $faq->save();
+        $mueble->active = 0;
+        $mueble->save();
 
         $message = \Lang::get('admin/faqs.faq-delete');
 
-        $view = View::make('admin.faqs.index')
-            ->with('faq', $this->faq)
-            ->with('faqs', $this->faq->where('active', 1)->paginate($this->paginate))
+        $view = View::make('admin.muebles.index')
+            ->with('mueble', $this->mueble)
+            ->with('muebles', $this->mueble->where('active', 1)->paginate($this->paginate))
             ->renderSections();
         
         return response()->json([
@@ -187,7 +188,7 @@ class FaqController extends Controller
 
         $filters = json_decode($request->input('filters'));
 
-        $query = $this->faq->query();
+        $query = $this->mueble->query();
 
         if($filters != null){
 
@@ -207,7 +208,7 @@ class FaqController extends Controller
                     return $q;
                 }
                 else {
-                    return $q->where('t_faqs.name', 'like', "%$search%");
+                    return $q->where('t_muebles.name', 'like', "%$search%");
                 }
             }); 
 
@@ -217,7 +218,7 @@ class FaqController extends Controller
                     return $q;
                 }
                 else {
-                    return $q->whereDate('t_faqs.created_at', '>=', $created_at_from);
+                    return $q->whereDate('t_muebles.created_at', '>=', $created_at_from);
                 }
             });
             
@@ -227,7 +228,7 @@ class FaqController extends Controller
                     return $q;
                 }
                 else {
-                    return $q->whereDate('t_faqs.created_at', '<=', $created_at_since);
+                    return $q->whereDate('t_muebles.created_at', '<=', $created_at_since);
                 }
             });
 
@@ -239,21 +240,21 @@ class FaqController extends Controller
        
 
         if($this->agent->isMobile()){
-            $faqs = $query->where('t_faqs.active', 1)
-            ->orderBy('t_faqs.created_at', 'desc')
+            $muebles = $query->where('t_muebles.active', 1)
+            ->orderBy('t_muebles.created_at', 'desc')
             ->paginate(10)
             ->appends(['filters' => json_encode($filters)]);  
         }
 
         if($this->agent->isDesktop()){
-            $faqs = $query->where('t_faqs.active', 1)
-            ->orderBy('t_faqs.created_at', 'desc')
+            $muebles = $query->where('t_muebles.active', 1)
+            ->orderBy('t_muebles.created_at', 'desc')
             ->paginate(10)
             ->appends(['filters' => json_encode($filters)]);  
         }
 
-        $view = View::make('admin.faqs.index')
-            ->with('faqs', $faqs)
+        $view = View::make('admin.muebles.index')
+            ->with('muebles', $muebles)
             ->renderSections();
 
         return response()->json([

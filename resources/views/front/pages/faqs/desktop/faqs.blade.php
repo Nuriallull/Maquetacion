@@ -28,8 +28,6 @@
                             <img src="{{Storage::url($faq->image_featured_desktop->path)}}" alt="{{$faq->image_featured_desktop->alt}}" title="{{$faq->image_featured_desktop->title}}" />
                         </div>
                     @endif
-
-                
                     
                     <div class="faq-grid-images">
                         @isset($faq->image_grid_desktop)

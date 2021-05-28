@@ -33,7 +33,7 @@
 
         <div class="upload-multiple" id="multiple-element"> 
             
-            <div class="upload-image-add multiple" data-content="{{$content}}" data-alias="{{$alias}}">
+            <div class="upload-image-add multiple" data-content="{{$content}}" data-entity="{{$entity}}" data-language="{{$alias}}">
                 <span class="drop-zone__prompt">@lang('admin/upload.images')</span>
                 <input class="drop-zone__input" type="file">
             </div>

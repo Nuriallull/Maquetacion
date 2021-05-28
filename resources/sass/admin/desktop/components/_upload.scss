@@ -52,11 +52,13 @@
     width: 2.5em;
     
   }
-  &.hidden{
-    display:none;
+}
+  
+.drop-zone__prompt.hidden{
+    display: none;
   }
 
-}
+
 
 .upload-image-options{
   display: none;

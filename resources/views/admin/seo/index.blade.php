@@ -67,10 +67,10 @@
 
                                     <div class="form-group">
                                         <div class="form-label">
-                                            <label for="seo[url.{{$localization->alias}}]" class="label-seo">Url</label>
+                                            <label for="seo[url.{{$localization->alias}}]" class="input highlight">Url</label>
                                         </div>
                                         <div class="form-input">
-                                            <input type="text" name="seo[url.{{$localization->alias}}]" value="{{isset($seo["url.$localization->alias"]) ? $seo["url.$localization->alias"] : ''}}" class="input-highlight block-parameters">
+                                            <input type="text" name="seo[url.{{$localization->alias}}]" value="{{isset($seo["url.$localization->alias"]) ? $seo["url.$localization->alias"] : ''}}" class="block-parameters">
                                         </div>
                                     </div>
 

@@ -1946,6 +1946,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _googleBot__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./googleBot */ "./resources/js/admin/desktop/googleBot.js");
 /* harmony import */ var _sitemap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./sitemap */ "./resources/js/admin/desktop/sitemap.js");
 /* harmony import */ var _localeSeo__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./localeSeo */ "./resources/js/admin/desktop/localeSeo.js");
+/* harmony import */ var _slugBlock__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./slugBlock */ "./resources/js/admin/desktop/slugBlock.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -1974,6 +1975,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var table = document.getElementById("table");
 var form = document.getElementById("form");
 var renderForm = function renderForm() {
@@ -1982,20 +1984,23 @@ var renderForm = function renderForm() {
   var inputs = document.querySelectorAll('.input-highlight');
   var sendButton = document.getElementById("send-button");
   var updateButton = document.getElementById("update-button");
-  inputs.forEach(function (input) {
-    input.addEventListener('focusin', function () {
-      for (var i = 0; i < labels.length; i++) {
-        if (labels[i].htmlFor == input.name) {
-          labels[i].classList.add("active");
+
+  if (inputs) {
+    inputs.forEach(function (input) {
+      input.addEventListener('focusin', function () {
+        for (var i = 0; i < labels.length; i++) {
+          if (labels[i].htmlFor == input.name) {
+            labels[i].classList.add("active");
+          }
         }
-      }
+      });
+      input.addEventListener('blur', function () {
+        for (var i = 0; i < labels.length; i++) {
+          labels[i].classList.remove("active");
+        }
+      });
     });
-    input.addEventListener('blur', function () {
-      for (var i = 0; i < labels.length; i++) {
-        labels[i].classList.remove("active");
-      }
-    });
-  });
+  }
 
   if (sendButton) {
     sendButton.addEventListener("click", function () {
@@ -2120,6 +2125,7 @@ var renderForm = function renderForm() {
   }
 
   (0,_ckeditor__WEBPACK_IMPORTED_MODULE_3__.renderEditor)();
+  (0,_slugBlock__WEBPACK_IMPORTED_MODULE_11__.renderBlockSlug)();
   (0,_tabs__WEBPACK_IMPORTED_MODULE_4__.renderTabs)();
   (0,_tabslocale__WEBPACK_IMPORTED_MODULE_5__.renderLocaleTabs)();
   (0,_upload__WEBPACK_IMPORTED_MODULE_6__.renderUpload)();
@@ -2673,7 +2679,15 @@ var openImageModal = function openImageModal(image) {
   imageForm.reset();
 
   if (image.path) {
-    imageContainer.src = '../storage/' + image.path;
+    if (image.entity_id) {
+      image.imageId = image.id;
+      imageContainer.src = '../storage/' + image.path;
+    } else {
+      imageContainer.src = image.path;
+    }
+  } else {
+    imageContainer.src = image.dataset.path;
+    image = image.dataset;
   }
 
   for (var _i = 0, _Object$entries = Object.entries(image); _i < _Object$entries.length; _i++) {
@@ -2741,6 +2755,8 @@ modalImageStoreButton.addEventListener("click", function (e) {
   var imageForm = document.getElementById('image-form');
   var data = new FormData(imageForm);
   var url = imageForm.action;
+  var temporalId = document.getElementById('modal-image-temporal-id');
+  var id = document.getElementById('modal-image-id');
 
   var sendImagePostRequest = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -2751,6 +2767,8 @@ modalImageStoreButton.addEventListener("click", function (e) {
               try {
                 axios.post(url, data).then(function (response) {
                   modal.classList.remove('modal-active');
+                  temporalId.value = "";
+                  id.value = "";
                   imageForm.reset();
                   (0,_wait__WEBPACK_IMPORTED_MODULE_1__.stopWait)();
                   (0,_messages__WEBPACK_IMPORTED_MODULE_2__.showMessage)('success', response.data.message);
@@ -2973,6 +2991,45 @@ var renderSitemap = function renderSitemap() {
 
 /***/ }),
 
+/***/ "./resources/js/admin/desktop/slugBlock.js":
+/*!*************************************************!*\
+  !*** ./resources/js/admin/desktop/slugBlock.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "renderBlockSlug": () => (/* binding */ renderBlockSlug)
+/* harmony export */ });
+var renderBlockSlug = function renderBlockSlug() {
+  var blockInputs = document.querySelectorAll(".block-parameters");
+  blockInputs.forEach(function (blockInput) {
+    var originalInput = blockInput.value.match(/\{.*?\}/g);
+
+    if (originalInput) {
+      blockInput.addEventListener("keydown", function () {
+        var setInput = blockInput.value;
+        blockInput.addEventListener("keyup", function () {
+          var finalInput = blockInput.value.match(/\{.*?\}/g);
+
+          if (finalInput) {
+            if (originalInput.toString() != finalInput.toString()) {
+              blockInput.value = setInput;
+            }
+          } else {
+            blockInput.value = setInput;
+          }
+
+          setInput = blockInput.value;
+        });
+      });
+    }
+  });
+};
+
+/***/ }),
+
 /***/ "./resources/js/admin/desktop/tabs.js":
 /*!********************************************!*\
   !*** ./resources/js/admin/desktop/tabs.js ***!
@@ -3120,10 +3177,9 @@ var renderUpload = function renderUpload() {
   function updateThumbnail(uploadElement, file) {
     if (file.type.startsWith("image/")) {
       var _thumbnailElement = uploadElement.querySelector(".upload-thumb");
-
-      var multipleWrap = document.getElementById("multiple-element");
       /* clonamos sin apend. Con apend es así:
          multipleWrap.appendChild(uploadClone); */
+
 
       if (uploadElement.classList.contains("multiple")) {
         if (!_thumbnailElement) {
@@ -3153,10 +3209,10 @@ var renderUpload = function renderUpload() {
         var temporalId = Math.floor(Math.random() * 99999 + 1);
         var content = uploadElement.dataset.content;
         var language = uploadElement.dataset.language;
-        var inputElement = uploadElement.getElementsByClassName("upload-image-input")[0];
+        var inputElement = uploadElement.getElementsByClassName("drop-zone__input")[0];
         _thumbnailElement.style.backgroundImage = "url('".concat(reader.result, "')");
         uploadElement.dataset.temporalId = temporalId;
-        uploadElement.dataset.image = reader.result;
+        uploadElement.dataset.path = reader.result;
         inputElement.name = "images[" + content + "-" + temporalId + "." + language + "]";
         uploadElement.classList.remove('upload-image-add');
         uploadElement.classList.add('upload-image');

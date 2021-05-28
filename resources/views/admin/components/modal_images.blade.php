@@ -19,7 +19,7 @@
             <div class="one-column">
                 <div class="form-group">
                     <div class="form-label">
-                        <label for="category_id" class="label-highlight">
+                        <label for="title" class="label-highlight">
                             Título
                         </label>
                     </div>
@@ -32,7 +32,7 @@
             <div class="one-column">
                 <div class="form-group">
                     <div class="form-label">
-                        <label for="category_id" class="label-highlight">
+                        <label for="alt" class="label-highlight">
                             Alt
                         </label>
                     </div>

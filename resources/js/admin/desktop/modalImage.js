@@ -22,7 +22,18 @@ export let openImageModal = (image) => {
     imageForm.reset();  
 
     if(image.path){
-        imageContainer.src = '../storage/' + image.path;
+
+        if(image.entity_id){
+            image.imageId = image.id; 
+            imageContainer.src = '../storage/' + image.path;
+        }else{
+            imageContainer.src = image.path;
+        }
+
+    }else{
+
+        imageContainer.src = image.dataset.path;
+        image = image.dataset;
     }
 
     for (var [key, val] of Object.entries(image)) {
@@ -85,6 +96,8 @@ modalImageStoreButton .addEventListener("click", (e) => {
     let imageForm = document.getElementById('image-form');
     let data = new FormData(imageForm);
     let url = imageForm.action;
+    let temporalId = document.getElementById('modal-image-temporal-id');
+    let id = document.getElementById('modal-image-id');
 
     let sendImagePostRequest = async () => {
 
@@ -92,6 +105,8 @@ modalImageStoreButton .addEventListener("click", (e) => {
             axios.post(url, data).then(response => {
 
                 modal.classList.remove('modal-active');
+                temporalId.value = "";
+                id.value = "";
                 imageForm.reset();
                 stopWait();
                 showMessage('success', response.data.message);

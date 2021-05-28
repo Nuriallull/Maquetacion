@@ -10,6 +10,7 @@ use App\Vendor\Image\Models\ImageResized;
 use App\Jobs\ProcessImage;
 use App\Jobs\DeleteImage;
 use Jcupitt\Vips;
+use Debugbar;
 
 class Image
 {
@@ -42,7 +43,6 @@ class Image
 
 	public function storeSeo(Request $request){
 
-		
 		$settings = ImageConfiguration::where('entity', request('entity'))
 				->where('content', request('content'))
 				->where('grid', '!=', 'original')
@@ -64,9 +64,9 @@ class Image
 			}
 		}
 			
-		if(request('imageId')){
+		if(request('id')){
 
-			$entity_id = ImageResized::find(request('imageId'))->entity_id;
+			$entity_id = ImageResized::find(request('id'))->entity_id;
 
 			foreach ($settings as $setting => $configuration){
 

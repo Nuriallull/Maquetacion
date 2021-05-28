@@ -72,7 +72,7 @@ export let renderUpload = () => {
         if (file.type.startsWith("image/")) {
 
             let thumbnailElement = uploadElement.querySelector(".upload-thumb");
-            let multipleWrap = document.getElementById("multiple-element");
+            
 
             /* clonamos sin apend. Con apend es así:
                multipleWrap.appendChild(uploadClone); */
@@ -93,6 +93,7 @@ export let renderUpload = () => {
             if (uploadElement.querySelector(".drop-zone__prompt")) {
                 uploadElement.querySelector(".drop-zone__prompt").classList.add('hidden');
             }
+            
           
             if (!thumbnailElement) {
                 thumbnailElement = document.createElement("div");
@@ -106,21 +107,21 @@ export let renderUpload = () => {
 
             reader.onload = () => {
                 let temporalId = Math.floor((Math.random() * 99999) + 1);
-            let content = uploadElement.dataset.content;
-            let language = uploadElement.dataset.language;
+                let content = uploadElement.dataset.content;
+                let language = uploadElement.dataset.language;
 
-            let inputElement = uploadElement.getElementsByClassName("upload-image-input")[0];
+                let inputElement = uploadElement.getElementsByClassName("drop-zone__input")[0];
 
-            thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
-            uploadElement.dataset.temporalId = temporalId;
-            uploadElement.dataset.image = reader.result;
-            inputElement.name = "images[" + content + "-" + temporalId + "." + language  + "]"; 
+                thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+                uploadElement.dataset.temporalId = temporalId;
+                uploadElement.dataset.path = reader.result;
+                inputElement.name = "images[" + content + "-" + temporalId + "." + language  + "]"; 
 
-            uploadElement.classList.remove('upload-image-add');
-            uploadElement.classList.add('upload-image');
+                uploadElement.classList.remove('upload-image-add');
+                uploadElement.classList.add('upload-image');
 
-            updateImageModal(uploadElement);
-            openModal();
+                updateImageModal(uploadElement);
+                openModal();
             };
 
 

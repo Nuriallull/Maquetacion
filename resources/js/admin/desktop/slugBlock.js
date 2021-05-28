@@ -1,27 +1,32 @@
+export let renderBlockSlug = () =>{
 
+    let blockInputs = document.querySelectorAll(".block-parameters");
 
-export let blockSlug = () => {
+    blockInputs.forEach(blockInput => {
 
-    let SlugElement =  document.querySelectorAll('.label-seo');
+        let originalInput = blockInput.value.match(/\{.*?\}/g)
 
-    if(SlugElement){
+        if (originalInput){
 
-        slugElement.forEach(slugElement => {
+            blockInput.addEventListener("keydown", () =>{
+                let setInput = blockInput.value;
 
-            slugElement.addEventListener("keyup", () => {
-            
-                let slug = slugElement.value.match(/\{.*?\}/g);
+                blockInput.addEventListener("keyup", () =>{
+                    let finalInput = blockInput.value.match(/\{.*?\}/g)
+    
+                    if (finalInput){
+                        if(originalInput.toString() != finalInput.toString()){
+                            blockInput.value = setInput;
+                        }
 
-            
-            })
-
-
-            slugElement.addEventListener("keydown", () => {
-            
-                let slug = slugElement.value.match(/\{.*?\}/g);
-            })
-
-        });
-        
-    }
+                    }else{
+                        blockInput.value = setInput;
+                    }
+                    
+                    setInput = blockInput.value
+                })
+            });   
+        }  
+    })
+    
 }

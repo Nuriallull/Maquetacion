@@ -8,22 +8,22 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Jenssegers\Agent\Agent;
 use App\Vendor\Locale\LocaleSlugSeo;
-use App\Models\DB\Faq;
+use App\Models\DB\Mueble;
 
-class FaqController extends Controller
+class MuebleController extends Controller
 {
     protected $agent;
-    protected $faq;
+    protected $mueble;
     protected $locale_slug_seo;
 
-    function __construct(Agent $agent, Faq $faq, LocaleSlugSeo $locale_slug_seo)
+    function __construct(Agent $agent, Mueble $mueble, LocaleSlugSeo $locale_slug_seo)
     {
         $this->agent = $agent;
-        $this->faq = $faq;
+        $this->mueble = $mueble;
         $this->locale_slug_seo = $locale_slug_seo;
 
         $this->locale_slug_seo->setLanguage(app()->getLocale()); 
-        $this->locale_slug_seo->setParent('faqs');      
+        $this->locale_slug_seo->setParent('muebles');      
     }
 
     public function index()
@@ -32,28 +32,28 @@ class FaqController extends Controller
 
         if($this->agent->isDesktop()){
 
-            $faqs = $this->faq
+            $muebles = $this->mueble
                     ->with('image_featured_desktop')
                     ->where('active', 1)
                     ->get();
         }
         
         elseif($this->agent->isMobile()){
-            $faqs = $this->faq
+            $muebles = $this->mueble
                     ->with('image_featured_mobile')
                     ->where('active', 1)
                     ->get();
         }
 
-        $faqs = $faqs->each(function($faq){  
+        $muebles = $muebles->each(function($faq){  
             
-            $faq['locale'] = $faq->locale->pluck('value','tag');
+            $faq['locale'] = $mueble->locale->pluck('value','tag');
             
-            return $faq;
+            return $mueble;
         });
 
-        $view = View::make('front.pages.faqs.index')
-                ->with('faqs', $faqs) 
+        $view = View::make('front.pages.muebles.index')
+                ->with('muebles', $muebles) 
                 ->with('seo', $seo );
         
         return $view;
@@ -66,7 +66,7 @@ class FaqController extends Controller
         if(isset($seo->key)){
 
             if($this->agent->isDesktop()){
-                $faq = $this->faq
+                $mueble = $this->mueble
                     ->with('image_featured_desktop')
                     ->with('image_grid_desktop')
                     ->where('active', 1)
@@ -74,16 +74,16 @@ class FaqController extends Controller
             }
             
             elseif($this->agent->isMobile()){
-                $faq = $this->faq
+                $mueble = $this->mueble
                     ->with('image_featured_mobile')
                     ->with('image_grid_mobile')
                     ->where('active', 1)
                     ->find($seo->key);
             }
 
-            $faq['locale'] = $faq->locale->pluck('value','tag');
+            $mueble['locale'] = $mueble->locale->pluck('value','tag');
 
-            $view = View::make('front.pages.faqs.single')->with('faq', $faq);
+            $view = View::make('front.pages.muebles.single')->with('mueble', $mueble);
 
             return $view;
 

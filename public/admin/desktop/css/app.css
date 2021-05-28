@@ -682,6 +682,7 @@ body {
 .sidebar ul li {
   border-bottom: 0.2em solid #FFFFFF;
   overflow: hidden;
+  padding-top: 1em;
 }
 
 .sidebar.active {
@@ -964,9 +965,9 @@ tr:nth-child(even) {
   padding: 0.3em;
   transition: border 0.3s;
   position: absolute;
-  top: 93%;
+  top: 57%;
   right: 0;
-  left: 95%;
+  left: 93%;
   bottom: 0;
   height: 5vh;
 }
@@ -2373,6 +2374,7 @@ input:checked + .slider:before {
   opacity: 100%;
   width: 2.5em;
 }
+
 .drop-zone__prompt.hidden {
   display: none;
 }

@@ -44,7 +44,21 @@ class ViewComposerServiceProvider extends ServiceProvider
             'admin.traductions.index', 
             'App\Http\ViewComposers\Admin\LocaleGroups'
         );
-    
+
+        view()->composer(
+            'admin.muebles.index', 
+            'App\Http\ViewComposers\Admin\MueblesCategories'
+        );
+        
+        view()->composer([
+            'admin.muebles.index'],
+            'App\Http\ViewComposers\Admin\Colores'
+        );
+
+        view()->composer([
+            'admin.muebles.index'],
+            'App\Http\ViewComposers\Admin\Tamaño'
+        );
     }
 
     public function register()
