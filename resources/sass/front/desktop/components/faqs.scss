@@ -1,114 +1,19 @@
 .faqs{
     
-    margin: 3% auto;
-    width: 80%;
+    margin: 5% auto;    
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 0.5em;
+    width: 100%;
+    padding-bottom: 0.5em;
+
 
     .faq{
-
-        width: 100%;
-
-        .faq-title-container{
-
-            border-bottom: 0.2em solid $white;
-            display: flex;
-            height: 10vh;
-            width: 100%;
-
-            @include respond-to('lg') {
-                height: 6vh;
-            }
-
-            .faq-title{
-                margin: 0 1em;
-                width: 90%;
-            }
-
-            .faq-title h3{
-                color: $white;
-                font-weight: 400;
-            }
-
-            .faq-plus-button {
-                cursor: pointer;
-                margin: 1em;
-                @include plusMinus(1.5em, 0.2em, $white);
-            }
-        }
-
-        .faq-title-container:hover{
-            background-color: $blue-dark;
-        }
-
-        .faq-description{
-
-            background-color: $white;
-            max-height: 0;
-            display: flex;
-            justify-content: space-between;
-            overflow: hidden;
-            transition: max-height 0.5s;
-            width: 100%;
-
-            p{
-                color: $black;
-                font-weight: 200;
-                margin: 1em;
-                vertical-align: top;
-            }
-
-            .faq-description-text{
-                width: 100%;
-                margin-bottom: 1em;
-                
-                p{
-                    width: 100%;
-                    color: $black;
-                    font-weight: 200;
-                    margin: 1em;
-                }
-            }
-
-            .faq-wrap-images{
-
-                .faq-description-image{
-                    padding: 1em;
-                    width: 100%;
-                    text-align: center;
-                }
-        
-                .faq-grid-images{
-                    display: grid;
-                    grid-template-columns: repeat(4, 1fr);
-                    grid-gap: 0.5em;
-                    width: 100%;
-                    padding-bottom: 0.5em;
-                }
-                .faq-description-images{
-                    height: 10vh;
-                    padding: 1;
-                    width: 100%;
-                }
-            }
-           
-        }
-
-        
-    
+        width: 35%;
+        height: 50vh;
     }
-
-    .faq.active{
-        
-        .faq-title-container{
-            background-color: $blue-dark;
-        }
-
-        .faq-description{
-            
-            max-height: max-content;
-        }
-    }
-    
-
     
 }
 

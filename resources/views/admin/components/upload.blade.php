@@ -19,7 +19,7 @@
 
         @if($files->count() == 0)
         
-            <div class="upload-image-add single" data-entity="{{$entity}}" data-content="{{$content}}" data-alias="{{$alias}}">
+            <div class="upload-image-add single" data-entity="{{$entity}}" data-content="{{$content}}" data-language="{{$alias}}">
                 <span class="drop-zone__prompt">@lang('admin/upload.image')</span>
                 <input  class="drop-zone__input" type="file" name="images[{{$content}}.{{$alias}}]">
             </div>

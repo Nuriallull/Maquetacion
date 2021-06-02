@@ -496,7 +496,7 @@ a:hover, a:focus {
 }
 
 .main-content {
-  background-color: rgba(114, 201, 223, 0.5);
+  background-color: #F2EBC4;
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
@@ -511,183 +511,247 @@ a:hover, a:focus {
 }
 
 .faqs {
-  margin: 3% auto;
-  width: 80%;
-}
-.faqs .faq {
+  margin: 5% auto;
   width: 100%;
-}
-.faqs .faq .faq-title-container {
-  border-bottom: 0.2em solid white;
-  display: flex;
-  height: 10vh;
-  width: 100%;
-}
-@media (min-width: 1920px) {
-  .faqs .faq .faq-title-container {
-    height: 6vh;
-  }
-}
-.faqs .faq .faq-title-container .faq-title {
-  margin: 0 1em;
-  width: 90%;
-}
-.faqs .faq .faq-title-container .faq-title h3 {
-  color: white;
-  font-weight: 400;
-}
-.faqs .faq .faq-title-container .faq-plus-button {
-  cursor: pointer;
-  margin: 1em;
-  box-sizing: border-box;
-  transition: transform 0.3s;
-  width: 1.5em;
-  height: 1.5em;
-  transform: rotate(180deg);
-  position: relative;
-}
-.faqs .faq .faq-title-container .faq-plus-button.active {
-  transform: rotate(0deg);
-}
-.faqs .faq .faq-title-container .faq-plus-button::before {
-  content: "";
-  display: block;
-  width: 1.5em;
-  height: 0px;
-  border-bottom: solid 0.2em white;
-  position: absolute;
-  bottom: 0.65em;
-  transform: rotate(90deg);
-  transition: width 0.3s;
-}
-.faqs .faq .faq-title-container .faq-plus-button.active::before {
-  content: "";
-  display: block;
-  width: 0px;
-  height: 0px;
-  border-bottom: solid 0.2em white;
-  position: absolute;
-  bottom: 0.65em;
-  transform: rotate(90deg);
-}
-.faqs .faq .faq-title-container .faq-plus-button::after {
-  content: "";
-  display: block;
-  width: 1.5em;
-  height: 0px;
-  border-bottom: solid 0.2em white;
-  position: absolute;
-  bottom: 0.65em;
-}
-.faqs .faq .faq-title-container:hover {
-  background-color: #110c40;
-}
-.faqs .faq .faq-description {
-  background-color: white;
-  max-height: 0;
-  display: flex;
-  justify-content: space-between;
-  overflow: hidden;
-  transition: max-height 0.5s;
-  width: 100%;
-}
-.faqs .faq .faq-description p {
-  color: black;
-  font-weight: 200;
-  margin: 1em;
-  vertical-align: top;
-}
-.faqs .faq .faq-description .faq-description-text {
-  width: 100%;
-  margin-bottom: 1em;
-}
-.faqs .faq .faq-description .faq-description-text p {
-  width: 100%;
-  color: black;
-  font-weight: 200;
-  margin: 1em;
-}
-.faqs .faq .faq-description .faq-wrap-images .faq-description-image {
-  padding: 1em;
-  width: 100%;
-  text-align: center;
-}
-.faqs .faq .faq-description .faq-wrap-images .faq-grid-images {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   grid-gap: 0.5em;
   width: 100%;
   padding-bottom: 0.5em;
 }
-.faqs .faq .faq-description .faq-wrap-images .faq-description-images {
-  height: 10vh;
-  padding: 1;
-  width: 100%;
-}
-.faqs .faq.active .faq-title-container {
-  background-color: #110c40;
-}
-.faqs .faq.active .faq-description {
-  max-height: -webkit-max-content;
-  max-height: -moz-max-content;
-  max-height: max-content;
+.faqs .faq {
+  width: 35%;
+  height: 50vh;
 }
 
 .faq {
   width: 100%;
+  height: 95%;
 }
 .faq .faq-title {
   margin: 0 1em;
   width: 90%;
 }
 .faq .faq-title h3 {
-  color: white;
+  color: #262001;
   font-weight: 400;
 }
-.faq .faq-description {
+
+.faq-title-container {
+  background-color: #110c40;
+}
+
+.faq-wrap-images {
+  width: 100%;
+}
+.faq-wrap-images .faq-description-image {
+  width: 100%;
+  text-align: center;
+}
+.faq-wrap-images .faq-description-image img {
+  width: 100%;
+  height: 100%;
+}
+.faq-wrap-images .faq-grid-images {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 0.5em;
+  width: 100%;
+  padding-bottom: 0.5em;
+}
+.faq-wrap-images .faq-grid-images img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.faq-wrap-images .faq-description-images {
+  height: 20vh;
+  padding: 1;
+  width: 100%;
+}
+
+.faq-description-single {
   background-color: white;
   display: flex;
   justify-content: space-between;
   overflow: hidden;
   height: 100%;
   width: 100%;
+  margin-left: 0.5em;
 }
-.faq .faq-description p {
+.faq-description-single p {
   color: black;
   font-weight: 200;
   margin: 1em;
   vertical-align: top;
 }
-.faq .faq-description .faq-description-text {
-  width: 100%;
-  margin-bottom: 1em;
+.faq-description-single .faq-specifications {
+  width: 40%;
+  height: 100%;
 }
-.faq .faq-description .faq-description-text p {
+.faq-description-single .faq-specifications .faq-description-text {
+  width: 90%;
+  margin-bottom: 1em;
+  height: 60%;
+  padding: 0.5em;
+}
+.faq-description-single .faq-specifications .faq-description-text .description-container.active {
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
+.faq-description-single .faq-specifications .faq-description-text .description-container.active .container {
   width: 100%;
+  height: 5vh;
+  display: flex;
+}
+.faq-description-single .faq-specifications .faq-description-text .description-container.active .container .descripcion-producto {
+  border-top: 1px solid #212121;
+  border-bottom: 1px solid #212121;
+  margin-left: 1em;
+  width: 100%;
+}
+.faq-description-single .faq-specifications .faq-description-text .description-container.active .container .plus-button {
+  width: 20%;
+  border-top: 1px solid #212121;
+  border-bottom: 1px solid #212121;
+}
+.faq-description-single .faq-specifications .faq-description-text .description-container.active .container .plus-button svg {
+  width: 100%;
+}
+.faq-description-single .faq-specifications .faq-description-text .description-container {
+  height: 10vh;
+  border-bottom: 1px solid #212121;
+  margin-left: 1em;
+}
+.faq-description-single .faq-specifications .faq-description-text .nombre {
+  text-align: center;
+  color: #262001;
+  font-size: 2.2em;
+}
+.faq-description-single .faq-specifications .faq-description-text p {
+  width: 90%;
   color: black;
   font-weight: 200;
   margin: 1em;
 }
-.faq .faq-description .faq-wrap-images .faq-description-image {
-  padding: 1em;
-  width: 100%;
+.faq-description-single .faq-specifications .faq-description-text .precio-total {
+  text-align: center;
+  font-size: 1em;
+  text-decoration: line-through;
+  color: rgba(40, 33, 1, 0.637);
+}
+.faq-description-single .faq-specifications .faq-description-text .precio-oferta {
+  text-align: center;
+  font-size: 2em;
+}
+.faq-description-single .faq-specifications .buttons-wrap {
+  height: 30%;
+  margin: 1em;
   text-align: center;
 }
-.faq .faq-description .faq-wrap-images .faq-grid-images {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 0.5em;
-  width: 100%;
-  padding-bottom: 0.5em;
+.faq-description-single .faq-specifications .buttons-wrap button {
+  margin-bottom: 0.5em;
+  width: 90%;
 }
-.faq .faq-description .faq-wrap-images .faq-description-images {
-  height: 10vh;
-  padding: 1;
+.faq-description-single .faq-specifications .buttons-wrap .quantity-wrap {
   width: 100%;
+  display: flex;
 }
-
-.faq-title-container {
-  background-color: #110c40;
+.faq-description-single .faq-specifications .buttons-wrap .quantity-wrap .quantity {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0.5em;
+}
+.faq-description-single .faq-specifications .buttons-wrap .quantity-wrap .quantity button {
+  width: 3em;
+  border: 0.1em solid #8A8C3B;
+  border-radius: 0.3em;
+  color: #262001;
+  background-color: #FFFFFF;
+}
+.faq-description-single .faq-specifications .buttons-wrap .quantity-wrap .quantity input {
+  border: 0.1em solid #8A8C3B;
+  border-radius: 0.3em;
+  text-align: center;
+  font-weight: 600;
+  color: #262001;
+  background-color: #FFFFFF;
+  width: 3em;
+}
+.faq-description-single .faq-specifications .buttons-wrap .cart-button button {
+  background-color: #262001;
+  border: none;
+}
+.faq-description-single .faq-specifications .buttons-wrap .cart-button button p {
+  color: #FFFFFF;
+  font-size: 1em;
+  font-weight: 400;
+}
+.faq-description-single .faq-specifications .buttons-wrap .cart-button button svg {
+  display: none;
+}
+.faq-description-single .faq-specifications .buttons-wrap .cart-button button:hover {
+  padding: 1em;
+  background-color: #262001;
+}
+.faq-description-single .faq-specifications .buttons-wrap .cart-button button:hover svg {
+  display: block;
+  color: #FFFFFF;
+  width: 2em;
+  transform: translate(7em, 0);
+}
+.faq-description-single .faq-specifications .buttons-wrap .cart-button button:hover p {
+  display: none;
+}
+.faq-description-single .faq-specifications .buttons-wrap .buy-button button {
+  border: 0.3em solid #262001;
+  background-color: #FFFFFF;
+}
+.faq-description-single .faq-specifications .buttons-wrap .buy-button button p {
+  color: #262001;
+  font-size: 1em;
+  font-weight: 400;
+}
+.faq-description-single .faq-specifications .buttons-wrap .buy-button button svg {
+  display: none;
+}
+.faq-description-single .faq-specifications .buttons-wrap .buy-button button:hover {
+  padding: 1em;
+  border: 0.3em solid #262001;
+}
+.faq-description-single .faq-specifications .buttons-wrap .buy-button button:hover svg {
+  display: block;
+  color: #262001;
+  width: 2em;
+  transform: translate(7em, 0);
+}
+.faq-description-single .faq-specifications .buttons-wrap .buy-button button:hover p {
+  display: none;
+}
+.faq-description-single .faq-specifications .buttons-wrap .dispo-button button {
+  background-color: #F2EBC4;
+  border: none;
+}
+.faq-description-single .faq-specifications .buttons-wrap .dispo-button button p {
+  color: #262001;
+  font-size: 1em;
+  font-weight: 400;
+}
+.faq-description-single .faq-specifications .buttons-wrap .dispo-button button svg {
+  display: none;
+}
+.faq-description-single .faq-specifications .buttons-wrap .dispo-button button:hover {
+  padding: 1em;
+}
+.faq-description-single .faq-specifications .buttons-wrap .dispo-button button:hover svg {
+  display: block;
+  color: #262001;
+  width: 2em;
+  transform: translate(7em, 0);
+}
+.faq-description-single .faq-specifications .buttons-wrap .dispo-button button:hover p {
+  display: none;
 }
 
 .error-container {

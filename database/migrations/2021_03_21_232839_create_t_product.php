@@ -18,13 +18,13 @@ class CreateTProduct extends Migration
             $table->string('entity',64)->nullable(true);
             $table->integer('key')->nullable(true)->index();
             $table->boolean('active')->default(false);
-            $table->unsignedInteger('base_price');
-            $table->unsignedInteger('total_price');
+            $table->decimal('base_price');
+            $table->decimal('total_price');
             $table->unsignedInteger('iva');
             $table->unsignedInteger('cesta_id');
             $table->integer('order')->default(0);
             $table->timestamps();
-            $table->unsignedInteger('offer_price');
+            $table->decimal('offer_price');
         });
     }
 

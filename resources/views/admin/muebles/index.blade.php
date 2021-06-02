@@ -1,3 +1,8 @@
+@php
+    $route = 'muebles';
+    $filters = ['category' => $muebles_categories, 'search' => true, 'created_at' => true]; 
+    $order  = ['Nombre' => 'name', 'Fecha' => 't_muebles.created_at', 'Categoria' => 't_muebles_categorias.name'];
+@endphp
 
 @extends('admin.layout.table_form')
 
@@ -92,6 +97,7 @@
 @section('form')
 
     @isset($mueble)
+    
         
         <div class="form-container">
 
@@ -123,6 +129,7 @@
                         <li class="menu-button" data-tab="contenido"> Contenido </li>
                         <li class="menu-button" data-tab="imagenes"> Imágenes </li>
                         <li class="menu-button" data-tab="seo"> SEO </li>
+                        <li class="menu-button" data-tab="product"> Producto </li>
                     </ul>
                 
                 </div>
@@ -130,64 +137,63 @@
 
                 <div class="panel tab-active" data-tab="contenido">
                             
-                <div class=first-column>
-                    <div class="form-group">
-                        <div class="form-label">
-                            <label for="name" class="label-highlight">Nombre</label>
+                    <div class=first-column>
+                        <div class="form-group">
+                            <div class="form-label">
+                                <label for="name" class="label-highlight">Nombre</label>
+                            </div>
+                            <div class="form-input">
+                                <input type="text" name="name" value="{{isset($mueble->name) ? $mueble->name : ''}}"  class="input-highlight"  />
+                            </div>
                         </div>
-                        <div class="form-input">
-                            <input type="text" name="name" value="{{isset($mueble->name) ? $mueble->name : ''}}"  class="input-highlight"  />
+
+                        <div class="form-group">
+                            <div class="form-label">
+                                <label for="mueble_categoria_id" class="label-highlight">
+                                    Categoría 
+                                </label>
+                            </div>
+                            <div class="form-input">
+                                <select name="mueble_categoria_id" data-placeholder="Seleccione una categoría" class="input-highlight">
+                                    <option></option>
+                                    @foreach($muebles_categories as $muebles_category)
+                                        <option value="{{$muebles_category->id}}" {{$mueble->mueble_categoria_id == $muebles_category->id ? 'selected':''}} class="category_id">{{ $muebles_category->name }}</option>
+                                    @endforeach
+                                </select>  
+                            </div>                  
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <div class="form-label">
-                            <label for="mueble_categoria_id" class="label-highlight">
-                                Categoría 
-                            </label>
+                    <div class="second-column">
+                        <div class="form-group">
+                            <div class="form-label">
+                                <label for="color_id" class="label-highlight">Color</label>
+                            </div>
+                            <div class="form-input">
+                                <select name="color_id" class="input-highlight">
+                                    <option></option>
+                                    @foreach ($colors as $color)
+                                        <option value="{{$color->id}}" {{$mueble->color_id == $color->id ? "selected" : ""}}>{{$color->name}}</option>
+                                    @endforeach
+                                </select>       
+                            </div>
                         </div>
-                        <div class="form-input">
-                            <select name="mueble_categoria_id" data-placeholder="Seleccione una categoría" class="input-highlight">
-                                <option></option>
-                                @foreach($muebles_categories as $muebles_category)
-                                    <option value="{{$muebles_category->id}}" {{$mueble->categoria_id == $muebles_category->id ? 'selected':''}} class="category_id">{{ $muebles_category->name }}</option>
-                                @endforeach
-                            </select>  
-                        </div>                 
-                    </div>
-                </div>
 
-                <div class="second-column">
-                    <div class="form-group">
-                        <div class="form-label">
-                            <label for="color_id" class="label-highlight">Color</label>
-                        </div>
-                        <div class="form-input">
-                            <select name="color_id" class="input-highlight">
-                                <option></option>
-                                @foreach ($colors as $color)
-                                    <option value="{{$color->id}}" {{$mueble->color_id == $color->id ? "selected" : ""}}>{{$color->name}}</option>
-                                @endforeach
-                            </select>       
+                        <div class="form-group">
+                            <div class="form-label">
+                                <label for="tamaño_id" class="label-highlight"> Tamaño </label>
+                            </div>
+                            <div class="form-input">
+                                <select name="tamaño_id" class="input-highlight">
+                                    <option></option>
+                                    @foreach ($tamaños as $tamaño)
+                                        <option value="{{$tamaño->id}}" {{$mueble->tamaño_id == $tamaño->id ? "selected" : ""}}>{{$tamaño->dimensions}}</option>
+                                    @endforeach
+                                </select>       
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <div class="form-label">
-                            <label for="tamaño_id" class="label-highlight"> Tamaño </label>
-                        </div>
-                        <div class="form-input">
-                            <select name="tamaño_id" class="input-highlight">
-                                <option></option>
-                                @foreach ($tamaños as $tamaño)
-                                    <option value="{{$tamaño->id}}" {{$mueble->tamaño_id == $tamaño->id ? "selected" : ""}}>{{$tamaño->dimensions}}</option>
-                                @endforeach
-                            </select>       
-                        </div>
-                    </div>
-                </div>
-
-    
                     @component('admin.components.locale', ['tab' => 'content'])
 
                         @foreach ($localizations as $localization)
@@ -234,6 +240,7 @@
                                 
                             <div class="subpanel {{ $loop->first ? 'locale-tab-active':'' }}" data-tab="imagenes" data-localetab="{{$localization->alias}}">
                                 
+                               
                                 @include('admin.components.upload', [
                                     'entity' => 'muebles',
                                     'type' => 'image', 
@@ -297,17 +304,63 @@
                         @endforeach
                         
                     @endcomponent
-                
+
+                </div>
+
+                <div class="panel" data-tab="product">
+                    <div class="form-group">
+                        <div class="form-label">
+                            <label for="baseprice" class="label-highlight"> Precio base </label>
+                        </div>
+                        <div class="form-input">
+                            <input type="text" name="product[baseprice]" class="input-highlight" value="{{isset($product->base_price) ? $product->base_price : ''}}">  
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-label">
+                            <label for="iva" class="label-highlight"> IVA </label>
+                        </div>
+                        <div class="form-input">
+                            <select name="product[iva]" class="input-highlight">
+                            @foreach ($ivas as $iva)
+                                <option value="{{$iva->id}}" {{$iva->tipo == $iva->id ? "selected" : ""}}>{{$iva->name}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-label">
+                            <label for="totalprice" class="label-highlight"> Precio total </label>
+                        </div>
+                        <div class="form-input">
+                            <input type="text" name="product[totalprice]" class="input-highlight" value="{{isset($product->total_price) ? $product->total_price : ''}}">  
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-label">
+                            <label for="offerprice" class="label-highlight"> Precio en oferta </label>
+                        </div>
+                        <div class="form-input">
+                            <input type="text" name="product[offerprice]" class="input-highlight" value="{{isset($product->offer_price) ? $product->offer_price : ''}}"> 
+                        </div>
+                    </div>
                 </div>
             </form>
+
         </div>
         
         <div class="form-footer">        
             <div class="form-submit">
-                <button id="send-button">Enviar</button>
+                <button id="send-button"> Enviar </button>
             </div>
         </div>
+       
     @endisset
+
+   
 
 @endsection
 

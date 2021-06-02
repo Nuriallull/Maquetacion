@@ -64,6 +64,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'muebles' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/muebles'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

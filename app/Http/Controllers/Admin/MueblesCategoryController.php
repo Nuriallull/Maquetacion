@@ -59,6 +59,8 @@ class MueblesCategoryController extends Controller
             'active' => 1,
         ]);
 
+
+
         $view = View::make('admin.muebles_categories.index')
         ->with('muebles_categories', $this->muebles_category->where('active', 1)->get())
         ->with('muebles_category', $muebles_category)

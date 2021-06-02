@@ -59,6 +59,11 @@ class ViewComposerServiceProvider extends ServiceProvider
             'admin.muebles.index'],
             'App\Http\ViewComposers\Admin\Tamaño'
         );
+
+        view()->composer([
+            'admin.muebles.index'],
+            'App\Http\ViewComposers\Admin\Ivas'
+        );
     }
 
     public function register()

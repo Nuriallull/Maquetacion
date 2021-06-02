@@ -45,9 +45,9 @@ class MuebleController extends Controller
                     ->get();
         }
 
-        $muebles = $muebles->each(function($faq){  
+        $muebles = $muebles->each(function($mueble){  
             
-            $faq['locale'] = $mueble->locale->pluck('value','tag');
+            $mueble['locale'] = $mueble->locale->pluck('value','tag');
             
             return $mueble;
         });

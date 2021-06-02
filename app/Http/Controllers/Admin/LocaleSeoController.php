@@ -15,7 +15,7 @@ use App\Vendor\Locale\Models\Sitemap;
 use App\Vendor\Locale\Models\LocaleSeo;
 use App\Vendor\Locale\Models\LocaleRedirect;
 use App\Vendor\Locale\Models\Googlebot;
-use Debugbar;
+
 
 class LocaleSeoController extends Controller
 {
@@ -130,7 +130,7 @@ class LocaleSeoController extends Controller
 
     public function edit($key)
     {
-    
+            
         $seos = $this->seo->where('key', $key)->paginate($this->paginate); 
 
         $languages = $this->language->get();
@@ -148,6 +148,8 @@ class LocaleSeoController extends Controller
             $seo['key.'. $language->alias] = empty($locale->key) ? '': $locale->key;
             $seo['group.'. $language->alias] = empty($locale->group) ? '': $locale->group;
         }
+
+       
 
         $view = View::make('admin.seo.index')
         ->with('seos', $seos)

@@ -113,7 +113,7 @@ class Image
 		$path = '/' . $entity_id . '/' . $language . '/' . $content . '/original/' . $name . '.' . $file_extension;
 		$path = str_replace(" ", "-", $path);
 
-		if($settings->type == 'single'){
+		if($settings->type == 'single'){	
 
 			Storage::disk($this->entity)->deleteDirectory('/' . $entity_id . '/' . $language . '/' . $content . '/original');
 			Storage::disk($this->entity)->putFileAs('/' . $entity_id . '/' . $language . '/' . $content . '/original', $file, $filename);

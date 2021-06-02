@@ -12,6 +12,8 @@ use App\Vendor\Locale\Locale;
 use App\Vendor\Locale\LocaleSlugSeo;
 use App\Vendor\Image\Image;
 use App\Models\DB\Mueble;
+use App\Vendor\Product\Product;
+use Debugbar;
 
 
 
@@ -20,11 +22,12 @@ class MuebleController extends Controller
     protected $mueble;
     protected $agent;
     protected $locale;
+    protected $product;
     protected $locale_slug_seo;
     protected $image;
     protected $paginate;
 
-    function __construct(Mueble $mueble, Agent $agent, Locale $locale, LocaleSlugSeo $locale_slug_seo, Image $image)
+    function __construct(Mueble $mueble, Agent $agent, Locale $locale, LocaleSlugSeo $locale_slug_seo, Image $image, Product $product)
     {
         $this->middleware('auth');
         $this->agent = $agent;
@@ -32,6 +35,7 @@ class MuebleController extends Controller
         $this->locale_slug_seo = $locale_slug_seo;
         $this->image = $image;
         $this->mueble = $mueble;
+        $this->product = $product;
         $this->mueble->visible = 1;
 
         if ($this->agent->isMobile()) {
@@ -45,6 +49,7 @@ class MuebleController extends Controller
        $this->locale->setParent('muebles');
        $this->locale_slug_seo->setParent('muebles');
        $this->image->setEntity('muebles');
+       $this->product->setEntity('muebles');
     }
     
     public function index()
@@ -94,9 +99,9 @@ class MuebleController extends Controller
         ]);
 
         if (request('id')){
-            $message = \Lang::get('admin/faqs.faq-update');
+            $message = \Lang::get('admin/muebles.faq-update');
         }else{
-            $message = \Lang::get('admin/faqs.faq-create');
+            $message = \Lang::get('admin/muebles.faq-create');
         }
 
         if(request('locale')){
@@ -111,11 +116,15 @@ class MuebleController extends Controller
             $seo = $this->locale_slug_seo->store(request('seo'), $mueble->id, 'front_faq');
         }
 
-    
+        if(request('product')){
+            $product = $this->product->store(request('product'), $mueble->id, 'front_faq');
+        }
+            
         $view = View::make('admin.muebles.index')
         ->with('muebles', $this->mueble->where('active', 1)->paginate($this->paginate))
         ->with('mueble', $mueble)
         ->with('locale', $locale)
+        ->with('product', $product)
         ->renderSections();         
             
 
@@ -130,11 +139,14 @@ class MuebleController extends Controller
 
     public function edit(Mueble $mueble)
     {
+    
         $locale = $this->locale->show($mueble->id);
         $seo = $this->locale_slug_seo->show($mueble->id);
+        //* $product = $this->product->show($mueble->id);
 
         $view = View::make('admin.muebles.index')
         ->with('locale', $locale)
+         //* ->with('product', $product)
         ->with('seo', $seo)
         ->with('mueble', $mueble)
         ->with('muebles', $this->mueble->where('active', 1)->paginate($this->paginate));   
@@ -142,6 +154,7 @@ class MuebleController extends Controller
         if(request()->ajax()) {
 
             $sections = $view->renderSections(); 
+
     
             return response()->json([
                 'form' => $sections['form'],
@@ -168,8 +181,10 @@ class MuebleController extends Controller
     {
         $mueble->active = 0;
         $mueble->save();
+        $this->locale->delete($mueble->id);
+        $this->locale_slug_seo->delete($mueble->id);
 
-        $message = \Lang::get('admin/faqs.faq-delete');
+        $message = \Lang::get('admin/muebles.faq-delete');
 
         $view = View::make('admin.muebles.index')
             ->with('mueble', $this->mueble)
@@ -192,13 +207,13 @@ class MuebleController extends Controller
 
         if($filters != null){
 
-            $query->when($filters->category_id, function ($q, $category_id) {
+            $query->when($filters->mueble_categoria_id, function ($q, $mueble_categoria_id) {
 
-                if($category_id == 'all'){
+                if($mueble_categoria_id == 'all'){
                     return $q;
                 }
                 else {
-                    return $q->where('category_id', $category_id);
+                    return $q->where('mueble_categoria_id', $mueble_categoria_id);
                 }
             });
 

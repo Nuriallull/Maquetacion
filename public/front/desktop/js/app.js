@@ -2029,6 +2029,26 @@ sendFingerprintRequest();
 
 /***/ }),
 
+/***/ "./resources/js/front/desktop/quantity.js":
+/*!************************************************!*\
+  !*** ./resources/js/front/desktop/quantity.js ***!
+  \************************************************/
+/***/ (() => {
+
+document.querySelector(".minus-btn").setAttribute("disabled", "disabled");
+document.querySelector(".plus-btn").addEventListener("click", function () {
+  valueCount = document.getElementById("quantity").value;
+  valueCount++;
+  document.getElementById("quantity").value = valueCount;
+});
+document.querySelector(".minus-btn").addEventListener("click", function () {
+  valueCount = document.getElementById("quantity").value;
+  valueCount--;
+  document.getElementById("quantity").value = valueCount;
+});
+
+/***/ }),
+
 /***/ "./node_modules/clientjs/dist/client.min.js":
 /*!**************************************************!*\
   !*** ./node_modules/clientjs/dist/client.min.js ***!
@@ -20388,6 +20408,8 @@ __webpack_require__(/*! ./faqs */ "./resources/js/front/desktop/faqs.js");
 __webpack_require__(/*! ./errors */ "./resources/js/front/desktop/errors.js");
 
 __webpack_require__(/*! ./fingerprint */ "./resources/js/front/desktop/fingerprint.js");
+
+__webpack_require__(/*! ./quantity */ "./resources/js/front/desktop/quantity.js");
 })();
 
 /******/ })()

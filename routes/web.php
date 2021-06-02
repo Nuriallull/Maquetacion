@@ -109,7 +109,8 @@ Route::group(['prefix' => 'admin'], function () {
             'show' => 'sliders_show',
         ]
     ]);
-
+    
+    
     Route::resource('muebles/categories', 'App\Http\Controllers\Admin\MueblesCategoryController', [
         'parameters' => [
             'categories' => 'muebles_category', 
@@ -124,7 +125,7 @@ Route::group(['prefix' => 'admin'], function () {
         ]
     ]);
 
-
+    Route::get('/muebles/filter/{filters?}', 'App\Http\Controllers\Admin\MuebleController@filter')->name('muebles_filter');
     Route::resource('muebles', 'App\Http\Controllers\Admin\MuebleController', [
         'parameters' => [
             'muebles' => 'mueble', 
@@ -147,6 +148,8 @@ Route::group(['prefix' => $localizationseo->setLocale(),
 
     Route::get($localizationseo->transRoute('routes.front_faqs'), 'App\Http\Controllers\Front\FaqController@index')->name('front_faqs');
     Route::get($localizationseo->transRoute('routes.front_faq'), 'App\Http\Controllers\Front\FaqController@show')->name('front_faq');
+    Route::get($localizationseo->transRoute('routes.front_muebles'), 'App\Http\Controllers\Front\MuebleController@index')->name('front_muebles');
+    Route::get($localizationseo->transRoute('routes.front_mueble'), 'App\Http\Controllers\Front\MuebleController@show')->name('front_mueble');
 });
 
 

@@ -5,6 +5,7 @@ namespace App\Models\DB;
 use App\Vendor\Locale\Models\Locale;
 use App\Vendor\Locale\Models\LocaleSlugSeo;
 use App\Vendor\Image\Models\ImageResized;
+use App\Vendor\Product\Model\Product;
 use App;
 
 class Mueble extends DBModel
@@ -60,12 +61,17 @@ class Mueble extends DBModel
 
     public function colors()
     {
-        return $this->hasMany(Colors::class, 'key')->where('rel_parent', 'muebles')->where('language', App::getLocale());
+        return $this->hasMany(Colors::class, 'key');
     }
 
     public function tamaños()
     {
-        return $this->hasMany(Tamaños::class, 'key')->where('rel_parent', 'muebles')->where('language', App::getLocale());
+        return $this->hasMany(Tamaños::class, 'key');
+    }
+
+    public function product()
+    {
+        return $this->hasOne(Product::class, 'key')->where('entity', 'muebles');
     }
 
 }
