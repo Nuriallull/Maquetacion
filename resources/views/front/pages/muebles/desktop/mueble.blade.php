@@ -7,8 +7,10 @@
     <div class="faq">
         <div class="faq-description-single">
             @include("front.components.desktop.slider")
-            @include("front.components.desktop.description")   
+            @include("front.components.desktop.description")
         </div>
     </div>
+
+    @include("front.components.desktop.cartbutton")
     
 </div>

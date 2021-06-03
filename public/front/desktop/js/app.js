@@ -1891,18 +1891,20 @@ window.requestAnimFrame = function () {
 /***/ (() => {
 
 var errorButton = document.getElementById('close-errors-button');
-errorButton.addEventListener("click", function () {
-  console.log("close");
-  var activeElements = document.querySelectorAll(".active");
 
-  if (errorButton.classList.contains("active")) {
-    errorButton.classList.remove("active");
-  } else {
-    activeElements.forEach(function (activeElement) {
-      activeElement.classList.remove("active");
-    });
-  }
-});
+if (errorButton) {
+  errorButton.addEventListener("click", function () {
+    var activeElements = document.querySelectorAll(".active");
+
+    if (errorButton.classList.contains("active")) {
+      errorButton.classList.remove("active");
+    } else {
+      activeElements.forEach(function (activeElement) {
+        activeElement.classList.remove("active");
+      });
+    }
+  });
+}
 
 /***/ }),
 
@@ -2029,22 +2031,36 @@ sendFingerprintRequest();
 
 /***/ }),
 
-/***/ "./resources/js/front/desktop/quantity.js":
-/*!************************************************!*\
-  !*** ./resources/js/front/desktop/quantity.js ***!
-  \************************************************/
+/***/ "./resources/js/front/desktop/mueble.js":
+/*!**********************************************!*\
+  !*** ./resources/js/front/desktop/mueble.js ***!
+  \**********************************************/
 /***/ (() => {
 
-document.querySelector(".minus-btn").setAttribute("disabled", "disabled");
-document.querySelector(".plus-btn").addEventListener("click", function () {
-  valueCount = document.getElementById("quantity").value;
-  valueCount++;
-  document.getElementById("quantity").value = valueCount;
-});
-document.querySelector(".minus-btn").addEventListener("click", function () {
-  valueCount = document.getElementById("quantity").value;
-  valueCount--;
-  document.getElementById("quantity").value = valueCount;
+var plusButton = document.getElementById('plus-button');
+var descriptionElement = document.querySelector(".description-container");
+var movingWrap = document.querySelector(".moving-wrap");
+
+if (plusButton) {
+  plusButton.addEventListener("click", function () {
+    movingWrap.classList.toggle("active");
+    descriptionElement.classList.toggle("active");
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/front/desktop/sidebar.js":
+/*!***********************************************!*\
+  !*** ./resources/js/front/desktop/sidebar.js ***!
+  \***********************************************/
+/***/ (() => {
+
+var hamButton = document.getElementById("ham-button");
+var sidebar = document.getElementById("sidebar");
+hamButton.addEventListener("click", function () {
+  hamButton.classList.toggle("active");
+  sidebar.classList.toggle("active");
 });
 
 /***/ }),
@@ -20409,7 +20425,9 @@ __webpack_require__(/*! ./errors */ "./resources/js/front/desktop/errors.js");
 
 __webpack_require__(/*! ./fingerprint */ "./resources/js/front/desktop/fingerprint.js");
 
-__webpack_require__(/*! ./quantity */ "./resources/js/front/desktop/quantity.js");
+__webpack_require__(/*! ./mueble */ "./resources/js/front/desktop/mueble.js");
+
+__webpack_require__(/*! ./sidebar */ "./resources/js/front/desktop/sidebar.js");
 })();
 
 /******/ })()

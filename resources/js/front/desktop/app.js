@@ -2,6 +2,9 @@ require('../../bootstrap');
 require('./faqs');
 require('./errors');
 require('./fingerprint');
-require('./quantity');
+require('./mueble');
+require('./sidebar');
+
+
 
 

@@ -7,6 +7,7 @@
     height: 100%;
     width: 100%;
     margin-left: 0.5em;
+    margin-top: -1em;
 
     p{
         color: $black;
@@ -31,35 +32,96 @@
             .description-container.active{
                 height: max-content;
 
+                .moving-wrap.active{
+                    height: max-content;
+                }
+
                 .container{
-                    width: 100%;
                     height: 5vh;
+                    width: 100%;
                     display:flex;
+
+
 
                     .descripcion-producto{
                         border-top: 1px solid #212121;
                         border-bottom: 1px solid #212121;
                         margin-left: 1em;
                         width:100%;
-                    }
+                        display:flex;
 
-                    .plus-button{
-                        width: 20%;
-                        border-top: 1px solid #212121;
-                        border-bottom: 1px solid #212121;
+                        .descrip{
+                            
+                            p{
+                                width:100%;
+                            }
+                            
+                        }
 
-                        svg{
-                            width: 100%;
+                        #plus-button{
+                            cursor:pointer;
+                            width: 20%;
+            
+                            svg{
+                                width: 80%;
+                            }
                         }
                     }
                 }
                 
             }
 
+            
+
+    
+
             .description-container{
                 height: 10vh;
                 border-bottom: 1px solid #212121;
                 margin-left: 1em;
+
+                .moving-wrap.active{
+                    height: 5vh;
+                }
+
+                 .container{
+                    height: 5vh;
+                    width: 100%;
+                    display:flex;
+                    
+                    .descripcion{
+                        p{
+                            display:none;
+                        }
+                        
+                    }
+
+                    .descripcion-producto{
+                        border-top: 1px solid #212121;
+                        border-bottom: 1px solid #212121;
+                        margin-left: 1em;
+                        width:100%;
+                        display:flex;
+
+                        .descrip{
+                            
+                            p{
+                                width:100%;
+                            }
+                            
+                        }
+
+                        #plus-button{
+                            cursor:pointer;
+                            width: 20%;
+            
+                            svg{
+                                width: 80%;
+                            }
+                        }
+                    }
+                }
+                
 
                 
             }

@@ -1,21 +1,59 @@
+.faqs-title-collection{
+    text-align:center;
+    background-color: #F2EBC4;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+    width: 90%;
+    margin: auto;
+
+    h3{
+        color: #262001;
+        font-weight: 700;
+        font-size: 1.8em; 
+    }
+}
+
 .faqs{
     
     margin: 5% auto;    
-    width: 100%;
+    width: 95%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    grid-gap: 0.5em;
-    width: 100%;
+    grid-gap: 1em;
     padding-bottom: 0.5em;
 
 
-    .faq{
+
+    .faq-container{
         width: 35%;
-        height: 50vh;
+        height: 20vh;
+
+        .faq-title-container{
+            display: none;
+        }
+
+    }
+
+    .faq-wrap-images{
+        width:100%;
+
+        .faq-description-images-collection{ 
+
+            width:100%;
+
+            img{
+                width:100%;
+            }
+
+        }
     }
     
 }
 
-
+    .sticky{
+        position: fixed;
+        top: 0;
+        width: 100%
+    }
 

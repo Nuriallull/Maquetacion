@@ -1,0 +1,22 @@
+
+.carrito-wrap{
+    position:fixed;
+    z-index:2000;
+    top: 9%;
+    right: -18%;
+
+    .carrito-icono{
+
+
+        svg{
+            width: 12%;
+            height: 5%;
+            color: #FFFFFF;
+            background-color: #262001;
+            border: 2px solid #262001;
+            border-radius: 50%;
+            padding: 0.8em;
+        }
+    }
+
+}

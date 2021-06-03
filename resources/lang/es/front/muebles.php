@@ -1,5 +1,5 @@
 <?php
 
 return array (
-  'title' => 'Muebles'
+  'title' => 'SOFÁS TAPIZADOS PARA TU SALÓN'
 );

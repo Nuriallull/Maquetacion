@@ -508,21 +508,53 @@ a:hover, a:focus {
   margin: 0 5%;
   min-height: 100vh;
   width: 100%;
+  padding-top: 4em;
+}
+
+.faqs-title-collection {
+  text-align: center;
+  background-color: #F2EBC4;
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+  width: 90%;
+  margin: auto;
+}
+.faqs-title-collection h3 {
+  color: #262001;
+  font-weight: 700;
+  font-size: 1.8em;
 }
 
 .faqs {
   margin: 5% auto;
-  width: 100%;
+  width: 95%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  grid-gap: 0.5em;
-  width: 100%;
+  grid-gap: 1em;
   padding-bottom: 0.5em;
 }
-.faqs .faq {
+.faqs .faq-container {
   width: 35%;
-  height: 50vh;
+  height: 20vh;
+}
+.faqs .faq-container .faq-title-container {
+  display: none;
+}
+.faqs .faq-wrap-images {
+  width: 100%;
+}
+.faqs .faq-wrap-images .faq-description-images-collection {
+  width: 100%;
+}
+.faqs .faq-wrap-images .faq-description-images-collection img {
+  width: 100%;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 .faq {
@@ -532,6 +564,7 @@ a:hover, a:focus {
 .faq .faq-title {
   margin: 0 1em;
   width: 90%;
+  display: none;
 }
 .faq .faq-title h3 {
   color: #262001;
@@ -542,32 +575,163 @@ a:hover, a:focus {
   background-color: #110c40;
 }
 
-.faq-wrap-images {
+.ham {
+  position: fixed;
+  z-index: 1002;
+  top: 4.7em;
+  left: 0.8em;
+  width: 1em;
+  height: 1em;
+  cursor: pointer;
+  padding: 1em;
+}
+.ham svg {
+  fill: #262001;
+  transition: fill 0.6s;
+}
+.ham.active svg {
+  fill: #262001;
+}
+.ham.active svg .bar1 {
+  transform: rotate(45deg) translate(2em, -1em);
+}
+.ham.active svg .bar2 {
+  opacity: 0;
+}
+.ham.active svg .bar3 {
+  transform: rotate(-45deg) translate(-2em, 1em);
+}
+
+.content-sidebar {
+  width: 15%;
+}
+
+.sidebar {
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  background-color: #FFFFFF;
+  position: relative;
+  z-index: 999;
+  top: -100%;
+  opacity: 0;
+  transition: 0.4s ease-in-out;
+}
+
+.sidebar ul {
+  cursor: pointer;
+  padding: 0.5em;
+  padding-top: 10vh;
+  font-size: 1.2em;
+  font-weight: 550;
+  color: #262001;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 600;
+  font-size: 1.3em;
   width: 100%;
 }
-.faq-wrap-images .faq-description-image {
+.sidebar ul li {
+  width: 15%;
+  text-align: center;
+  display: inline-block;
+}
+
+.sidebar.active {
+  position: absolute;
   width: 100%;
+  z-index: 1100;
+  top: 0%;
+  opacity: 1;
+  transition: 0.4s ease-in-out;
+  height: 20vh;
+}
+
+.information-grid {
   text-align: center;
 }
-.faq-wrap-images .faq-description-image img {
-  width: 100%;
-  height: 100%;
+.information-grid .nombre-collection {
+  text-align: center;
+  z-index: 1;
+  color: #262001;
 }
-.faq-wrap-images .faq-grid-images {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 0.5em;
-  width: 100%;
-  padding-bottom: 0.5em;
+.information-grid .nombre-collection:after {
+  content: "";
+  /* This is necessary for the pseudo element to work. */
+  display: block;
+  /* This will put the pseudo element on its own line. */
+  margin: 0 auto;
+  /* This will center the border. */
+  width: 32%;
+  /* Change this to whatever width you want. */
+  padding-top: 0.1em;
+  /* This creates some space between the element and the border. */
+  border-bottom: 1px solid #262001;
+  /* This creates the border. Replace black with whatever color you want. */
 }
-.faq-wrap-images .faq-grid-images img {
-  max-width: 100%;
-  max-height: 100%;
+.information-grid .precio-total-collection h3 {
+  font-weight: 90;
+  color: #262001;
 }
-.faq-wrap-images .faq-description-images {
-  height: 20vh;
-  padding: 1;
-  width: 100%;
+
+.carrito-wrap {
+  position: fixed;
+  z-index: 2000;
+  top: 9%;
+  right: -18%;
+}
+.carrito-wrap .carrito-icono svg {
+  width: 12%;
+  height: 5%;
+  color: #FFFFFF;
+  background-color: #262001;
+  border: 2px solid #262001;
+  border-radius: 50%;
+  padding: 0.8em;
+}
+
+.faq-description-images-collection {
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.faq-description-images-collection img {
+  transition: transform 0.5s ease;
+}
+
+.faq-description-images-collection:hover img {
+  transform: scale(1.3);
+  cursor: pointer;
+}
+
+.iconos-imagen {
+  position: absolute;
+  z-index: 999;
+  top: 25%;
+  left: 30%;
+  opacity: 0;
+  padding-bottom: 20em;
+}
+.iconos-imagen .icono-corazon svg {
+  width: 9%;
+  height: 5%;
+  color: #FFFFFF;
+  background-color: #F2EBC4;
+  border: 2px solid #F2EBC4;
+  border-radius: 50%;
+  padding: 0.2em;
+}
+.iconos-imagen .icono-carrito svg {
+  width: 9%;
+  height: 5%;
+  color: #FFFFFF;
+  background-color: #F2EBC4;
+  border: 2px solid #F2EBC4;
+  border-radius: 50%;
+  padding: 0.2em;
+}
+
+.iconos-imagen:hover {
+  opacity: 1;
 }
 
 .faq-description-single {
@@ -578,6 +742,7 @@ a:hover, a:focus {
   height: 100%;
   width: 100%;
   margin-left: 0.5em;
+  margin-top: -1em;
 }
 .faq-description-single p {
   color: black;
@@ -600,9 +765,14 @@ a:hover, a:focus {
   height: -moz-max-content;
   height: max-content;
 }
+.faq-description-single .faq-specifications .faq-description-text .description-container.active .moving-wrap.active {
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
 .faq-description-single .faq-specifications .faq-description-text .description-container.active .container {
-  width: 100%;
   height: 5vh;
+  width: 100%;
   display: flex;
 }
 .faq-description-single .faq-specifications .faq-description-text .description-container.active .container .descripcion-producto {
@@ -610,19 +780,50 @@ a:hover, a:focus {
   border-bottom: 1px solid #212121;
   margin-left: 1em;
   width: 100%;
+  display: flex;
 }
-.faq-description-single .faq-specifications .faq-description-text .description-container.active .container .plus-button {
-  width: 20%;
-  border-top: 1px solid #212121;
-  border-bottom: 1px solid #212121;
-}
-.faq-description-single .faq-specifications .faq-description-text .description-container.active .container .plus-button svg {
+.faq-description-single .faq-specifications .faq-description-text .description-container.active .container .descripcion-producto .descrip p {
   width: 100%;
+}
+.faq-description-single .faq-specifications .faq-description-text .description-container.active .container .descripcion-producto #plus-button {
+  cursor: pointer;
+  width: 20%;
+}
+.faq-description-single .faq-specifications .faq-description-text .description-container.active .container .descripcion-producto #plus-button svg {
+  width: 80%;
 }
 .faq-description-single .faq-specifications .faq-description-text .description-container {
   height: 10vh;
   border-bottom: 1px solid #212121;
   margin-left: 1em;
+}
+.faq-description-single .faq-specifications .faq-description-text .description-container .moving-wrap.active {
+  height: 5vh;
+}
+.faq-description-single .faq-specifications .faq-description-text .description-container .container {
+  height: 5vh;
+  width: 100%;
+  display: flex;
+}
+.faq-description-single .faq-specifications .faq-description-text .description-container .container .descripcion p {
+  display: none;
+}
+.faq-description-single .faq-specifications .faq-description-text .description-container .container .descripcion-producto {
+  border-top: 1px solid #212121;
+  border-bottom: 1px solid #212121;
+  margin-left: 1em;
+  width: 100%;
+  display: flex;
+}
+.faq-description-single .faq-specifications .faq-description-text .description-container .container .descripcion-producto .descrip p {
+  width: 100%;
+}
+.faq-description-single .faq-specifications .faq-description-text .description-container .container .descripcion-producto #plus-button {
+  cursor: pointer;
+  width: 20%;
+}
+.faq-description-single .faq-specifications .faq-description-text .description-container .container .descripcion-producto #plus-button svg {
+  width: 80%;
 }
 .faq-description-single .faq-specifications .faq-description-text .nombre {
   text-align: center;
@@ -857,4 +1058,35 @@ a:hover, a:focus {
 .form-content h1 {
   font-size: 2em;
   font-weight: 600;
+}
+
+.faq-wrap-images {
+  width: 100%;
+}
+.faq-wrap-images .faq-description-image {
+  width: 100%;
+  height: 75vh;
+  text-align: center;
+}
+.faq-wrap-images .faq-description-image img {
+  width: 100%;
+  height: 100%;
+}
+.faq-wrap-images .faq-grid-images {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 0.2em;
+  width: 100%;
+  padding-bottom: 1em;
+  padding-top: 1em;
+  padding-left: 1em;
+}
+.faq-wrap-images .faq-grid-images img {
+  width: 90%;
+  height: 20vh;
+}
+.faq-wrap-images .faq-description-images {
+  height: 20vh;
+  padding: 1;
+  width: 100%;
 }

@@ -1,5 +1,5 @@
 <?php
 
 return array (
-  'title' => 'Forniture'
+  'title' => 'FIND THE PERFECT SOFA FOR YOUR LIVING ROOM'
 );

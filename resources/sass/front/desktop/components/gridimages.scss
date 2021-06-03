@@ -1,0 +1,57 @@
+
+.faq-description-images-collection{
+    overflow: hidden;
+    z-index: 1000;
+}
+.faq-description-images-collection img{
+    transition: transform .5s ease;
+
+}
+
+.faq-description-images-collection:hover img{
+    transform: scale(1.3);
+    cursor:pointer;
+
+}
+
+.iconos-imagen{
+    position: absolute;
+    z-index: 999;
+    top: 25%;
+    left: 30%;
+    opacity: 0;
+    padding-bottom: 20em;
+
+    .icono-corazon{
+        
+        svg{
+            width: 9%;
+            height: 5%;
+            color: #FFFFFF;
+            background-color: #F2EBC4;
+            border: 2px solid #F2EBC4;  
+            border-radius: 50%;
+            padding: 0.2em;
+        }
+    }
+
+    .icono-carrito{
+        
+        svg{
+            width: 9%;
+            height: 5%;
+            color: #FFFFFF;
+            background-color: #F2EBC4;
+            border: 2px solid #F2EBC4;
+            border-radius: 50%;
+            padding: 0.2em;
+        }
+    }
+}
+
+.iconos-imagen:hover{
+    opacity: 1;
+}
+
+
+

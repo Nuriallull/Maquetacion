@@ -8,7 +8,12 @@
 @import "layout/master";
 @import "components/faqs";
 @import "components/faq";
-@import "components/slider";
+@import "components/_sidebar";
+@import "components/grid.scss";
+@import "components/cartbutton.scss";
+@import "components/gridimages.scss";
 @import "components/description";
 @import "components/errors.scss";
 @import "layout/login-form.scss";
+@import "components/slider.scss";
+
