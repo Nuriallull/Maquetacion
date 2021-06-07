@@ -64,6 +64,17 @@ class ViewComposerServiceProvider extends ServiceProvider
             'admin.muebles.index'],
             'App\Http\ViewComposers\Admin\Ivas'
         );
+
+        view()->composer([
+            'front.layout.partials.header_fixed',
+            'front.pages.login.index'],
+            'App\Http\ViewComposers\Front\Logo'
+        );
+
+        view()->composer(
+            'front.layout.partials.footer',
+            'App\Http\ViewComposers\Front\LogoLight'
+        );
     }
 
     public function register()

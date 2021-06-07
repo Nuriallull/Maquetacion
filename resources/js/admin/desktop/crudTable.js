@@ -9,6 +9,9 @@ import {renderGoogleBot} from './googleBot';
 import {renderSitemap} from './sitemap';
 import {renderLocaleSeo} from './localeSeo';
 import {renderBlockSlug} from './slugBlock';
+import {renderNestedSortables} from './sortable';
+import {renderMenuItems} from './menuItems';
+import {renderSelects} from './selects';
 
 
 const table = document.getElementById("table");
@@ -151,6 +154,9 @@ export let renderForm = () => {
     renderGoogleBot();
     renderSitemap();
     renderLocaleSeo();
+    renderNestedSortables();
+    renderMenuItems();
+    renderSelects();
     
     
 };

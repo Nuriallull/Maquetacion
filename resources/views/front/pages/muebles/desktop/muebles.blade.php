@@ -4,5 +4,4 @@
 
 <div class="faqs">
 @include("front.components.desktop.grid")
-@include("front.components.desktop.sidebar")
 </div>

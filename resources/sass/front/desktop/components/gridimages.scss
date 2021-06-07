@@ -14,44 +14,47 @@
 
 }
 
-.iconos-imagen{
-    position: absolute;
-    z-index: 999;
-    top: 25%;
-    left: 30%;
-    opacity: 0;
-    padding-bottom: 20em;
-
-    .icono-corazon{
-        
-        svg{
-            width: 9%;
-            height: 5%;
-            color: #FFFFFF;
-            background-color: #F2EBC4;
-            border: 2px solid #F2EBC4;  
-            border-radius: 50%;
-            padding: 0.2em;
-        }
-    }
-
-    .icono-carrito{
-        
-        svg{
-            width: 9%;
-            height: 5%;
-            color: #FFFFFF;
-            background-color: #F2EBC4;
-            border: 2px solid #F2EBC4;
-            border-radius: 50%;
-            padding: 0.2em;
-        }
-    }
-}
-
-.iconos-imagen:hover{
+.faq-wrap-images{
     opacity: 1;
+    .iconos-imagen{
+        position: absolute;
+        z-index: 1200;
+        top: 50%;
+        left: 30%;
+        padding-bottom: 20em;
+    
+        .icono-corazon{
+            
+            svg{
+                width: 9%;
+                height: 5%;
+                color: #FFFFFF;
+                background-color: #F2EBC4;
+                border: 2px solid #F2EBC4;  
+                border-radius: 50%;
+                padding: 0.2em;
+            }
+        }
+    
+        .icono-carrito{
+            
+            svg{
+                width: 9%;
+                height: 5%;
+                color: #FFFFFF;
+                background-color: #F2EBC4;
+                border: 2px solid #F2EBC4;
+                border-radius: 50%;
+                padding: 0.2em;
+            }
+        }
+    }    
 }
 
+
+
+.faq-wrap-images.hover{
+    opacity: 0;
+}
 
 

@@ -23,12 +23,17 @@
     </head>
 
     <body>
+        @include("front.layout.partials.topbar")
+        @include("front.layout.partials.header_fixed")
+
         <div class="wrapper" id="app">
             <div class="main-content">
                 @yield('content')
             </div>
         </div>      
 
+        @include("front.layout.partials.footer")
+        @include("front.layout.partials.bottombar")
         @include("front.layout.partials.js")
     </body>
 </html>

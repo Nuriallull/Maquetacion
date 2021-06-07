@@ -1,0 +1,84 @@
+.footer{
+	background-color: hsla(49, 95%, 8%, 0.452);
+	height: max-content;
+	margin-top: 0px;
+	padding: 5% 10%;
+	position: relative;
+	width: 80%;
+	display:flex;
+
+	.footer-container{
+		width: 40%;
+	}
+	.mapa{
+		width: 60%; 
+	}
+}
+
+.footer:before{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 20px;
+    background-size: 40px 40px;
+    transform: rotate(180deg);
+}
+
+.footer:after{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 30px;
+    background-size: 80px 40px;
+    transform: rotate(180deg);
+}
+
+.footer .footer-element-title{
+	color: #262001;
+	margin-bottom: 1.5em;
+}
+
+.footer .booking-button{
+	
+	margin-top: 2em;
+	
+	button{
+		color: #262001;
+	}
+}
+
+.footer .footer-element-container{
+
+	p,a,h1,h2,h3,h4,h5{
+		color: #262001;
+		font-weight: 400;
+	}
+}
+
+.footer .footer-element-icon{
+
+	margin-right: 0.5em;
+
+	svg{
+		height: 1em;
+		width: 1.5em;
+
+		path{
+			fill: #F2EBC4;
+		}
+	}
+}
+
+.footer .footer-socials-container{
+	display: flex;
+}
+
+.footer .footer-contact-item{
+	display: flex;
+	margin: 0.5em 0;
+}
+

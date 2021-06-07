@@ -2050,21 +2050,6 @@ if (plusButton) {
 
 /***/ }),
 
-/***/ "./resources/js/front/desktop/sidebar.js":
-/*!***********************************************!*\
-  !*** ./resources/js/front/desktop/sidebar.js ***!
-  \***********************************************/
-/***/ (() => {
-
-var hamButton = document.getElementById("ham-button");
-var sidebar = document.getElementById("sidebar");
-hamButton.addEventListener("click", function () {
-  hamButton.classList.toggle("active");
-  sidebar.classList.toggle("active");
-});
-
-/***/ }),
-
 /***/ "./node_modules/clientjs/dist/client.min.js":
 /*!**************************************************!*\
   !*** ./node_modules/clientjs/dist/client.min.js ***!
@@ -20426,8 +20411,6 @@ __webpack_require__(/*! ./errors */ "./resources/js/front/desktop/errors.js");
 __webpack_require__(/*! ./fingerprint */ "./resources/js/front/desktop/fingerprint.js");
 
 __webpack_require__(/*! ./mueble */ "./resources/js/front/desktop/mueble.js");
-
-__webpack_require__(/*! ./sidebar */ "./resources/js/front/desktop/sidebar.js");
 })();
 
 /******/ })()

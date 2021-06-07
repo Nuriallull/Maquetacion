@@ -1,0 +1,59 @@
+.topbar{
+
+    background: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    padding: 1% 5%;
+	height: max-content;
+	width: 90%;
+    z-index: 1100;
+    border-bottom: 0.1em solid #F2EBC4;
+    
+    .topbar-element{
+
+        display: flex;
+        margin: 0 1em;
+
+        .topbar-element-icon{
+
+            margin: auto;
+            margin-right: 0.5em;
+
+            svg{
+                height: 1em;
+                width: 1em;
+
+                path{
+                    fill: #2685BF;
+                }
+            }
+        }
+
+        .topbar-element-text{
+
+            margin: auto;
+
+            p, a, h1{
+                color: #262001;
+                font-size: 0.9em;
+                font-weight: 500;
+            }
+
+            @include respond-to('lg'){
+
+                p{
+                    font-size: 1em;
+                }
+            }
+
+        }
+    } 
+
+	&.hidden{
+		@include fadeOut(0,1s);
+	}
+
+    .topbar-left, .topbar-right{
+        display: flex;
+    }
+}

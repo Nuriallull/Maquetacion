@@ -3,7 +3,7 @@ require('./faqs');
 require('./errors');
 require('./fingerprint');
 require('./mueble');
-require('./sidebar');
+
 
 
 

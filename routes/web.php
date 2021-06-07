@@ -18,6 +18,9 @@ $localizationseo = new LocalizationSeo();
 
 Route::group(['prefix' => 'admin'], function () {
 
+    Route::get('/informacion-de-la-empresa', 'App\Http\Controllers\Admin\BusinessInformationController@index')->name('business_information');
+    Route::post('/informacion-de-la-empresa', 'App\Http\Controllers\Admin\BusinessInformationController@store')->name('business_information_store');
+
     Route::get('/seo/sitemap', 'App\Http\Controllers\Admin\LocaleSeoController@getSitemaps')->name('create_sitemap');
     Route::get('/seo/import', 'App\Http\Controllers\Admin\LocaleSeoController@importSeo')->name('seo_import');
     Route::get('/seo/{key}', 'App\Http\Controllers\Admin\LocaleSeoController@edit')->name('seo_edit');
@@ -28,6 +31,24 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/image/delete/{image?}', 'App\Vendor\Image\Image@destroy')->name('delete_image');
     Route::get('/image/{image}', 'App\Vendor\Image\Image@show')->name('show_image_seo');
     Route::post('/image/seo', 'App\Vendor\Image\Image@storeSeo')->name('store_image_seo');
+
+    Route::get('/menus/item/index/{language?}/{item?}', 'App\Http\Controllers\Admin\MenuItemController@index')->name('menus_item_index');
+    Route::get('/menus/item/create/{language?}', 'App\Http\Controllers\Admin\MenuItemController@create')->name('menus_item_create');
+    Route::delete('/menus/item/delete/{item?}', 'App\Http\Controllers\Admin\MenuItemController@destroy')->name('menus_item_destroy');
+    Route::get('/menus/item/edit/{item?}', 'App\Http\Controllers\Admin\MenuItemController@edit')->name('menus_item_edit');
+    Route::post('/menus/item/store', 'App\Http\Controllers\Admin\MenuItemController@store')->name('menus_item_store'); 
+    Route::post('/menus/item/reordermenu', 'App\Http\Controllers\Admin\MenuItemController@orderItem')->name('menus_reorder');
+    
+    Route::resource('menus', 'App\Http\Controllers\Admin\MenuController', [
+        'names' => [
+            'index' => 'menus',
+            'create' => 'menus_create',
+            'store' => 'menus_store',
+            'destroy' => 'menus_destroy',
+            'edit' => 'menus_edit',
+        ]
+    ]);
+
 
     Route::get('/traductions', 'App\Http\Controllers\Admin\LocaleTagController@index')->name('traductions');
     Route::get('/traductions/{group}/{key}', 'App\Http\Controllers\Admin\LocaleTagController@edit')->name('traductions_edit');
@@ -142,6 +163,8 @@ Route::group(['prefix' => 'admin'], function () {
 
 });
 
+Route::post('/contacto', 'App\Http\Controllers\Front\ContactController@send')->name('front_contact_form');
+
 Route::group(['prefix' => $localizationseo->setLocale(),
               'middleware' => [ 'localize' ]
             ], function () use ($localizationseo) {
@@ -150,7 +173,10 @@ Route::group(['prefix' => $localizationseo->setLocale(),
     Route::get($localizationseo->transRoute('routes.front_faq'), 'App\Http\Controllers\Front\FaqController@show')->name('front_faq');
     Route::get($localizationseo->transRoute('routes.front_muebles'), 'App\Http\Controllers\Front\MuebleController@index')->name('front_muebles');
     Route::get($localizationseo->transRoute('routes.front_mueble'), 'App\Http\Controllers\Front\MuebleController@show')->name('front_mueble');
+    Route::get($localizationseo->transRoute('routes.front_contact'), 'App\Http\Controllers\Front\ContactController@index')->name('front_contact');
+    Route::get($localizationseo->transRoute('routes.front_about_us'), 'App\Http\Controllers\Front\AboutUsController@index')->name('front_about_us');
 });
+
 
 
 Route::post('/fingerprint', 'App\Http\Controllers\Front\FingerprintController@store')->name('front_fingerprint');

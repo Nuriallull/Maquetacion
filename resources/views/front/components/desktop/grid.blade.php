@@ -9,7 +9,7 @@
             <div class="faq-plus-button" data-button="{{$loop->iteration}}"></div>
         </div>
 
-        <div class="faq-wrap-images">
+        <div class="faq-wrap-images active">
             @isset($mueble->image_featured_desktop->path)
                 <div class="faq-description-images-collection">
                     <img src="{{Storage::url($mueble->image_featured_desktop->path)}}" alt="{{$mueble->image_featured_desktop->alt}}" title="{{$mueble->image_featured_desktop->title}}" />
