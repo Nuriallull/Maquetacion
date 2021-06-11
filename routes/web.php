@@ -181,7 +181,7 @@ Route::group(['prefix' => $localizationseo->setLocale(),
 Route::post('/contacto', 'App\Http\Controllers\Front\ContactController@store')->name('front_contact_form');
 Route::get('/traduccion/{language}/{parent}/{slug?}', 'App\Http\Controllers\Front\LocalizationController@show')->name('front_localization');
 
-Route::post('/fingerprint', 'App\Http\Controllers\Front\FingerprintController@store')->name('front_fingerprint');
+Route::post('/fingerprint', 'App\Http\Controllers\Front\FingerPrintController@store')->name('front_fingerprint');
 Route::get('/login', 'App\Http\Controllers\Front\LoginController@index')->name('login');
 Route::post('/login', 'App\Http\Controllers\Front\LoginController@login')->name('front_login_submit');
 Route::get('/faqs', 'App\Http\Controllers\Front\FaqController@index')->name('faqs_front');

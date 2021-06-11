@@ -4,19 +4,18 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\DB\Fingerprint;
+use App\Models\DB\FingerPrint;
 
-class FingerprintController extends Controller
+class FingerPrintController extends Controller
 {
-    
-    
+
     public function store(Request $request){
         
         $cookie_fingerprint = $request->cookie('fp');
 
         if($cookie_fingerprint == null){
 
-            $fingerprint = Fingerprint::create([
+            $fingerprint = FingerPrint::create([
                 'fingerprint_code' => request('fingerprint_code'),
                 'browser' => request('browser'),
                 'browser_version' => request('browser_version'),
@@ -24,7 +23,7 @@ class FingerprintController extends Controller
                 'resolution' => request('resolution')
             ]);
         }else{
-            $fingerprint = Fingerprint::where('fingerprint_code', $cookie_fingerprint)->first();
+            $fingerprint = FingerPrint::where('fingerprint_code', $cookie_fingerprint)->first();
         }
 
         $cookie_fingerprint = cookie()->forever('fp', $fingerprint->fingerprint_code);

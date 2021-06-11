@@ -2,7 +2,7 @@
 
 namespace App\Models\DB;
 
-class Fingerprint extends DBModel
+class FingerPrint extends DBModel
 {
 
     protected $table = 't_fingerprint';
