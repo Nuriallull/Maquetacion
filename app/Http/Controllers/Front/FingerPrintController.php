@@ -9,6 +9,7 @@ use App\Models\DB\Fingerprint;
 class FingerprintController extends Controller
 {
     
+    
     public function store(Request $request){
         
         $cookie_fingerprint = $request->cookie('fp');
