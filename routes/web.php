@@ -175,9 +175,11 @@ Route::group(['prefix' => $localizationseo->setLocale(),
     Route::get($localizationseo->transRoute('routes.front_mueble'), 'App\Http\Controllers\Front\MuebleController@show')->name('front_mueble');
     Route::get($localizationseo->transRoute('routes.front_contact'), 'App\Http\Controllers\Front\ContactController@index')->name('front_contact');
     Route::get($localizationseo->transRoute('routes.front_about_us'), 'App\Http\Controllers\Front\AboutUsController@index')->name('front_about_us');
+    Route::get($localizationseo->transRoute('routes.front_home'), 'App\Http\Controllers\Front\HomeController@index')->name('front_home');           
 });
 
-
+Route::post('/contacto', 'App\Http\Controllers\Front\ContactController@store')->name('front_contact_form');
+Route::get('/traduccion/{language}/{parent}/{slug?}', 'App\Http\Controllers\Front\LocalizationController@show')->name('front_localization');
 
 Route::post('/fingerprint', 'App\Http\Controllers\Front\FingerprintController@store')->name('front_fingerprint');
 Route::get('/login', 'App\Http\Controllers\Front\LoginController@index')->name('login');

@@ -18,7 +18,7 @@ class CreateTMuebles extends Migration
             $table->string('name', 255);
             $table->boolean('active')->default(false);
             $table->unsignedInteger('mueble_categoria_id');
-            $table->foreign('category_id')->references('id')->on('t_faqs_categories');
+            $table->foreign('category_id')->references('id')->on('t_muebles_categorias');
             $table->unsignedInteger('color_id');
             $table->unsignedInteger('tamaño_id');
             $table->integer('order')->default(0);

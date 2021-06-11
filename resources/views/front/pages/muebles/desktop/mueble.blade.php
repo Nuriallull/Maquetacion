@@ -4,8 +4,8 @@
         <h3>{{isset($mueble->seo->title) ? $mueble->seo->title : ""}}</h3>
     </div>
     
-    <div class="faq">
-        <div class="faq-description-single">
+    <div class="mueble">
+        <div class="mueble-description-single">
             @include("front.components.desktop.slider")
             @include("front.components.desktop.description")
         </div>

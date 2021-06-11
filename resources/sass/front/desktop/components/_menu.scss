@@ -4,57 +4,50 @@
     width: max-content;
 	z-index: 1001;
 
-	li{
+	ul{
+		width: 100%;
 
-		margin: 0.5em; 
-
-		&.selected{
-
-			a h4{
-				color: $red;
-			}
-		}
-
-		cursor: pointer;
-		display: inline-flex;
-
-		a h4{
-			color: #253786;
-			font-size: 1em;
-		}
-
-		&:hover a h4{
-			color: #00a7b0;
-		}
-
-		@include respond-to('lg'){
+		li{
+			display: inline-flex;
+			margin: 0.5em;
+			cursor:pointer;
 
 			a h4{
-				font-size: 1.6em;
-			}
-		}
-
-		@include respond-to('wsga'){	
-			
-			a h4{
+				color: #262001;
 				font-size: 1em;
+
+				&:hover{
+					opacity: 1;
+					top: 5vh;
+					transition: all 0.7s;
+				}
+			}
+
+			&.selected{
+
+				a h4{
+					color: $red;
+				}
+			}
+		
+			@include respond-to('lg'){
+
+				a h4{
+					font-size: 1.6em;
+				}
+			}
+
+			@include respond-to('wsga'){	
+				
+				a h4{
+					font-size: 1em;
+				}
 			}
 		}
 	}
-
-	&:hover .menu{
-		opacity: 1;
-		top: 5vh;
-		transition: all 0.7s;
-	}
+	
 }
 
-.menu-vertical{
-
-	li{
-		margin: 0.5em 0;
-	}
-}
 
 .menu{
 
@@ -70,6 +63,7 @@
 
 	li{
 		margin: 1em 0.5em;
+		cursor: pointer;
 
 	}
 }

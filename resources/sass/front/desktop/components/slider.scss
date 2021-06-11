@@ -1,8 +1,8 @@
-.faq-wrap-images{
+.mueble-wrap-images{
 
     width: 100%;
 
-    .faq-description-image{
+    .mueble-description-image{
         width: 100%;
         height: 75vh;
         text-align: center;
@@ -13,7 +13,7 @@
         }
     }
 
-    .faq-grid-images{
+    .mueble-grid-images{
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         grid-gap: 0.2em;
@@ -28,7 +28,7 @@
         }
     }
 
-    .faq-description-images{
+    .mueble-description-images{
         height: 20vh;
         padding: 1;
         width: 100%;

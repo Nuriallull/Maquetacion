@@ -1,0 +1,59 @@
+.muebles-title-collection{
+    text-align:center;
+    background-color: #F2EBC4;
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+    width: 90%;
+    margin: auto;
+
+    h3{
+        color: #262001;
+        font-weight: 700;
+        font-size: 1.8em; 
+    }
+}
+
+.muebles{
+    
+    margin: 5% auto;    
+    width: 95%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 1em;
+    padding-bottom: 0.5em;
+
+
+
+    .mueble-container{
+        width: 35%;
+        height: 20vh;
+
+        .faq-title-container{
+            display: none;
+        }
+
+    }
+
+    .mueble-wrap-images{
+        width:100%;
+
+        .mueble-description-images-collection{ 
+
+            width:100%;
+
+            img{
+                width:100%;
+            }
+
+        }
+    }
+    
+}
+
+.sticky{
+    position: fixed;
+    top: 0;
+    width: 100%
+}
+

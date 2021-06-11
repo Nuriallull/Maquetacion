@@ -1,17 +1,17 @@
 
 @foreach ($muebles as $mueble)
     
-    <div class="faq" data-content="{{$loop->iteration}}">
-        <div class="faq-title-container">
-            <div class="faq-title">
+    <div class="mueble" data-content="{{$loop->iteration}}">
+        <div class="mueble-title-container">
+            <div class="mueble-title">
                 <h3>{{isset($mueble->locale['title']) ? $mueble->locale['title'] : ""}}</h3>
             </div>
-            <div class="faq-plus-button" data-button="{{$loop->iteration}}"></div>
+            <div class="mueble-plus-button" data-button="{{$loop->iteration}}"></div>
         </div>
 
-        <div class="faq-wrap-images active">
+        <div class="mueble-wrap-images active">
             @isset($mueble->image_featured_desktop->path)
-                <div class="faq-description-images-collection">
+                <div class="mueble-description-images-collection">
                     <img src="{{Storage::url($mueble->image_featured_desktop->path)}}" alt="{{$mueble->image_featured_desktop->alt}}" title="{{$mueble->image_featured_desktop->title}}" />
                        
                     <div class="iconos-imagen">

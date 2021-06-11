@@ -13,5 +13,5 @@ return array (
   'twitter' => 'twitter.com/thesofahouse',
   'whatsapp' => '+34 663 553 705',
   'slogan' => 'Sofás y decoración al mejor precio',
-  'ourbusiness' => NULL,
+  'ourbusiness' => '<p>Est ei erat mucius quaeque. Ei his quas phaedrum, efficiantur mediocritatem ne sed, hinc oratio blandit ei sed. Blandit gloriatur eam et. Brute noluisse per et, verear disputando neglegentur at quo. Sea quem legere ei, unum soluta ne duo.&nbsp;</p>',
 );

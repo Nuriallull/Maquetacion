@@ -23,11 +23,13 @@
     </head>
 
     <body>
+        @include('front.layout.partials.wait')
         @include("front.layout.partials.topbar")
         @include("front.layout.partials.header_fixed")
+        @include("front.layout.partials.modal_localization")
 
         <div class="wrapper" id="app">
-            <div class="main-content">
+            <div class="main-content" id="main-content">
                 @yield('content')
             </div>
         </div>      

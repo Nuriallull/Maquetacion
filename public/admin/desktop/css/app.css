@@ -819,6 +819,12 @@ tr:nth-child(even) {
   width: 100%;
   height: 90vh;
 }
+.form-container #menu-item-form-container {
+  padding: 0 2em;
+}
+.form-container #menu-item-form-container .locale-tabs-container {
+  margin-top: 0;
+}
 
 .form-update {
   display: flex;
@@ -1507,7 +1513,7 @@ tr:nth-child(even) {
 }
 
 .modal-form-template {
-  background-color: white;
+  background-color: #FFFFFF;
   height: 100vh;
   transform: translateY(-200%);
   position: fixed;

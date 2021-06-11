@@ -36,6 +36,16 @@
 .form-container{
 	width: 100%;
 	height: 90vh;
+
+	#menu-item-form-container{
+		
+		padding: 0 2em;
+
+		.locale-tabs-container{
+
+			margin-top: 0;
+		}
+	}	
 }
 
 .form-update{
@@ -133,6 +143,7 @@
 .form-input input:focus, .form-input textarea:focus{
 	outline: none;
 }
+
 
 .form-input .ck-editor__editable_inline {
     min-height: 15vh;

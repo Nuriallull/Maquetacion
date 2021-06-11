@@ -1,0 +1,187 @@
+.page-header-title{
+    text-align: center;
+}
+
+.contact{
+    
+    margin: 5% auto;
+    width: 70%;
+
+    .form form{
+        width:100%;
+        background-color: #FFFFFF;
+        padding: 2em;
+        border: 0.1px solid #FFFFFF;
+        -webkit-box-shadow: 0 10px 6px -6px #777;
+        -moz-box-shadow: 0 10px 6px -6px #777;
+        box-shadow: 0 10px 6px -6px #777;
+        text-align: center;
+
+        .first-column{
+            display: inline-block;
+            width: 40%;
+        }
+        
+        .second-column{
+            display: inline-block;
+            width: 40%;
+            float: right;
+        }        
+
+        .label{
+            font-size: 18px;
+            font-weight: 400;
+            color: #262001;
+            cursor: text;
+            transition: transform .2s ease-in-out;
+            padding-bottom: 1em;
+            padding-top: 1.5em;
+
+            .contact-label{
+                color: #2684bfce;
+                font-weight: 550;
+                font-size: 1em;
+            }
+        }
+
+        .input{
+
+            .contact-input{
+                border: none;
+                padding: 0.8em;
+                width: 70%;
+
+                &:focus{
+                    outline: none;
+                }
+
+                &:focus,
+                    &.not-empty {
+                        + .label {
+                            transform: translateY(-24px);
+                        }
+                }
+                
+            }
+        }
+
+        
+
+        .input:after{
+            content: ""; /* This is necessary for the pseudo element to work. */ 
+            display: block; /* This will put the pseudo element on its own line. */
+            margin: 0 auto; /* This will center the border. */
+            width: 70%; /* Change this to whatever width you want. */
+            padding-top: 0.1em; /* This creates some space between the element and the border. */
+            border-bottom: 1px solid #262001; /* This creates the border. Replace black with whatever color you want. */
+        }
+
+        .input-privacy{
+            padding: 1em;
+            margin-top: 1em;
+            font-size: 0.8em;
+        }
+
+        .form-group.form-submit{
+            margin-top: 1em;
+
+            button[type=send-button]{
+                background-color: #262001;
+                border: 1px solid #262001;
+                border-radius: 0.1em;
+                padding: 0.8em;
+                color: #FFFFFF;
+                font-weight: 100;
+
+            }
+        }
+    }
+}
+
+.contact-wrap{
+    padding-top: 2em;
+    display: flex;
+    width: 100%;
+    
+
+    .contact-socials{
+        width: 50%;
+        text-align: center;
+    
+        .contact-socials-title{
+            width: 50%;
+        }
+        
+        .socials-icons .social-icon{
+    
+        background-color: #2685BF;
+        border-radius: 50%;
+        display: inline-block;
+        align-items: center;
+        height: 3em;
+        width: 3em;
+        margin: 0.5em;
+    
+        svg{
+            display: inline-block;
+            margin: 0 auto;
+            width: 70%;
+            padding-top: 0.4em;
+            path{
+                fill: white;
+            }
+        }
+  
+    
+
+    }
+
+    
+        
+
+    
+    .contact-socials .socials-icons .social-icon:hover{
+        background-color: hsla(203, 67%, 45%, 0.226);
+        cursor: pointer;
+    
+    }
+    
+    }
+    
+    .contact-info{
+        width: 80%;
+        height: 20vh;
+
+        .contact-info-title{
+            width: 100%;
+            height: 5vh;
+        }
+    
+        .contact-info-squares{
+            height: 15vh;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding-right: 1em;
+            width: 100%;
+            
+
+            .contact-info .contact-info-element{
+                padding-right: 1em;
+
+                .contact-info-icon{
+                    width: 25%;
+                    svg{
+                        width: 10%;
+                    }
+                }
+
+                .contact-info-text{
+                    display: inline-block;
+                    width: 100%;
+                }
+            }
+            }   
+        }   
+    }
+
+

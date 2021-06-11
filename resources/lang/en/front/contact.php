@@ -1,10 +1,11 @@
 <?php
 
 return array (
-  'title' => 'Contact us',
-  'send' => 'SEND',
-  'contact-socials-title' => 'Social Networks',
-  'contact-info-title' => 'Information',
-  'contact-map-title' => 'Where to find us',
-  'contact-map-text' => 'We are located in the San Antonio de la Playa Maritime Club located in Can Pastilla, Mallorca – Balearic Islands. To get to Can Pastilla there are mainly three urban bus lines owned by the EMT and they are lines 15, 30 and 31B, as well as line 21 that connects s’Arenal with the Airport. To get there by car there is the Ma-19 highway that runs through all the tourist spots mentioned above.'
+  'title' => 'Contacta con nosotros',
+  'send' => 'ENVIAR',
+  'contact-socials-title' => 'Redes sociales',
+  'contact-info-title' => 'Información',
+  'contact-map-title' => 'Donde encontrarnos',
+  'contact-map-text' => 'Estamos situados en El Club Marítimo San Antonio de la Playa ubicado en Can Pastilla, Mallorca – Islas Baleares. Para llegar a Can Pastilla existen principalmente tres líneas de autobús urbano propiedad de la EMT y son las líneas 15 30 y 31B además de la línea 21 que comunica s’Arenal con el Aeropuerto. Para llegar mediante coche existe la autovía Ma-19 que recorre todos los puntos turísticos dichos anteriormente.',
+  'success' => 'Gracias. Le contestaremos en cuanto leamos su mensaje.'
 );

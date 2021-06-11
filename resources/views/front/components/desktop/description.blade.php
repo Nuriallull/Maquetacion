@@ -1,7 +1,7 @@
-<div class="faq-specifications">
+<div class="mueble-specifications">
                 
     
-    <div class="faq-description-text">
+    <div class="mueble-description-text">
 
         <div class="nombre">
             <h3>{{isset($mueble->name) ? $mueble->name : ""}}</h3>

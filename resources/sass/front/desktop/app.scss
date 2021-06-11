@@ -8,10 +8,13 @@
 @import "layout/master";
 @import "components/faqs";
 @import "components/faq";
+@import "components/muebles";
+@import "components/mueble";
 @import "components/grid.scss";
 @import "components/cartbutton.scss";
 @import "components/gridimages.scss";
-@import "components/description";
+@import "components/muebledescription";
+@import "components/faqdescription.scss";
 @import "components/errors.scss";
 @import "layout/login-form.scss";
 @import "components/slider.scss";
@@ -20,4 +23,12 @@
 @import "layout/header";
 @import "layout/topbar";
 @import "components/form-buttons";
-
+@import "components/about-us";
+@import "components/contact";
+@import "components/menu";
+@import "components/success_form";
+@import "components/errors_form";
+@import "components/localization";
+@import "layout/modal_localization";
+@import "layout/wait";
+@import "layout/master_without_header.scss";

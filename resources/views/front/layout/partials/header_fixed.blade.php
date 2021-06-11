@@ -2,9 +2,9 @@
 
     <div class="header-container">
         <div class="header-logo">
-            @isset($business->images_logo_preview->path)
-                <img src="{{Storage::url($business->images_logo_preview->path)}}" alt="{{$logo->alt}}" title="{{$logo->title}}">
-            @endisset
+            @isset($logo->path)
+                    <a href="/"><img src="{{Storage::url($logo->path)}}" alt="{{$logo->alt}}" title="{{$logo->title}}"></a>
+                @endisset
         </div>
     
         <div class="header-menu">

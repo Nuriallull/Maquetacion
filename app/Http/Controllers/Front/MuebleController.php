@@ -55,7 +55,17 @@ class MuebleController extends Controller
         $view = View::make('front.pages.muebles.index')
                 ->with('muebles', $muebles) 
                 ->with('seo', $seo );
+
+
+            if(request()->ajax()) {
+
+                $sections = $view->renderSections(); 
         
+                return response()->json([
+                    'view' => $sections['content'],
+                ]); 
+            }
+
         return $view;
     }
 

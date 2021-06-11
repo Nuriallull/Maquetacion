@@ -1,7 +1,7 @@
-@extends('front.layout.table_form')
+@extends('front.layout.master_without_header')
 
 
-@section('form')
+@section('content')
 
 <div class="login-errors">
     @include('front.components.desktop.errors')

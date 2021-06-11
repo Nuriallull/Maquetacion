@@ -1,59 +1,99 @@
-.faqs-title-collection{
-    text-align:center;
-    background-color: #F2EBC4;
-    padding-bottom: 0.5em;
-    padding-top: 0.5em;
-    width: 90%;
-    margin: auto;
-
-    h3{
-        color: #262001;
-        font-weight: 700;
-        font-size: 1.8em; 
-    }
-}
-
 .faqs{
     
-    margin: 5% auto;    
-    width: 95%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-gap: 1em;
-    padding-bottom: 0.5em;
+    margin: 5% auto;
+    width: 80%;
 
+    .faq{
 
-
-    .faq-container{
-        width: 35%;
-        height: 20vh;
+        width: 100%;
 
         .faq-title-container{
-            display: none;
-        }
 
-    }
+            border-bottom: 0.2em solid #FFFFFF;
+            display: flex;
+            height: 10vh;
+            width: 100%;
 
-    .faq-wrap-images{
-        width:100%;
-
-        .faq-description-images-collection{ 
-
-            width:100%;
-
-            img{
-                width:100%;
+            .faq-title{
+                margin: 1em;
+                width: 90%;
             }
 
+            .faq-title h3{
+                color: #FFFFFF;
+                font-weight: 400;
+            }
+
+            .faq-plus {
+
+                width: 10%;
+                
+                .faq-plus-button {
+                    cursor: pointer;
+                    float: right;
+                    margin: 1em;
+                    
+                }
+            }
+        }
+
+        .faq-description{
+
+            display: flex;
+            justify-content: space-between;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s;
+            width: 100%;
+
+            .faq-description-text{
+
+                width: 100%;
+
+                &.with-image{
+                    width: 60%;
+                }
+
+                p{
+                    color: $black;
+                    font-weight: 200;
+                    margin: 1em;
+                }
+            }
+
+            .faq-description-image{
+                width: 40%;
+                padding: 1em;
+            }
+
+            .faq-description-image{
+                padding: 1em;
+            }
+              
+        }
+    }
+
+    .faq.active{
+
+        .faq-description{
+            max-height: 70vh;
         }
     }
     
-}
+    .faqs-message{
 
-    .sticky{
-        position: fixed;
-        top: 0;
-        width: 100%
+        margin: 2em 0;
+
+        p{
+            font-size: 0.9em;
+            font-weight: 400;
+            text-align: center;
+        }
     }
 
+    .faqs-contact{ 
+    
+        margin: 0 auto;
+        width: 20%;
+    }
+}

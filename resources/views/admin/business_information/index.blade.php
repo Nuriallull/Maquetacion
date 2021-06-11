@@ -4,13 +4,13 @@
 
 @extends('admin.layout.table_form')
 
-@section('table')
-    <div class="titulo-lang">
-        <h1>
-            @lang('admin/information.parent_section')
-        </h1>
-    </div>
-@endsection
+
+<div class="titulo-lang">
+    <h1>
+        @lang('admin/information.parent_section')
+    </h1>
+</div>
+
 
 @section('form')
 
@@ -143,6 +143,7 @@
                                     <div class="form-label">
                                         <label for="name" class="label-highlight">Logo</label>
                                     </div>
+                                    
                                     <div class="form-input">
                                         @include('admin.components.upload', [
                                             'entity' => 'business_information',
@@ -247,8 +248,20 @@
                     @foreach ($localizations as $localization)
 
                         <div class="subpanel {{ $loop->first ? 'locale-tab-active':'' }}" data-tab="presentation" data-localetab="{{$localization->alias}}">
-
+                            
                             <div class="one-column">
+                                <div class="form-group">
+                                    <div class="form-input" id="ourbusiness">
+                                        @include('admin.components.upload', [
+                                            'entity' => 'business_information',
+                                            'type' => 'image', 
+                                            'content' => 'ourbusiness', 
+                                            'alias' => $localization->alias,
+                                            'files' => $business->images_our_business_preview
+                                        ])
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <div class="form-label">
                                         <label for="business" class="label-highlight">Eslogan</label>
@@ -257,9 +270,9 @@
                                         <input type="text" name="business[slogan.{{$localization->alias}}]" value="{{isset($business["slogan.$localization->alias"]) ? $business["slogan.$localization->alias"] : ''}}" class="input-highlight">
                                     </div>
                                 </div>
-                            </div>
+                            
 
-                            <div class="two-columns">
+                            
                                 <div class="form-group">
                                     <div class="form-label">
                                         <label for="business" class="label-highlight">
@@ -268,18 +281,6 @@
                                     </div>
                                     <div class="form-input">
                                         <textarea class="ckeditor input-highlight" name="business[ourbusiness.{{$localization->alias}}]">{{isset($business["ourbusiness.$localization->alias"]) ? $business["ourbusiness.$localization->alias"] : ''}}</textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="form-input">
-                                        @include('admin.components.upload', [
-                                            'entity' => 'business_information',
-                                            'type' => 'image', 
-                                            'content' => 'ourbusiness', 
-                                            'alias' => $localization->alias,
-                                            'files' => $business->images_our_business_preview
-                                        ])
                                     </div>
                                 </div>
                             </div>

@@ -1,0 +1,31 @@
+
+.mueble{
+
+    width: 100%;
+    height: 95%;
+
+    
+
+        .mueble-title{
+            margin: 0 1em;
+            width: 90%;
+            display: none;
+        }
+
+        .mueble-title h3{
+            color: #262001;
+            font-weight: 400;
+            
+        } 
+
+}
+
+.mueble-title-container{
+    background-color: $blue-dark;
+}
+
+
+
+
+
+

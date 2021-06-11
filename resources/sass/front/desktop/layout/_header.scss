@@ -34,15 +34,16 @@
 	}
 
 	.header-menu{
-		width: 80%;
+		width: 100%;
 		z-index: 1101;
 		
 		.menu-inline{
 			width: 100%;
+			height: 8vh;
 
 			li{
 				display:inline-block;
-				width: 20%;
+				width: 15%;
 				
 				a{
 					color:#262001;
